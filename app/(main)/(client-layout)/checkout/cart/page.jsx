@@ -2,18 +2,15 @@
 import { Fragment } from 'react'
 import { useRouter } from 'next/navigation'
 
-import { clearCart } from 'store'
-
 import { Icons, CartItem, CartInfo, Header, RedirectToLogin, Button, EmptyCart } from 'components'
 import { Menu, Transition } from '@headlessui/react'
 
 import { formatNumber } from 'utils'
 
-import { useUserInfo, useDisclosure, useAppSelector, useAppDispatch } from 'hooks'
+import { useUserInfo, useDisclosure } from 'hooks'
+import { useGetCartListQuery } from '@/store/services'
 
 const CartPage = () => {
-  // Assets
-  const dispatch = useAppDispatch()
   const { push } = useRouter()
 
   const [isShowRedirectModal, redirectModalHandlers] = useDisclosure()
@@ -22,8 +19,9 @@ const CartPage = () => {
   const { userInfo } = useUserInfo()
 
   // Store
-  const { cartItems, totalItems, totalPrice, totalDiscount } = useAppSelector(state => state.cart)
-
+  // const { cartItems, totalItems, totalPrice, totalDiscount } = useAppSelector(state => state.cart)
+  const data = useGetCartListQuery()
+  console.log('data', data)
   // Handlers
   const handleRoute = () => {
     if (!userInfo) return redirectModalHandlers.open()
@@ -49,7 +47,7 @@ const CartPage = () => {
       >
         <Menu.Items className="w-32 dropdown__items ">
           <Menu.Item>
-            <button onClick={() => dispatch(clearCart())} className="px-4 py-3 flex-center gap-x-2">
+            <button className="px-4 py-3 flex-center gap-x-2">
               <Icons.Delete className="icon" />
               <span>删除全部</span>
             </button>

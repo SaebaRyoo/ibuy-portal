@@ -18,20 +18,20 @@ const LoginForm = props => {
     setFocus,
   } = useForm({
     resolver: yupResolver(logInSchema),
-    defaultValues: { email: '', password: '' },
+    defaultValues: { loginName: '', password: '' },
   })
 
   // Focus On Mount
   useEffect(() => {
-    setFocus('email')
+    setFocus('loginName')
   }, [])
 
   return (
     <form className="space-y-4" onSubmit={handleSubmit(onSubmit)} autoComplete="off">
       <TextField
-        errors={formErrors.email}
-        placeholder="请输入您的账户邮箱"
-        name="email"
+        errors={formErrors.loginName}
+        placeholder="请输入您的账号名"
+        name="loginName"
         control={control}
       />
 

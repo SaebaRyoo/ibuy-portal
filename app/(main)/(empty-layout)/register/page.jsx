@@ -9,7 +9,7 @@ import { yupResolver } from '@hookform/resolvers/yup'
 
 import { registerSchema } from 'utils'
 
-import { TextField, LoginBtn, HandleResponse, RedirectToLogin, Logo } from '@/components'
+import { TextField, LoginBtn, HandleResponse, RedirectToLogin, LogoH } from '@/components'
 
 import { useCreateUserMutation } from '@/store/services'
 import { useDispatch } from 'react-redux'
@@ -49,7 +49,7 @@ export default function RegisterPage() {
   const submitHander = async ({ name, email, password }) => {
     if (name && email && password) {
       await createUser({
-        body: { name, email, password },
+        body: { loginName: name, email, password },
       })
     }
   }
@@ -61,7 +61,7 @@ export default function RegisterPage() {
   }
 
   const onSuccess = () => {
-    dispatch(userLogin(data.data.token))
+    dispatch(userLogin(data.data.access_token))
     reset()
     replace(redirectTo || '/')
   }
@@ -88,7 +88,7 @@ export default function RegisterPage() {
       <main className="grid items-center min-h-screen">
         <section className="container max-w-md px-12 py-6 space-y-6 lg:border lg:border-gray-100 lg:rounded-lg lg:shadow">
           <Link passHref href="/">
-            <Logo className="mx-auto w-48 h-24" />
+            <LogoH className="mx-auto w-48 h-24" />
           </Link>
           <h1>
             <font className="">

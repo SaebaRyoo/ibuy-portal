@@ -18,38 +18,7 @@ export const categoryApiSlice = apiSlice.injectEndpoints({
             ]
           : ['Category'],
     }),
-
-    getSingleCategory: builder.query({
-      query: ({ id }) => ({
-        url: `/api/category/${id}`,
-        method: 'GET',
-      }),
-      providesTags: (result, error, arg) => [{ type: 'Category', id: arg.id }],
-    }),
-
-    updateCategory: builder.mutation({
-      query: ({ id, body }) => ({
-        url: `/api/category/${id}`,
-        method: 'PUT',
-        body,
-      }),
-      invalidatesTags: (result, error, arg) => [{ type: 'Category', id: arg.id }],
-    }),
-
-    createCategory: builder.mutation({
-      query: ({ body }) => ({
-        url: '/api/category',
-        method: 'POST',
-        body,
-      }),
-      invalidatesTags: ['Category'],
-    }),
   }),
 })
 
-export const {
-  useCreateCategoryMutation,
-  useGetCategoriesQuery,
-  useGetSingleCategoryQuery,
-  useUpdateCategoryMutation,
-} = categoryApiSlice
+export const { useGetCategoriesQuery } = categoryApiSlice

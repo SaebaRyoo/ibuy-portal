@@ -1,23 +1,6 @@
 import apiSlice from './api'
 export const reviewApiSlice = apiSlice.injectEndpoints({
   endpoints: builder => ({
-    getReviewsList: builder.query({
-      query: ({ page }) => ({
-        url: `/api/reviews/list?page=${page}`,
-        method: 'GET',
-      }),
-      providesTags: result =>
-        result
-          ? [
-              ...result.data.reviews.map(({ _id }) => ({
-                type: 'Review',
-                id: _id,
-              })),
-              'Review',
-            ]
-          : ['Review'],
-    }),
-
     getReviews: builder.query({
       query: ({ page }) => ({
         url: `/api/reviews?page=${page}`,
@@ -51,14 +34,6 @@ export const reviewApiSlice = apiSlice.injectEndpoints({
           : ['Review'],
     }),
 
-    getSingleReview: builder.query({
-      query: ({ id }) => ({
-        url: `/api/reviews/${id}`,
-        method: 'GET',
-      }),
-      providesTags: (result, err, arg) => [{ type: 'Review', id: arg.id }],
-    }),
-
     deleteReview: builder.mutation({
       query: ({ id }) => ({
         url: `/api/reviews/${id}`,
@@ -80,10 +55,8 @@ export const reviewApiSlice = apiSlice.injectEndpoints({
 
 export const {
   useGetReviewsQuery,
-  useGetSingleReviewQuery,
   useDeleteReviewMutation,
   useGetProductReviewsQuery,
   useEditReviewMutation,
   useCreateReviewMutation,
-  useGetReviewsListQuery,
 } = reviewApiSlice

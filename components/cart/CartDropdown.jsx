@@ -3,7 +3,7 @@ import { useRouter } from 'next/navigation'
 
 import { formatNumber } from 'utils'
 
-import { useUserInfo, useDisclosure, useAppSelector } from 'hooks'
+import { useUserInfo, useDisclosure, useCartList } from 'hooks'
 
 import { Menu, Transition } from '@headlessui/react'
 import { ArrowLink, CartItem, RedirectToLogin, Button, CartBadge, EmptyCart } from 'components'
@@ -14,8 +14,7 @@ export default function CartDropdown() {
   const { isVerify } = useUserInfo()
   const [isShowRedirectModal, redirectModalHandlers] = useDisclosure()
 
-  // Store
-  const { totalItems, cartItems, totalDiscount, totalPrice } = useAppSelector(state => state.cart)
+  const { cartData } = useCartList()
 
   // Handlers
   const handleRoute = () => {
@@ -49,25 +48,23 @@ export default function CartDropdown() {
           leaveTo="transform opacity-0 scale-95"
         >
           <Menu.Items className="dropdown__items w-[440px]">
-            {totalItems > 0 ? (
+            {cartData.totalItems > 0 ? (
               <>
                 {/* Header */}
                 <div className="flex items-center justify-between px-3 py-4">
-                  <span className="">{totalItems} 件商品</span>
+                  <span className="">{cartData.totalItems} 件商品</span>
                   <ArrowLink path="/checkout/cart">查看购物车</ArrowLink>
                 </div>
                 {/* Itmes */}
                 <div className="mx-1 overflow-y-auto divide-y divide-gray-50 h-80">
-                  {cartItems.map(item => (
-                    <CartItem item={item} key={item.itemID} />
-                  ))}
+                  {cartData?.data?.map(item => <CartItem item={item} key={item.skuId} />)}
                 </div>
                 {/* Footer */}
                 <div className="flex items-center justify-between p-3 border-t">
                   <div>
                     <span>应付金额</span>
                     <div className="flex-center">
-                      <span className="text-sm">{formatNumber(totalPrice - totalDiscount)}</span>
+                      <span className="text-sm">{formatNumber(cartData.totalPrice)}</span>
                       <span className="ml-1">¥</span>
                     </div>
                   </div>

@@ -6,5 +6,6 @@ export { default as useChangeRoute } from './useChangeRoute'
 export { default as useUrlQuery } from './useUrlQuery'
 export { default as useDebounce } from './useDebounce'
 export { default as useTitle } from './useTitle'
+export { default as useCartList } from './useCartList'
 
 export * from './useRedux'

@@ -20,10 +20,10 @@ export default function LoginPage() {
   const [login, { data, isSuccess, isError, isLoading, error }] = useLoginMutation()
 
   // Handlers
-  const submitHander = async ({ email, password }) => {
-    if (email && password) {
+  const submitHander = async ({ loginName, password }) => {
+    if (loginName && password) {
       await login({
-        body: { email, password },
+        body: { loginName, password },
       })
     }
   }
@@ -37,7 +37,7 @@ export default function LoginPage() {
           error={error?.data?.message}
           message={data?.message}
           onSuccess={() => {
-            dispatch(userLogin(data.data.token))
+            dispatch(userLogin(data.data.access_token))
             replace(redirectTo || '/')
           }}
         />

@@ -6,7 +6,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 
-import { clearCart, showAlert } from 'store'
+import { showAlert } from 'store'
 
 import { useCreateOrderMutation } from '@/store/services'
 
@@ -105,7 +105,6 @@ const ShippingPage = () => {
           error={error?.data?.message}
           message={data?.message}
           onSuccess={() => {
-            dispatch(clearCart())
             router.push('/profile')
           }}
         />

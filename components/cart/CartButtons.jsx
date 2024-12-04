@@ -16,24 +16,18 @@ const CartButtons = props => {
   return (
     <div className="flex items-center py-2 text-sm rounded-md shadow-3xl justify-evenly">
       <button className="active:scale-90" type="button">
-        <Icons.Plus onClick={() => dispatch(increase(item.itemID))} className="text-red-500 icon" />
+        <Icons.Plus className="text-red-500 icon" />
       </button>
 
-      <span className="text-sm min-w-[22px] text-center">{formatNumber(item.quantity)}</span>
+      <span className="text-sm min-w-[22px] text-center">{formatNumber(item.num)}</span>
 
-      {item.quantity === 1 ? (
+      {item.num === 1 ? (
         <button className="active:scale-90" type="button">
-          <Icons.Delete
-            onClick={() => dispatch(removeFromCart(item.itemID))}
-            className="text-red-500 icon"
-          />
+          <Icons.Delete className="text-red-500 icon" />
         </button>
       ) : (
         <button className="active:scale-90" type="button">
-          <Icons.Minus
-            onClick={() => dispatch(decrease(item.itemID))}
-            className="text-red-500 icon"
-          />
+          <Icons.Minus className="text-red-500 icon" />
         </button>
       )}
     </div>

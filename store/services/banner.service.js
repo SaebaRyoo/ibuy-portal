@@ -18,47 +18,7 @@ export const bannerApiSlice = apiSlice.injectEndpoints({
             ]
           : ['Banner'],
     }),
-
-    getSingleBanner: builder.query({
-      query: ({ id }) => ({
-        url: `/api/banner/${id}`,
-        method: 'GET',
-      }),
-      providesTags: (result, err, arg) => [{ type: 'Banner', id: arg.id }],
-    }),
-
-    updateBanner: builder.mutation({
-      query: ({ id, body }) => ({
-        url: `/api/banner/${id}`,
-        method: 'PUT',
-        body,
-      }),
-      invalidatesTags: (result, err, arg) => [{ type: 'Banner', id: arg.id }],
-    }),
-
-    createBanner: builder.mutation({
-      query: ({ body }) => ({
-        url: '/api/banner',
-        method: 'POST',
-        body,
-      }),
-      invalidatesTags: ['Banner'],
-    }),
-
-    deleteBanner: builder.mutation({
-      query: ({ id }) => ({
-        url: `/api/banner/${id}`,
-        method: 'DELETE',
-      }),
-      invalidatesTags: ['Banner'],
-    }),
   }),
 })
 
-export const {
-  useGetSingleBannerQuery,
-  useUpdateBannerMutation,
-  useCreateBannerMutation,
-  useDeleteBannerMutation,
-  useGetBannersQuery,
-} = bannerApiSlice
+export const { useGetBannersQuery } = bannerApiSlice

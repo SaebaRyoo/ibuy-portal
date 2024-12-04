@@ -13,10 +13,10 @@ const CartItem = props => {
     <article className="flex px-4 py-5 space-x-4 ">
       {/* image & cartButtons */}
       <div className="space-y-4">
-        <ResponsiveImage dimensions="w-28 h-28" src={item.img.url} alt={item.name} />
+        <ResponsiveImage dimensions="w-28 h-28" src={item.image} alt={item.name} />
 
         <div className="mx-auto w-fit ">
-          <SpecialSell discount={item.discount} inStock={item.inStock} />
+          <SpecialSell discount={1} inStock={item.num} />
         </div>
 
         <CartButtons item={item} />
@@ -25,26 +25,11 @@ const CartItem = props => {
       {/* name */}
       <div>
         <h5 className="mb-3 text-sm">
-          <Link href={`/products/item`}>{item.name}</Link>
+          <Link href={`/products/item?spuId=${item.spuId}&skuId=${item.skuId}`}>{item.name}</Link>
         </h5>
 
         {/* info */}
         <div className="space-y-3">
-          {item.color && (
-            <div className="flex items-center gap-x-2">
-              <span
-                className="inline-block w-5 h-5 shadow rounded-xl"
-                style={{ background: item.color.hashCode }}
-              />
-              <span>{item.color.name}</span>
-            </div>
-          )}
-          {item.size && (
-            <div className="flex items-center gap-x-2">
-              <Icons.Rule className="icon" />
-              <span className="">{item.size.size}</span>
-            </div>
-          )}
           <div className="flex items-center gap-x-2">
             <Icons.ShieldCheck className="icon" />
             <span className="font-light">正品保证和发货保证</span>

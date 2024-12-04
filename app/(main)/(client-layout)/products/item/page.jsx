@@ -1,27 +1,18 @@
 'use client'
-import {
-  Services,
-  SmilarProductsSlider,
-  ImageGallery,
-  Description,
-  Specification,
-  Reviews,
-  OutOfStock,
-  AddToCart,
-  Info,
-  Breadcrumb,
-  InitialStore,
-  VariantSelector,
-} from 'components'
+import { ImageGallery, OutOfStock, VariantSelector } from 'components'
 import { useUrlQuery } from '@/hooks'
-import { useGetSingleSkuQuery, useGetSkusBySpuIdQuery } from '@/store/services'
+import {
+  useAddToCartMutation,
+  useGetSingleSkuQuery,
+  useGetSkusBySpuIdQuery,
+} from '@/store/services'
 import { transformSpecObject } from '@/utils'
 
 export default function SingleProduct() {
   const query = useUrlQuery()
   const spuId = query?.spuId?.toString() ?? ''
   const skuId = query?.skuId?.toString() ?? ''
-  // Fetch Categories Data
+  // Fetch Product Data
   const { product, isLoading } = useGetSingleSkuQuery(
     { id: skuId },
     {
@@ -67,6 +58,17 @@ export default function SingleProduct() {
     }
   )
 
+  const [addToCart, { data, isSuccess, isError, isLoading: addToCartLoading, error }] =
+    useAddToCartMutation()
+
+  const onAddToCart = async data => {
+    // console.log('onAddToCart--->', data)
+    await addToCart({
+      id: data.id,
+      num: data.num,
+    })
+  }
+
   return (
     <main className="xl:mt-28 container mx-auto py-4 space-y-4">
       <div className="h-fit lg:h-fit lg:grid lg:grid-cols-9 lg:px-4 lg:gap-x-2 lg:gap-y-4 lg:mb-10 xl:gap-x-7">
@@ -85,7 +87,7 @@ export default function SingleProduct() {
           <div className="section-divide-y" />
 
           {/* 商品属性 */}
-          <VariantSelector data={{ skus }} />
+          <VariantSelector data={{ skus }} onAddToCart={onAddToCart} />
 
           {product.num === 0 && <OutOfStock />}
 
@@ -93,13 +95,6 @@ export default function SingleProduct() {
         </div>
         {/* <div className="lg:col-span-2">{product.num > 0 && <AddToCart product={product} />}</div> */}
       </div>
-
-      {/* <Services /> */}
-
-      {/* {product.description.length > 0 && <Description description={product.description} />} */}
-
-      {/* <SmilarProductsSlider smilarProducts={smilarProducts} /> */}
-
       <div className="section-divide-y" />
 
       <div className="flex">

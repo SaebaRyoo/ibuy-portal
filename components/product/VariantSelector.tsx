@@ -20,16 +20,23 @@ interface Props {
   data: SkuItem
   /** 点击确定按钮 */
   onPressConfirm?: (p: PostBody) => void
+  /** 加入购物车 */
+  onAddToCart?: (p: PostBody) => void
   /** 所选规格变化触发 */
   optionsChange?: (s: Spec) => void
   /** modal关闭时触发 */
   onClose?: (s: Spec) => void
 }
 
+export enum BuyType {
+  cart = 'cart',
+  buy = 'buy',
+}
+
 let TotalSkuStock = 0 // 总库存
 
 const SkuSelect: FC<Props> = props => {
-  const { data, optionsChange, onPressConfirm } = props
+  const { data, optionsChange, onPressConfirm, onAddToCart } = props
   const [count, setCount] = useState<number>(1)
   const [spec, setSpec] = useState<Spec>({})
   const [canFlag, setCanFlag] = useState(false)
@@ -291,7 +298,7 @@ const SkuSelect: FC<Props> = props => {
     }
     setCount(_count)
   }
-  const onPressConfirmButton = () => {
+  const onPressConfirmButton = (buyType: BuyType) => {
     if (!judgeCanAdd(data?.skus)) {
       return
     }
@@ -301,7 +308,12 @@ const SkuSelect: FC<Props> = props => {
       itemId: data?.itemId,
       num: count,
     }
-    onPressConfirm?.(postData)
+    if (buyType === BuyType.cart) {
+      onAddToCart?.(postData)
+      // addCart({
+    } else {
+      onPressConfirm?.(postData)
+    }
   }
   useEffect(openCurDrawer, [data])
 
@@ -363,15 +375,24 @@ const SkuSelect: FC<Props> = props => {
           </div>
         </div>
 
-        <div className="mt-8">
+        <div className="mt-8 flex gap-6">
           <button
             className={`w-full py-3 rounded-full text-white ${
               canFlag ? 'bg-orange-500 hover:bg-orange-600' : 'bg-gray-400 cursor-not-allowed'
             }`}
-            onClick={onPressConfirmButton}
+            onClick={() => onPressConfirmButton(BuyType.cart)}
             disabled={!canFlag}
           >
-            确认
+            加入购物车
+          </button>
+          <button
+            className={`w-full py-3 rounded-full text-white ${
+              canFlag ? 'bg-orange-500 hover:bg-orange-600' : 'bg-gray-400 cursor-not-allowed'
+            }`}
+            onClick={() => onPressConfirmButton(BuyType.buy)}
+            disabled={!canFlag}
+          >
+            立即购买
           </button>
         </div>
       </div>
