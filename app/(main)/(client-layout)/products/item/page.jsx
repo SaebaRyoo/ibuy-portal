@@ -93,7 +93,6 @@ export default function SingleProduct() {
 
           {/* <Info infos={product?.info} /> */}
         </div>
-        {/* <div className="lg:col-span-2">{product.num > 0 && <AddToCart product={product} />}</div> */}
       </div>
       <div className="section-divide-y" />
 
@@ -108,10 +107,6 @@ export default function SingleProduct() {
             prdouctID={product._id}
             productTitle={product.title}
           /> */}
-        </div>
-
-        <div className="hidden w-full px-3 lg:block lg:max-w-xs xl:max-w-sm">
-          {/* {product.inStock > 0 && <AddToCart product={product} second />} */}
         </div>
       </div>
     </main>

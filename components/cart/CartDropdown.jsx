@@ -48,11 +48,11 @@ export default function CartDropdown() {
           leaveTo="transform opacity-0 scale-95"
         >
           <Menu.Items className="dropdown__items w-[440px]">
-            {cartData.totalItems > 0 ? (
+            {cartData?.totalItems > 0 ? (
               <>
                 {/* Header */}
                 <div className="flex items-center justify-between px-3 py-4">
-                  <span className="">{cartData.totalItems} 件商品</span>
+                  <span className="">{cartData?.totalItems} 件商品</span>
                   <ArrowLink path="/checkout/cart">查看购物车</ArrowLink>
                 </div>
                 {/* Itmes */}
@@ -64,7 +64,7 @@ export default function CartDropdown() {
                   <div>
                     <span>应付金额</span>
                     <div className="flex-center">
-                      <span className="text-sm">{formatNumber(cartData.totalPrice)}</span>
+                      <span className="text-sm">{formatNumber(cartData?.totalPrice)}</span>
                       <span className="ml-1">¥</span>
                     </div>
                   </div>

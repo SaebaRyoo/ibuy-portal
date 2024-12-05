@@ -7,8 +7,7 @@ import { Menu, Transition } from '@headlessui/react'
 
 import { formatNumber } from 'utils'
 
-import { useUserInfo, useDisclosure } from 'hooks'
-import { useGetCartListQuery } from '@/store/services'
+import { useUserInfo, useDisclosure, useCartList } from 'hooks'
 
 const CartPage = () => {
   const { push } = useRouter()
@@ -18,10 +17,7 @@ const CartPage = () => {
   // Get User Data
   const { userInfo } = useUserInfo()
 
-  // Store
-  // const { cartItems, totalItems, totalPrice, totalDiscount } = useAppSelector(state => state.cart)
-  const data = useGetCartListQuery()
-  console.log('data', data)
+  const { cartData } = useCartList()
   // Handlers
   const handleRoute = () => {
     if (!userInfo) return redirectModalHandlers.open()
@@ -58,7 +54,7 @@ const CartPage = () => {
   )
 
   // Render
-  if (cartItems.length === 0)
+  if (!cartData?.data || cartData?.data?.length === 0)
     return (
       <>
         <section className="py-2 mx-auto mb-20 space-y-3 xl:mt-36 lg:mb-0 container lg:px-5 lg:mt-6 lg:space-y-0 lg:py-4 lg:border lg:border-gray-200 lg:rounded-md">
@@ -86,16 +82,14 @@ const CartPage = () => {
           <section className="flex justify-between px-4">
             <div>
               <h3 className="mb-2 text-sm font-bold">您的购物车</h3>
-              <span className="">{formatNumber(totalItems)} 件商品</span>
+              <span className="">{formatNumber(cartData?.totalItems)} 件商品</span>
             </div>
             <DeleteAllDropDown />
           </section>
 
           {/* carts */}
           <section className="divide-y">
-            {cartItems.map(item => (
-              <CartItem item={item} key={item.itemID} />
-            ))}
+            {cartData?.data?.map(item => <CartItem item={item} key={item.itemID} />)}
           </section>
         </div>
 
@@ -113,7 +107,7 @@ const CartPage = () => {
           <div>
             <span className="font-light">总计购物车</span>
             <div className="flex items-center">
-              <span className="text-sm">{formatNumber(totalPrice - totalDiscount)}</span>
+              <span className="text-sm">{formatNumber(cartData?.totalPrice)}</span>
               <span className="ml-1">¥</span>
             </div>
           </div>

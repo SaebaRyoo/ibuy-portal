@@ -1,4 +1,3 @@
-import { decrease, increase, removeFromCart } from 'store'
 import { useDispatch } from 'react-redux'
 
 import { Icons } from 'components'
