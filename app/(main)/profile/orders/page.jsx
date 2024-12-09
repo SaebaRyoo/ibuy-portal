@@ -19,12 +19,14 @@ const Orders = () => {
   // Assets
   const query = useUrlQuery()
   const changeRoute = useChangeRoute()
-
+  console.log('订单管理')
   // Get Orders Data
   const { data, isSuccess, isFetching, error, isError, refetch } = useGetOrdersQuery({
     pageSize: 5,
-    page: query.page ? +query.page : 1,
+    current: query.page ? +query.page : 1,
   })
+
+  console.log('data--->', data)
 
   // Render
   return (

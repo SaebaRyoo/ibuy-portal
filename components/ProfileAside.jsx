@@ -63,9 +63,9 @@ function ProfileAside() {
         </Link>
       </div>
 
-      <div className="lg:hidden">
+      {/* <div className="lg:hidden">
         <Orders />
-      </div>
+      </div> */}
 
       <div className="mt-7">
         <div className="hidden lg:block">
