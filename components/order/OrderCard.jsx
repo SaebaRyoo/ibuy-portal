@@ -6,7 +6,17 @@ import { HandleResponse, Icons, ResponsiveImage } from 'components'
 
 import { formatNumber } from 'utils'
 
-import { useUpdateOrderMutation } from '@/store/services'
+import { useUpdateOrderMutation, useGetOrderItemsQuery } from '@/store/services'
+
+const OrderStatusMap = {
+  0: '待付款',
+  1: '待发货',
+  2: '待收货',
+  3: '待评价',
+  4: '退款/售后',
+  5: '交易完成',
+  6: '交易关闭',
+}
 
 const OrderCard = props => {
   // Props
@@ -15,16 +25,27 @@ const OrderCard = props => {
   // Edit Order Query
   const [editOrder, { data, isSuccess, isError, error }] = useUpdateOrderMutation()
 
+  // Get Order Items Data
+  const {
+    data: orderItemsData,
+    isSuccess: isOrderItemsSuccess,
+    isError: isOrderItemsError,
+  } = useGetOrderItemsQuery({
+    id: order.id,
+  })
+
+  const orderItems = orderItemsData?.data || []
+
   // Handlers
   const handleChangeToDelivered = () => {
     editOrder({
-      id: order._id,
+      id: order.id,
       body: { paid: true, delivered: true },
     })
   }
   const handleChangeToInProccess = () => {
     editOrder({
-      id: order._id,
+      id: order.id,
       body: { paid: false, delivered: false },
     })
   }
@@ -44,9 +65,8 @@ const OrderCard = props => {
             ) : (
               <Icons.Clock2 className="p-0.5 w-6 h-6 bg-amber-500 text-white rounded-full" />
             )}
-            <span className="text-sm text-black">{order.delivered ? '完成' : '未确认'}</span>
+            <span className="text-sm text-black">{OrderStatusMap[order.orderStatus]}</span>
           </div>
-          {/* <Icons.ArrowLeft className='icon w-7 h-7' /> */}
           {order.delivered && (
             <span className="">{moment(order.updatedAt).format('YYYY-MM-DD HH:mm:ss')}</span>
           )}
@@ -81,19 +101,38 @@ const OrderCard = props => {
         <div className="flex flex-wrap justify-between lg:px-3">
           <div>
             <span>订单号:</span>
-            <span className="ml-2 text-sm text-black">{order._id}</span>
+            <span className="ml-2 text-sm text-black">{order.id}</span>
           </div>
           <div className="flex items-center gap-x-1">
-            <span className="text-black">
-              {formatNumber(order.totalPrice - order.totalDiscount)}
+            <span className="text-xl font-bold text-red-600">
+              总价：￥{formatNumber(order.payMoney)}
             </span>
-            <span className="">¥</span>
           </div>
         </div>
-        <div className="flex flex-wrap py-5 gap-x-5 gap-y-3 lg:border-t lg:border-gray-200 lg:px-3">
-          {order.cart.map((cartItem, index) => (
-            <Link href={`/products/item`} key={index}>
-              <ResponsiveImage dimensions="w-16 h-16" src={cartItem.img.url} alt={cartItem.name} />
+        <div className="flex flex-col flex-wrap py-5 gap-x-5 gap-y-3 lg:border-t lg:border-gray-200 lg:px-3">
+          {orderItems.map((orderItem, index) => (
+            <Link
+              href={`/products/item?spuId=${orderItem.spuId}&skuId=${orderItem.skuId}`}
+              key={index}
+            >
+              <div key={orderItem.id} className="flex border border-gray-300 rounded p-4">
+                <ResponsiveImage
+                  dimensions="w-16 h-16"
+                  src={orderItem.image}
+                  alt={orderItem.name}
+                />
+                <div className="ml-4 flex-grow">
+                  <h2 className="text-sm font-semibold mb-1">{orderItem.name}</h2>
+                  <div className="flex justify-between items-center mb-2">
+                    <span className="text-sm">单价：￥{orderItem.price}</span>
+                    <span className="text-gray-500">×{orderItem.num}</span>
+                  </div>
+                  <p className="text-sm font-bold text-red-600">
+                    实付款：￥{formatNumber(order.payMoney)}
+                  </p>
+                  <p className="text-sm text-gray-500 mb-1">{orderItem.description}</p>
+                </div>
+              </div>
             </Link>
           ))}
         </div>

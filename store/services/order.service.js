@@ -2,9 +2,18 @@ import apiSlice from './api'
 
 export const orderApiSlice = apiSlice.injectEndpoints({
   endpoints: builder => ({
+    // 获取订单列表
     getOrders: builder.query({
       query: ({ current = 1, pageSize = 10, orderStatus }) => ({
         url: `/v1/order/list/${current}/${pageSize}${orderStatus ? `?orderStatus=${orderStatus}` : ''}`,
+        method: 'GET',
+      }),
+    }),
+
+    // 获取订单详情列表
+    getOrderItems: builder.query({
+      query: ({ id }) => ({
+        url: `/v1/order-items/item/${id}`,
         method: 'GET',
       }),
     }),
@@ -39,6 +48,7 @@ export const orderApiSlice = apiSlice.injectEndpoints({
 
 export const {
   useGetOrdersQuery,
+  useGetOrderItemsQuery,
   useGetSingleOrderQuery,
   useUpdateOrderMutation,
   useCreateOrderMutation,
