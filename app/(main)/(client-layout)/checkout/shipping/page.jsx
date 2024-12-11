@@ -8,7 +8,7 @@ import { useRouter } from 'next/navigation'
 
 import { showAlert } from 'store'
 
-import { useCreateOrderMutation } from '@/store/services'
+import { useCreateOrderFromCartListMutation, useGetAlipayUrlMutation } from '@/store/services'
 
 import {
   Button,
@@ -19,7 +19,7 @@ import {
   WithAddressModal,
 } from 'components'
 
-import { formatNumber } from 'utils'
+import { AliPay, formatNumber, PayTypes } from 'utils'
 
 import { useAppDispatch, useAppSelector, useUserInfo } from 'hooks'
 
@@ -32,47 +32,61 @@ const ShippingPage = () => {
   const { userInfo } = useUserInfo()
 
   // States
-  const [paymentMethod, setPaymentMethod] = useState('在线支付')
+  const [payType, setPaymentMethod] = useState(AliPay)
 
   // Store
   const { cartItems, totalItems, totalDiscount, totalPrice } = useAppSelector(state => state.cart)
 
-  // Create Order Query
-  const [postData, { data, isSuccess, isError, isLoading, error }] = useCreateOrderMutation()
+  // Mutations
+  // const [postData, { data, isSuccess, isError, isLoading, error }] = useCreateOrderMutation()
+  const [createOrderFromCartList, { data, isSuccess, isError, isLoading, error }] =
+    useCreateOrderFromCartListMutation()
+  // 获取支付宝支付页面链接
+  const [getAlipayUrl, { data: alipayUrl, isSuccess: isAlipayUrlSuccess }] =
+    useGetAlipayUrlMutation()
 
   // Handlers
-  const handleCreateOrder = () => {
+  const handleCreateOrder = async () => {
+    // 1. 验证用户是否登录
     if (
       !userInfo?.address?.city &&
       !userInfo?.address?.province &&
       !userInfo?.address?.area &&
       !userInfo?.address?.street &&
       !userInfo?.address?.postalCode
-    )
+    ) {
       return dispatch(
         showAlert({
           status: 'error',
           title: '请填写您的地址',
         })
       )
-    else
-      postData({
-        body: {
-          address: {
-            city: userInfo.address.city.name,
-            area: userInfo.address.area.name,
-            postalCode: userInfo.address.postalCode,
-            provinces: userInfo.address.province.name,
-            street: userInfo.address.street,
-          },
-          mobile: userInfo.mobile,
-          cart: cartItems,
-          totalItems,
-          totalPrice,
-          totalDiscount,
-          paymentMethod,
-        },
-      })
+    }
+
+    // 2. 调用创建订单接口
+    await createOrderFromCartList({
+      body: {
+        receiverAddress: JSON.stringify({
+          city: userInfo.address.city.name,
+          area: userInfo.address.area.name,
+          postalCode: userInfo.address.postalCode,
+          provinces: userInfo.address.province.name,
+          street: userInfo.address.street,
+        }),
+        receiverMobile: userInfo.mobile,
+        receiverMontact: userInfo.loginName,
+        payType,
+      },
+    })
+    // 3. 根据订单id 调用支付接口
+    const orderData = data.data
+
+    await getAlipayUrl({
+      body: {
+        orderId: orderData?.orderId,
+        queueName: 'ORDER_PAY', // 正常支付
+      },
+    })
   }
 
   // Local Components
@@ -159,24 +173,7 @@ const ShippingPage = () => {
               <div className="flex flex-wrap justify-start gap-x-8 gap-y-5">
                 {cartItems.map(item => (
                   <article key={item.itemID}>
-                    <ResponsiveImage dimensions="w-28 h-28" src={item.img.url} alt={item.name} />
-
-                    {item.color && (
-                      <div className="flex items-center gap-x-2 ml-3 mt-1.5">
-                        <span
-                          className="inline-block w-4 h-4 shadow rounded-xl"
-                          style={{ background: item.color.hashCode }}
-                        />
-                        <span>{item.color.name}</span>
-                      </div>
-                    )}
-
-                    {item.size && (
-                      <div className="flex items-center gap-x-2">
-                        <Icons.Rule className="icon" />
-                        <span>{item.size.size}</span>
-                      </div>
-                    )}
+                    <ResponsiveImage dimensions="w-28 h-28" src={item.image} alt={item.name} />
                   </article>
                 ))}
               </div>
@@ -193,32 +190,21 @@ const ShippingPage = () => {
           <section className="lg:border lg:border-gray-200 lg:rounded-md lg:h-fit">
             <CartInfo />
             <div className="px-3 py-2 space-y-3">
-              <div className="flex items-center gap-x-2 ">
-                <input
-                  type="radio"
-                  name="cash"
-                  id="cash"
-                  value="在线支付"
-                  checked={paymentMethod === '在线支付'}
-                  onChange={e => setPaymentMethod(e.target.value)}
-                />
-                <label className="text-sm" htmlFor="cash">
-                  在线支付
-                </label>
-              </div>
-              <div className="flex items-center gap-x-2 ">
-                <input
-                  type="radio"
-                  name="zarinPal"
-                  id="zarinPal"
-                  value="银行卡"
-                  checked={paymentMethod === '银行卡'}
-                  onChange={e => setPaymentMethod(e.target.value)}
-                />
-                <label className="text-sm" htmlFor="zarinPal">
-                  银行卡
-                </label>
-              </div>
+              {PayTypes.map(type => (
+                <div className="flex items-center gap-x-2 ">
+                  <input
+                    type="radio"
+                    name="zarinPal"
+                    id="zarinPal"
+                    value={type.value}
+                    checked={payType === type.value}
+                    onChange={e => setPaymentMethod(type.value)}
+                  />
+                  <label className="text-sm" htmlFor="zarinPal">
+                    {type.name}
+                  </label>
+                </div>
+              ))}
               <Button
                 onClick={handleCreateOrder}
                 isLoading={isLoading}

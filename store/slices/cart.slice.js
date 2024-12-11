@@ -1,8 +1,4 @@
-import { PayloadAction, createSlice, nanoid } from '@reduxjs/toolkit'
-
-import { existItem, getTotal } from 'utils'
-
-const setCartItems = cartItems => localStorage.setItem('cartItems', JSON.stringify(cartItems))
+import { createSlice } from '@reduxjs/toolkit'
 
 const initialState = {
   cartItems: [],

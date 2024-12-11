@@ -7,6 +7,7 @@ import { useUserInfo, useDisclosure, useCartList } from 'hooks'
 
 import { Menu, Transition } from '@headlessui/react'
 import { ArrowLink, CartItem, RedirectToLogin, Button, CartBadge, EmptyCart } from 'components'
+import { useCreateOrderFromCartListMutation } from '@/store/services'
 
 export default function CartDropdown() {
   // Assets
@@ -19,7 +20,6 @@ export default function CartDropdown() {
   // Handlers
   const handleRoute = () => {
     if (!isVerify) return redirectModalHandlers.open()
-
     push('/checkout/shipping')
   }
 

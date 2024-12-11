@@ -18,21 +18,14 @@ export const orderApiSlice = apiSlice.injectEndpoints({
       }),
     }),
 
-    getSingleOrder: builder.query({
-      query: ({ id }) => ({
-        url: `/api/order/${id}`,
-        method: 'GET',
-      }),
-      providesTags: (result, error, arg) => [{ type: 'Order', id: arg.id }],
-    }),
-
-    updateOrder: builder.mutation({
-      query: ({ id, body }) => ({
-        url: `/api/order/${id}`,
-        method: 'PATCH',
+    // 从购物车列表创建订单
+    createOrderFromCartList: builder.mutation({
+      query: ({ body }) => ({
+        url: '/v1/order/cart/add',
+        method: 'POST',
         body,
       }),
-      invalidatesTags: (result, error, arg) => [{ type: 'Order', id: arg.id }],
+      invalidatesTags: ['Order'],
     }),
 
     createOrder: builder.mutation({
@@ -49,7 +42,6 @@ export const orderApiSlice = apiSlice.injectEndpoints({
 export const {
   useGetOrdersQuery,
   useGetOrderItemsQuery,
-  useGetSingleOrderQuery,
-  useUpdateOrderMutation,
+  useCreateOrderFromCartListMutation,
   useCreateOrderMutation,
 } = orderApiSlice

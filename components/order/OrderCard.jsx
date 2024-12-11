@@ -6,7 +6,7 @@ import { HandleResponse, Icons, ResponsiveImage } from 'components'
 
 import { formatNumber } from 'utils'
 
-import { useUpdateOrderMutation, useGetOrderItemsQuery } from '@/store/services'
+import { useGetOrderItemsQuery } from '@/store/services'
 
 const OrderStatusMap = {
   0: '待付款',
@@ -20,10 +20,7 @@ const OrderStatusMap = {
 
 const OrderCard = props => {
   // Props
-  const { order, singleOrder } = props
-
-  // Edit Order Query
-  const [editOrder, { data, isSuccess, isError, error }] = useUpdateOrderMutation()
+  const { order } = props
 
   // Get Order Items Data
   const {
@@ -35,20 +32,6 @@ const OrderCard = props => {
   })
 
   const orderItems = orderItemsData?.data || []
-
-  // Handlers
-  const handleChangeToDelivered = () => {
-    editOrder({
-      id: order.id,
-      body: { paid: true, delivered: true },
-    })
-  }
-  const handleChangeToInProccess = () => {
-    editOrder({
-      id: order.id,
-      body: { paid: false, delivered: false },
-    })
-  }
 
   // Render
   return (
@@ -69,33 +52,6 @@ const OrderCard = props => {
           </div>
           {order.delivered && (
             <span className="">{moment(order.updatedAt).format('YYYY-MM-DD HH:mm:ss')}</span>
-          )}
-          {singleOrder && (
-            <div className="relative h-fit px-1.5 group self-end">
-              <Icons.More className="cursor-pointer icon" />
-              <div className="absolute left-0 z-10 hidden px-4 py-3 bg-white rounded shadow-3xl top-5 group-hover:flex">
-                <div className="space-y-4">
-                  <button
-                    type="button"
-                    className="flex items-center w-48 gap-x-3 lg:w-56"
-                    onClick={handleChangeToDelivered}
-                    disabled={order.delivered}
-                  >
-                    <Icons.Check className="text-white rounded-full p-0.5 icon bg-green-500 " />
-                    <span className="block">将状态更改为已交付</span>
-                  </button>
-                  <button
-                    type="button"
-                    className="flex items-center w-48 gap-x-3 lg:w-56"
-                    onClick={handleChangeToInProccess}
-                    disabled={!order.delivered}
-                  >
-                    <Icons.Clock2 className="text-white rounded-full p-0.5 icon bg-amber-500 " />
-                    <span className="block">将状态更改为处理中</span>
-                  </button>
-                </div>
-              </div>
-            </div>
           )}
         </div>
         <div className="flex flex-wrap justify-between lg:px-3">
