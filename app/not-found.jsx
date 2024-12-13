@@ -10,7 +10,7 @@ export default function NotFoundPage() {
   return (
     <StoreProvider>
       <ClientLayout>
-        <main className="flex flex-col items-center justify-center py-8 gap-y-6 xl:mt-28">
+        <main className="flex flex-col items-center justify-center py-8 gap-y-6 xl:mt-36">
           <p className="text-base font-semibold text-black">404 Not Found!</p>
           <ArrowLink path="/">返回首页</ArrowLink>
           <ResponsiveImage

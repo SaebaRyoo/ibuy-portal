@@ -1,6 +1,6 @@
 'use client'
 import { ImageGallery, OutOfStock, VariantSelector } from 'components'
-import { useUrlQuery } from '@/hooks'
+import { useCartList, useUrlQuery } from '@/hooks'
 import {
   useAddToCartMutation,
   useGetSingleSkuQuery,
@@ -60,6 +60,7 @@ export default function SingleProduct() {
 
   const [addToCart, { data, isSuccess, isError, isLoading: addToCartLoading, error }] =
     useAddToCartMutation()
+  const { refetch: refetchCartList } = useCartList()
 
   const onAddToCart = async data => {
     // console.log('onAddToCart--->', data)
@@ -67,10 +68,11 @@ export default function SingleProduct() {
       id: data.id,
       num: data.num,
     })
+    refetchCartList()
   }
 
   return (
-    <main className="xl:mt-28 container mx-auto py-4 space-y-4">
+    <main className="container mx-auto py-4 space-y-4">
       <div className="h-fit lg:h-fit lg:grid lg:grid-cols-9 lg:px-4 lg:gap-x-2 lg:gap-y-4 lg:mb-10 xl:gap-x-7">
         <ImageGallery
           images={product?.images?.split(',')}

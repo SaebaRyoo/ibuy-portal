@@ -9,7 +9,15 @@ export const paySlice = apiSlice.injectEndpoints({
         method: 'GET',
       }),
     }),
+
+    // 支付宝订单查询
+    getAlipayStatus: builder.mutation({
+      query: ({ orderId }) => ({
+        url: `/v1/alipay/trade/query?orderId=${orderId}`,
+        method: 'GET',
+      }),
+    }),
   }),
 })
 
-export const { useGetAlipayUrlMutation } = paySlice
+export const { useGetAlipayUrlMutation, useGetAlipayStatusMutation } = paySlice

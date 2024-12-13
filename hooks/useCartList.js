@@ -7,7 +7,7 @@ export default function useCartList() {
   const dispatch = useAppDispatch()
   const isVerify = useVerify()
 
-  const { data, isLoading, error, isError, isSuccess } = useGetCartListQuery(undefined, {
+  const { data, isLoading, error, isError, isSuccess, refetch } = useGetCartListQuery(undefined, {
     skip: !isVerify,
   })
 
@@ -15,5 +15,5 @@ export default function useCartList() {
     dispatch(setCartData(data?.data))
   }
 
-  return { cartData: data?.data, isVerify, isLoading, error, isError }
+  return { cartData: data?.data, isVerify, isLoading, error, isError, refetch }
 }

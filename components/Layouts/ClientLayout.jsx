@@ -4,7 +4,7 @@ export default function ClientLayout({ children }) {
   return (
     <>
       <Header />
-      {children}
+      <main className="mt-36 container">{children}</main>
       <Footer />
     </>
   )

@@ -25,10 +25,10 @@ export default async function Home({ searchParams }) {
   const bannerTwoType = []
 
   return (
-    <main className="min-h-screen xl:mt-28 container space-y-24">
-      <div className="py-4 mx-auto space-y-24 xl:mt-28">
+    <main className="min-h-screen container space-y-24">
+      <div className="py-4 mx-auto space-y-24 xl:mt-36">
         <MainSlider data={sliders} />
-        <DiscountSlider currentCategory={currentCategory} />
+        {/* <DiscountSlider currentCategory={currentCategory} /> */}
         <Categories
           childCategories={{ categories: childCategories, title: '所有分类' }}
           color={currentCategory?.colors?.start}

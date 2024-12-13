@@ -21,12 +21,13 @@ import {
 
 import { AliPay, formatNumber, PayTypes } from 'utils'
 
-import { useAppDispatch, useAppSelector, useUserInfo } from 'hooks'
+import { useAppDispatch, useAppSelector, useUserInfo, useCartList } from 'hooks'
 
 const ShippingPage = () => {
   // Assets
   const router = useRouter()
   const dispatch = useAppDispatch()
+  const { refetch: refetchCartList } = useCartList()
 
   // Get User Data
   const { userInfo } = useUserInfo()
@@ -42,51 +43,70 @@ const ShippingPage = () => {
   const [createOrderFromCartList, { data, isSuccess, isError, isLoading, error }] =
     useCreateOrderFromCartListMutation()
   // 获取支付宝支付页面链接
-  const [getAlipayUrl, { data: alipayUrl, isSuccess: isAlipayUrlSuccess }] =
-    useGetAlipayUrlMutation()
+  const [getAlipayUrl] = useGetAlipayUrlMutation()
 
   // Handlers
   const handleCreateOrder = async () => {
     // 1. 验证用户是否登录
-    if (
-      !userInfo?.address?.city &&
-      !userInfo?.address?.province &&
-      !userInfo?.address?.area &&
-      !userInfo?.address?.street &&
-      !userInfo?.address?.postalCode
-    ) {
-      return dispatch(
-        showAlert({
-          status: 'error',
-          title: '请填写您的地址',
-        })
-      )
-    }
+    // if (
+    //   !userInfo?.address?.city &&
+    //   !userInfo?.address?.province &&
+    //   !userInfo?.address?.area &&
+    //   !userInfo?.address?.street &&
+    //   !userInfo?.address?.postalCode
+    // ) {
+    //   return dispatch(
+    //     showAlert({
+    //       status: 'error',
+    //       title: '请填写您的地址',
+    //     })
+    //   )
+    // }
 
     // 2. 调用创建订单接口
-    await createOrderFromCartList({
+    const orderResult = await createOrderFromCartList({
       body: {
-        receiverAddress: JSON.stringify({
-          city: userInfo.address.city.name,
-          area: userInfo.address.area.name,
-          postalCode: userInfo.address.postalCode,
-          provinces: userInfo.address.province.name,
-          street: userInfo.address.street,
-        }),
-        receiverMobile: userInfo.mobile,
-        receiverMontact: userInfo.loginName,
+        // receiverAddress: JSON.stringify({
+        //   city: userInfo.address.city.name,
+        //   area: userInfo.address.area.name,
+        //   postalCode: userInfo.address.postalCode,
+        //   provinces: userInfo.address.province.name,
+        //   street: userInfo.address.street,
+        // }),
+        receiverAddress: '镇江市京口区',
+        receiverMobile: '15189189999',
+        receiverContact: '朱青源',
         payType,
       },
     })
+    // 重新刷新一下购物车列表
+    refetchCartList()
     // 3. 根据订单id 调用支付接口
-    const orderData = data.data
+    const orderId = orderResult?.data?.data?.id
+    console.log('orderId: ', orderId)
 
-    await getAlipayUrl({
-      body: {
-        orderId: orderData?.orderId,
-        queueName: 'ORDER_PAY', // 正常支付
-      },
+    const alipayData = await getAlipayUrl({
+      orderId: orderId,
+      queueName: 'ORDER_PAY', // 正常支付
     })
+
+    // 4. 根据alipayData.data.url 跳转到一个新的支付页面
+    const alipayUrl = alipayData?.data?.data?.alipayUrl
+    // if (payType === AliPay) {
+    window.open(alipayUrl, '_blank')
+    // }
+
+    if (alipayUrl) {
+      // 5. 跳转到支付状态查询页面
+      router.push(`/checkout/payment?orderId=${orderId}`)
+    }
+
+    // const alipayData = await getAlipayUrl({
+    //   orderId: 'NO.776251236826615808',
+    //   queueName: 'ORDER_PAY', // 正常支付
+    // })
+    // console.log('alipayData--->', alipayData?.data?.data?.alipayUrl)
+    // window.open(alipayData?.data?.data?.alipayUrl, '_blank')
   }
 
   // Local Components
@@ -124,7 +144,7 @@ const ShippingPage = () => {
         />
       )}
 
-      <main className="py-2 mx-auto space-y-3 xl:mt-28 container">
+      <main className="py-2 mx-auto space-y-3 container">
         {/* header */}
         <header className="lg:border lg:border-gray-200 lg:rounded-lg py-2">
           <div className="flex items-center justify-evenly">
