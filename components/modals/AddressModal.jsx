@@ -9,8 +9,6 @@ import { yupResolver } from '@hookform/resolvers/yup'
 
 import { addressSchema } from 'utils'
 
-import { useUserInfo } from 'hooks'
-
 import regions from 'china-citys'
 
 import {
@@ -24,13 +22,10 @@ import {
 
 const AddressModal = props => {
   // Porps
-  const { isShow, onClose, address } = props
+  const { isShow, onClose, address, handleConfirm } = props
 
   // Assets
   let AllProvinces = regions.getProvinces()
-
-  // Get User Data
-  const { userInfo } = useUserInfo()
 
   // State
   const [cities, setCities] = useState([])
@@ -49,8 +44,10 @@ const AddressModal = props => {
     defaultValues: address,
   })
 
-  // Edit User-Info Query
+  // TODO: edit address
   const [editUser, { data, isSuccess, isLoading, isError, error }] = useEditUserMutation()
+  // TODO create address
+  // const [editUser, { data, isSuccess, isLoading, isError, error }] = useEditUserMutation()
 
   // Re-Renders
   //* Change cities beside on province
@@ -66,10 +63,12 @@ const AddressModal = props => {
     watch('province')
   }, [getValues('province')?.code])
 
+  console.log('province--->', getValues('province'))
+
   useEffect(() => {
-    if (userInfo?.address) {
-      setValue('city', userInfo.address.city)
-      setValue('area', userInfo.address.area)
+    if (address) {
+      setValue('city', address.city)
+      setValue('area', address.area)
     }
   }, [])
 

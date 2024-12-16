@@ -5,18 +5,14 @@ import { AddressModal } from 'components'
 import { useDisclosure, useUserInfo } from 'hooks'
 
 const WithAddressModal = props => {
-  const { children } = props
+  const { children, address, handleConfirm } = props
 
   const [isShowAddressModal, addressModalHandlers] = useDisclosure()
 
-  const { userInfo, isVerify, isLoading } = useUserInfo()
-
   const addressModalProps = {
     openAddressModal: addressModalHandlers.open,
-    address: userInfo?.address ?? {},
-    isLoading,
-    isVerify,
-    isAddress: !!userInfo?.address,
+    address: address ?? {},
+    isAddress: !!address,
   }
 
   return (
@@ -29,13 +25,12 @@ const WithAddressModal = props => {
           : child
       )}
 
-      {!isVerify ? null : !isLoading ? (
-        <AddressModal
-          isShow={isShowAddressModal}
-          onClose={addressModalHandlers.close}
-          address={userInfo?.address ?? {}}
-        />
-      ) : null}
+      <AddressModal
+        isShow={isShowAddressModal}
+        onClose={addressModalHandlers.close}
+        address={address ?? {}}
+        handleConfirm={handleConfirm}
+      />
     </>
   )
 }

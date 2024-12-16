@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import { Icons, Search, Signup, Cart, Navbar, Sidebar, AddressBar, LogoH } from 'components'
+import { Icons, Search, Signup, Cart, Navbar, Sidebar, LogoH } from 'components'
 export default function Header() {
   return (
     <>
@@ -22,7 +22,6 @@ export default function Header() {
         </div>
         <div className="container py-2 flex justify-between mx-auto relative">
           <Navbar />
-          <AddressBar />
         </div>
       </header>
     </>

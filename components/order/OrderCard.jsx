@@ -23,15 +23,11 @@ const OrderCard = props => {
   const { order } = props
 
   // Get Order Items Data
-  const {
-    data: orderItemsData,
-    isSuccess: isOrderItemsSuccess,
-    isError: isOrderItemsError,
-  } = useGetOrderItemsQuery({
+  const { data, isSuccess, isError, error } = useGetOrderItemsQuery({
     id: order.id,
   })
 
-  const orderItems = orderItemsData?.data || []
+  const orderItems = data?.data || []
 
   // Render
   return (

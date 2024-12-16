@@ -17,6 +17,7 @@ import {
   Icons,
   ResponsiveImage,
   WithAddressModal,
+  AddressSelector,
 } from 'components'
 
 import { AliPay, formatNumber, PayTypes } from 'utils'
@@ -100,13 +101,6 @@ const ShippingPage = () => {
       // 5. 跳转到支付状态查询页面
       router.push(`/checkout/payment?orderId=${orderId}`)
     }
-
-    // const alipayData = await getAlipayUrl({
-    //   orderId: 'NO.776251236826615808',
-    //   queueName: 'ORDER_PAY', // 正常支付
-    // })
-    // console.log('alipayData--->', alipayData?.data?.data?.alipayUrl)
-    // window.open(alipayData?.data?.data?.alipayUrl, '_blank')
   }
 
   // Local Components
@@ -114,10 +108,15 @@ const ShippingPage = () => {
     const BasicChangeAddress = ({ addressModalProps }) => {
       const { openAddressModal } = addressModalProps || {}
       return (
-        <button type="button" onClick={openAddressModal} className="flex items-center ml-auto">
-          <span className="text-base text-sky-500">改变 | 编辑</span>
-          <Icons.ArrowRight2 className="icon text-sky-500" />
-        </button>
+        <section className="flex items-center px-3 py-4 lg:border lg:border-gray-200 lg:rounded-lg gap-x-3">
+          <div className="space-y-2">
+            <span className="">确认收货地址</span>
+          </div>
+          <button type="button" onClick={openAddressModal} className="flex items-center ml-auto">
+            <span className="text-base text-sky-500">改变 | 编辑</span>
+            <Icons.ArrowRight2 className="icon text-sky-500" />
+          </button>
+        </section>
       )
     }
 
@@ -166,15 +165,8 @@ const ShippingPage = () => {
         <div className="lg:flex lg:gap-x-3">
           <div className="lg:flex-1">
             {/* address */}
-            <section className="flex items-center px-3 py-4 lg:border lg:border-gray-200 lg:rounded-lg gap-x-3">
-              <Icons.Location2 className="text-black w-7 h-7" />
-              <div className="space-y-2">
-                <span className="">订单送货地址</span>
-                <p className="text-base text-black">{userInfo?.address?.street}</p>
-                <span className="text-sm">{userInfo?.name}</span>
-              </div>
-              <ChangeAddress />
-            </section>
+            {/* <ChangeAddress /> */}
+            <AddressSelector />
 
             <div className="section-divide-y lg:hidden" />
 

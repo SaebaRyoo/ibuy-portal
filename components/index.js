@@ -15,7 +15,6 @@ export { default as Services } from './Services'
 export { default as Navbar } from './Navbar'
 export { default as Sidebar } from './Sidebar'
 export { default as Sort } from './Sort'
-export { default as AddressBar } from './AddressBar'
 
 //* LAYOUT COMPONENTS
 export { default as ClientLayout } from './Layouts/ClientLayout'
@@ -140,3 +139,6 @@ export { default as SmilarProductsSlider } from './sliders/SmilarProductsSlider'
 //* BANNER COMPONENTS
 export { default as BannerOne } from './banners/BannerOne'
 export { default as BannerTwo } from './banners/BannerTwo'
+
+//* ADDRESS COMPONENTS
+export { default as AddressSelector } from './address/AddressSelector'
