@@ -10,7 +10,7 @@ import { Control, useController } from 'react-hook-form'
 
 const Combobox = props => {
   // Props
-  const { list, name, control, placeholder } = props
+  const { list, name, control, placeholder, label } = props
 
   // Form Hook
   const { field } = useController({ name, control })
@@ -30,6 +30,14 @@ const Combobox = props => {
   return (
     <HUICombobox value={field.value} name={field.name} onChange={field.onChange}>
       <div className="relative max-w-xl">
+        {label && (
+          <label
+            className="block text-xs text-gray-700 lg:text-sm md:min-w-max mb-3"
+            htmlFor={field.name}
+          >
+            {label}
+          </label>
+        )}
         <div className="relative w-full cursor-default overflow-hidden rounded-lg bg-white text-left border border-gray-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-teal-300 sm:text-sm">
           <HUICombobox.Input
             className="w-full border-none py-2 pl-3 pr-10 text-sm leading-5 outline-none text-gray-900 focus:ring-0"

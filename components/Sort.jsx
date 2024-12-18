@@ -79,7 +79,7 @@ const Sort = ({ handleChangeRoute }) => {
           <button
             key={i}
             className={`py-0.5  text-sm ${
-              sort?.value === item.value ? 'text-red-500' : 'text-gray-600'
+              sort?.value === item.value ? 'text-cPink' : 'text-gray-600'
             }`}
             type="button"
             name="sort"

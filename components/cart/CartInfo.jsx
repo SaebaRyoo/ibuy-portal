@@ -38,13 +38,13 @@ const CartInfo = props => {
 
       {/* total cart profit */}
       <div className="flex justify-between">
-        <span className="text-red-500">您从购买中省去的金额</span>
+        <span className="text-cPink">您从购买中省去的金额</span>
         <div className="flex-center gap-x-1">
-          <span className="text-red-500 text-sm">
+          <span className="text-cPink text-sm">
             ({((totalDiscount / totalPrice) * 100).toFixed(1)}%)
           </span>
-          <span className="text-red-500">{formatNumber(totalDiscount)}</span>
-          <span className="ml-1 text-red-500">¥</span>
+          <span className="text-cPink">{formatNumber(totalDiscount)}</span>
+          <span className="ml-1 text-cPink">¥</span>
         </div>
       </div>
 

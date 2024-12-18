@@ -71,7 +71,7 @@ const ProductsHome = () => {
                 {searchData?.rows.map(item => <ProductCard product={item} key={item.id} />)}
               </section>
             ) : (
-              <section className="text-center text-red-500 xl:border xl:border-gray-200 xl:rounded-md xl:py-4">
+              <section className="text-center text-cPink xl:border xl:border-gray-200 xl:rounded-md xl:py-4">
                 没有找到商品
               </section>
             )}

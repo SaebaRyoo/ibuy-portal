@@ -72,7 +72,6 @@ export { default as PageContainer } from './common/PageContainer'
 export { default as ShowWrapper } from './common/ShowWrapper'
 export { default as SelectBox } from './common/SelectBox'
 export { default as TextArea } from './common/TextArea'
-export { default as WithAddressModal } from './common/WithAddressModal'
 export { default as Combobox } from './common/Combobox'
 export { default as Tabs } from './common/Tabs'
 export * from './common/IconBtns'
@@ -142,3 +141,4 @@ export { default as BannerTwo } from './banners/BannerTwo'
 
 //* ADDRESS COMPONENTS
 export { default as AddressSelector } from './address/AddressSelector'
+export { default as AddressTable } from './address/AddressTable'

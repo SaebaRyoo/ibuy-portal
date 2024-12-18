@@ -135,11 +135,7 @@ const ReveiwCard = props => {
                 )}
                 <span
                   className={`${
-                    status === 1
-                      ? 'text-amber-500'
-                      : status === 2
-                        ? 'text-green-500'
-                        : 'text-red-500'
+                    status === 1 ? 'text-amber-500' : status === 2 ? 'text-green-500' : 'text-cPink'
                   }`}
                 >
                   {status === 1 ? '等待确认' : status === 2 ? '已经确认' : '不见了'}

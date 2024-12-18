@@ -16,7 +16,6 @@ import {
   HandleResponse,
   Icons,
   ResponsiveImage,
-  WithAddressModal,
   AddressSelector,
 } from 'components'
 
@@ -38,6 +37,8 @@ const ShippingPage = () => {
 
   // Store
   const { cartItems, totalItems, totalDiscount, totalPrice } = useAppSelector(state => state.cart)
+  // get selected address from redux
+  const currentSelectedAddress = useAppSelector(state => state.address.currentSelectedAddress)
 
   // Mutations
   // const [postData, { data, isSuccess, isError, isLoading, error }] = useCreateOrderMutation()
@@ -46,37 +47,25 @@ const ShippingPage = () => {
   // 获取支付宝支付页面链接
   const [getAlipayUrl] = useGetAlipayUrlMutation()
 
+  console.log('currentSelectedAddress: ', currentSelectedAddress)
   // Handlers
   const handleCreateOrder = async () => {
-    // 1. 验证用户是否登录
-    // if (
-    //   !userInfo?.address?.city &&
-    //   !userInfo?.address?.province &&
-    //   !userInfo?.address?.area &&
-    //   !userInfo?.address?.street &&
-    //   !userInfo?.address?.postalCode
-    // ) {
-    //   return dispatch(
-    //     showAlert({
-    //       status: 'error',
-    //       title: '请填写您的地址',
-    //     })
-    //   )
-    // }
+    // 1. 验证用户是否选择了地址
+    if (!currentSelectedAddress) {
+      return dispatch(
+        showAlert({
+          status: 'error',
+          title: '请填写您的地址',
+        })
+      )
+    }
 
     // 2. 调用创建订单接口
     const orderResult = await createOrderFromCartList({
       body: {
-        // receiverAddress: JSON.stringify({
-        //   city: userInfo.address.city.name,
-        //   area: userInfo.address.area.name,
-        //   postalCode: userInfo.address.postalCode,
-        //   provinces: userInfo.address.province.name,
-        //   street: userInfo.address.street,
-        // }),
-        receiverAddress: '镇江市京口区',
-        receiverMobile: '15189189999',
-        receiverContact: '朱青源',
+        receiverAddress: currentSelectedAddress.address,
+        receiverMobile: currentSelectedAddress.phone,
+        receiverContact: currentSelectedAddress.contact,
         payType,
       },
     })
@@ -101,30 +90,6 @@ const ShippingPage = () => {
       // 5. 跳转到支付状态查询页面
       router.push(`/checkout/payment?orderId=${orderId}`)
     }
-  }
-
-  // Local Components
-  const ChangeAddress = () => {
-    const BasicChangeAddress = ({ addressModalProps }) => {
-      const { openAddressModal } = addressModalProps || {}
-      return (
-        <section className="flex items-center px-3 py-4 lg:border lg:border-gray-200 lg:rounded-lg gap-x-3">
-          <div className="space-y-2">
-            <span className="">确认收货地址</span>
-          </div>
-          <button type="button" onClick={openAddressModal} className="flex items-center ml-auto">
-            <span className="text-base text-sky-500">改变 | 编辑</span>
-            <Icons.ArrowRight2 className="icon text-sky-500" />
-          </button>
-        </section>
-      )
-    }
-
-    return (
-      <WithAddressModal>
-        <BasicChangeAddress />
-      </WithAddressModal>
-    )
   }
 
   // Render
@@ -154,8 +119,8 @@ const ShippingPage = () => {
 
             <div className="h-[1px] w-8  bg-red-300" />
             <div className="flex flex-col items-center gap-y-2">
-              <Icons.Wallet className="w-6 h-6 text-red-500 icon" />
-              <span className="text-base font-normal text-red-500">付款方式</span>
+              <Icons.Wallet className="w-6 h-6 text-cPink icon" />
+              <span className="text-base font-normal text-cPink">付款方式</span>
             </div>
           </div>
         </header>
@@ -165,7 +130,6 @@ const ShippingPage = () => {
         <div className="lg:flex lg:gap-x-3">
           <div className="lg:flex-1">
             {/* address */}
-            {/* <ChangeAddress /> */}
             <AddressSelector />
 
             <div className="section-divide-y lg:hidden" />

@@ -20,30 +20,30 @@ export default function ProfilePage() {
             <div className="ml-4">
               <h1 className="text-xl font-semibold">弱冠有余</h1>
               <p className="text-gray-500">我的账号 | lxxnbnq | 收货地址</p>
-              <p className="text-red-500">淘宝双12 大额盲拍，抢先领</p>
+              <p className="text-cPink">淘宝双12 大额盲拍，抢先领</p>
             </div>
           </div>
 
           <div className="grid grid-cols-5 text-center mb-6">
             <a className="group">
-              <p className="text-lg group-hover:text-[#f76c68] transition">0</p>
-              <p className="text-gray-500 group-hover:text-[#f76c68] transition">付款</p>
+              <p className="text-lg group-hover:text-cPink transition">0</p>
+              <p className="text-gray-500 group-hover:text-cPink transition">付款</p>
             </a>
             <a className="group">
-              <p className="text-lg group-hover:text-[#f76c68] transition">0</p>
-              <p className="text-gray-500 group-hover:text-[#f76c68] transition">发货</p>
+              <p className="text-lg group-hover:text-cPink transition">0</p>
+              <p className="text-gray-500 group-hover:text-cPink transition">发货</p>
             </a>
             <a className="group">
-              <p className="text-lg group-hover:text-[#f76c68] transition">1</p>
-              <p className="text-gray-500 group-hover:text-[#f76c68] transition">待收货</p>
+              <p className="text-lg group-hover:text-cPink transition">1</p>
+              <p className="text-gray-500 group-hover:text-cPink transition">待收货</p>
             </a>
             <a className="group">
-              <p className="text-lg group-hover:text-[#f76c68] transition">4</p>
-              <p className="text-gray-500 group-hover:text-[#f76c68] transition">待评价</p>
+              <p className="text-lg group-hover:text-cPink transition">4</p>
+              <p className="text-gray-500 group-hover:text-cPink transition">待评价</p>
             </a>
             <a className="group">
-              <p className="text-lg group-hover:text-[#f76c68] transition">0</p>
-              <p className="text-gray-500 group-hover:text-[#f76c68] transition">退款/售后</p>
+              <p className="text-lg group-hover:text-cPink transition">0</p>
+              <p className="text-gray-500 group-hover:text-cPink transition">退款/售后</p>
             </a>
           </div>
 

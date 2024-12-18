@@ -12,11 +12,11 @@ const DiscountCartItem = props => {
   return (
     <div>
       <div className="flex items-center gap-x-2">
-        <span className="text-red-500">{formatNumber(+(price * discountPercent).toFixed())}</span>
+        <span className="text-cPink">{formatNumber(+(price * discountPercent).toFixed())}</span>
 
-        <span className="text-red-500">¥</span>
+        <span className="text-cPink">¥</span>
 
-        <span className="text-red-500">折扣</span>
+        <span className="text-cPink">折扣</span>
       </div>
       <div className="flex items-center gap-x-2">
         <span className="text-sm text-gray-700">

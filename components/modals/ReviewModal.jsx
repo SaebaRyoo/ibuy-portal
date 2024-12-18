@@ -223,7 +223,7 @@ const ReviewModal = props => {
                   <div className="space-y-3">
                     {negativePointsFields.map((field, index) => (
                       <div key={field.id} className="flex items-center px-3 gap-x-4">
-                        <Icons.Minus className="text-red-500 icon" />
+                        <Icons.Minus className="text-cPink icon" />
                         <span className="ml-auto">{field.title}</span>
                         <button>
                           <Icons.Delete

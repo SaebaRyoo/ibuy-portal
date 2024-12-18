@@ -20,7 +20,7 @@ export default function ShowWrapper(props) {
       {isError ? (
         <div className="py-20 mx-auto space-y-3 text-center w-fit">
           <h5 className="text-xl">出现异常</h5>
-          <p className="text-lg text-red-500">{error?.data?.err}</p>
+          <p className="text-lg text-cPink">{error?.data?.err}</p>
           <Button className="mx-auto" onClick={refetch}>
             重试
           </Button>

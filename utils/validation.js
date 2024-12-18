@@ -59,7 +59,6 @@ export const addressSchema = Yup.object().shape({
     name: Yup.string().required('请选择您的居住的区县'),
   }),
   street: Yup.string().required('街道名称不能为空'),
-  postalCode: Yup.string().required('请输入您的邮政编码'),
 })
 
 export const nameSchema = Yup.object().shape({

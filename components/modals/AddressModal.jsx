@@ -2,9 +2,9 @@
 
 import { useEffect, useState } from 'react'
 
-import { useEditUserMutation } from '@/store/services'
+import { useAddAddressMutation, useUpdateAddressMutation } from '@/store/services'
 
-import { SubmitHandler, useForm } from 'react-hook-form'
+import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 
 import { addressSchema } from 'utils'
@@ -13,6 +13,7 @@ import regions from 'china-citys'
 
 import {
   TextField,
+  TextArea,
   DisplayError,
   SubmitModalBtn,
   Combobox,
@@ -22,7 +23,8 @@ import {
 
 const AddressModal = props => {
   // Porps
-  const { isShow, onClose, address, handleConfirm } = props
+  const { isShow, onClose, handleConfirm, address } = props
+  const isEdit = !!address
 
   // Assets
   let AllProvinces = regions.getProvinces()
@@ -44,10 +46,19 @@ const AddressModal = props => {
     defaultValues: address,
   })
 
-  // TODO: edit address
-  const [editUser, { data, isSuccess, isLoading, isError, error }] = useEditUserMutation()
-  // TODO create address
-  // const [editUser, { data, isSuccess, isLoading, isError, error }] = useEditUserMutation()
+  // 添加地址
+  const [addAddress, { data, isSuccess, isLoading, isError, error }] = useAddAddressMutation()
+  // 更新地址
+  const [
+    updateAddress,
+    {
+      data: updateData,
+      isSuccess: isUpdateSuccess,
+      isLoading: isUpdateLoading,
+      isError: isUpdateError,
+      error: updateError,
+    },
+  ] = useUpdateAddressMutation()
 
   // Re-Renders
   //* Change cities beside on province
@@ -63,32 +74,64 @@ const AddressModal = props => {
     watch('province')
   }, [getValues('province')?.code])
 
-  console.log('province--->', getValues('province'))
-
   useEffect(() => {
     if (address) {
-      setValue('city', address.city)
-      setValue('area', address.area)
+      console.log('address--->', address)
+      // setValue('city', address.city)
+      // setValue('area', address.area)
+      // setValue('province', regions.getProvinceByCode(address.provinceId))
     }
-  }, [])
+  }, [address])
 
   // Handlers
-  const submitHander = address => {
-    editUser({
-      body: { address },
-    })
+  const submitHander = async editedAddress => {
+    const _editedAddress = {
+      contact: editedAddress.contact,
+      phone: editedAddress.phone,
+      address:
+        editedAddress.province?.name +
+        editedAddress.city?.name +
+        editedAddress.area?.name +
+        editedAddress.street,
+      provinceId: editedAddress.province?.code,
+      cityId: editedAddress.city?.code,
+      areaId: editedAddress.area?.code,
+      username: '',
+      isDefault: 0, // 是否为默认地址
+    }
+    if (isEdit) {
+      await updateAddress({
+        ..._editedAddress,
+        id: address.id,
+      })
+      onClose()
+      handleConfirm()
+    } else {
+      await addAddress(_editedAddress)
+      onClose()
+      handleConfirm()
+    }
   }
 
   // Render
   return (
     <>
-      {/* Handle Edit Address Response */}
+      {/* Handle Add Address Response */}
       {(isSuccess || isError) && (
         <HandleResponse
           isError={isError}
           isSuccess={isSuccess}
           error={error?.data?.message}
           message={data?.message}
+          onSuccess={onClose}
+        />
+      )}
+      {(isUpdateSuccess || isUpdateError) && (
+        <HandleResponse
+          isError={isUpdateError}
+          isSuccess={isUpdateSuccess}
+          error={updateError?.data?.message}
+          message={updateData?.message}
           onSuccess={onClose}
         />
       )}
@@ -105,49 +148,64 @@ const AddressModal = props => {
               className="flex flex-col justify-between flex-1 pl-4 overflow-y-auto"
               onSubmit={handleSubmit(submitHander)}
             >
-              <div className="space-y-12 md:grid md:grid-cols-3 md:gap-x-12 md:gap-y-5 md:items-baseline ">
-                <div className="space-y-2">
-                  <Combobox
-                    control={control}
-                    name="province"
-                    list={AllProvinces}
-                    placeholder="请选择您所在的省份"
-                  />
-                  <DisplayError errors={formErrors.province?.name} />
+              <div className="flex flex-col">
+                <div className="flex space-x-4">
+                  <div className="flex-1 ">
+                    <Combobox
+                      label="省份"
+                      control={control}
+                      name="province"
+                      list={AllProvinces}
+                      placeholder="请选择您所在的省份"
+                    />
+                    <DisplayError errors={formErrors.province?.name} />
+                  </div>
+
+                  <div className="flex-1 space-y-2">
+                    <Combobox
+                      label="城市"
+                      control={control}
+                      name="city"
+                      list={cities}
+                      placeholder="请选择您所在的城市"
+                    />
+                    <DisplayError errors={formErrors.city?.name} />
+                  </div>
+
+                  <div className="flex-1 space-y-2">
+                    <Combobox
+                      label="区县"
+                      control={control}
+                      name="area"
+                      list={areas}
+                      placeholder="请选择您所在的区县"
+                    />
+                    <DisplayError errors={formErrors.area?.name} />
+                  </div>
                 </div>
 
-                <div className="space-y-2 ">
-                  <Combobox
-                    control={control}
-                    name="city"
-                    list={cities}
-                    placeholder="请选择您所在的城市"
-                  />
-                  <DisplayError errors={formErrors.city?.name} />
-                </div>
-
-                <div className="space-y-2 ">
-                  <Combobox
-                    control={control}
-                    name="area"
-                    list={areas}
-                    placeholder="请选择您所在的区县"
-                  />
-                  <DisplayError errors={formErrors.area?.name} />
-                </div>
-
-                <TextField
-                  label="街道信息"
+                <TextArea
+                  label="详细地址"
                   control={control}
+                  rows={2}
                   errors={formErrors.street}
                   name="street"
                 />
 
                 <TextField
-                  label="邮政编码"
+                  label="收货人姓名"
                   control={control}
-                  errors={formErrors.postalCode}
-                  name="postalCode"
+                  errors={formErrors.contact}
+                  name="contact"
+                  type="text"
+                  direction="ltr"
+                  inputMode="numeric"
+                />
+                <TextField
+                  label="收货人电话"
+                  control={control}
+                  errors={formErrors.phone}
+                  name="phone"
                   type="number"
                   direction="ltr"
                   inputMode="numeric"

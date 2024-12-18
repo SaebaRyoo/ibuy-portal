@@ -46,7 +46,7 @@ export const DeleteIconBtn = props => (
   <IconButton
     title="删除"
     icon={
-      <Icons.Delete className="text-red-500 bg-red-100 rounded-2xl w-8 h-8 p-1 lg:w-9 lg:h-9 lg:p-1.5 active:scale-95" />
+      <Icons.Delete className="text-cPink bg-red-100 rounded-2xl w-8 h-8 p-1 lg:w-9 lg:h-9 lg:p-1.5 active:scale-95" />
     }
     {...props}
   />
@@ -70,6 +70,6 @@ export const AddToListIconBtn = props => (
 
 export const DeleteFromListIconBtn = props => (
   <DeleteIconBtn className="border-2 border-red-100 rounded-full flex-center gap-x-4" {...props}>
-    <span className="pl-2 text-base text-red-500">从列表删除</span>
+    <span className="pl-2 text-base text-cPink">从列表删除</span>
   </DeleteIconBtn>
 )
