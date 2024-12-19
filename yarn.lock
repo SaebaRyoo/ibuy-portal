@@ -1392,6 +1392,11 @@
   resolved "https://registry.npmmirror.com/@pkgr/core/-/core-0.1.1.tgz#1ec17e2edbec25c8306d424ecfbf13c7de1aaa31"
   integrity sha512-cq8o4cWH0ibXh9VGi5P20Tu9XF/0fFXl9EUinr9QfTM7a7p0oTA4iJRCQWppXR1Pg8dSM0UCItCkPwsk9qWWYA==
 
+"@province-city-china/types@8.5.8":
+  version "8.5.8"
+  resolved "https://registry.npmmirror.com/@province-city-china/types/-/types-8.5.8.tgz#bc75b8a6f25652987adab3a518ece7a2cf96cf4d"
+  integrity sha512-KZ3NyM8HsaBVcn5BRhWaOeZRhqEvm18PfB6HfRDuZfwwWhJLoTxB81mTENrBlONr2g8fy/fSbjsh44gvOj+/Lw==
+
 "@reduxjs/toolkit@^1.8.2":
   version "1.9.7"
   resolved "https://registry.npmmirror.com/@reduxjs/toolkit/-/toolkit-1.9.7.tgz#7fc07c0b0ebec52043f8cb43510cf346405f78a6"
@@ -2130,11 +2135,6 @@ chalk@^4.0.0, chalk@^4.1.0:
   dependencies:
     ansi-styles "^4.1.0"
     supports-color "^7.1.0"
-
-china-citys@^0.0.1:
-  version "0.0.1"
-  resolved "https://registry.npmmirror.com/china-citys/-/china-citys-0.0.1.tgz#402a1c9aeaed5dcdfc79bd6d844be9e8252dc92a"
-  integrity sha512-TCvT4F74mqCwpVSRwSHdSv88JoODoQnMhoeDTmR4kI57dH0DcapcuNCkvSISwJSv90pJ3/4X2PAjCNVHCRehqA==
 
 chokidar@^3.5.3:
   version "3.6.0"
@@ -4709,6 +4709,13 @@ property-expr@^2.0.4:
   version "2.0.6"
   resolved "https://registry.npmmirror.com/property-expr/-/property-expr-2.0.6.tgz#f77bc00d5928a6c748414ad12882e83f24aec1e8"
   integrity sha512-SVtmxhRE/CGkn3eZY1T6pC8Nln6Fr/lu1mKSgRud0eC73whjGfoAogbn78LkD8aFL0zz3bAFerKSnOl7NlErBA==
+
+province-city-china@^8.5.8:
+  version "8.5.8"
+  resolved "https://registry.npmmirror.com/province-city-china/-/province-city-china-8.5.8.tgz#b1f28cfe917388e67684cfb64f7cf2a5c30ed44a"
+  integrity sha512-gUV5kSOWHVufemkq6lygb0ngNZ4snMcONmr3QzxHuj1MYOQPphiyjHplfmywcVGWdGQgim30RXia/mYB007eLg==
+  dependencies:
+    "@province-city-china/types" "8.5.8"
 
 pump@^3.0.0:
   version "3.0.2"

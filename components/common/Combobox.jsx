@@ -10,7 +10,7 @@ import { Control, useController } from 'react-hook-form'
 
 const Combobox = props => {
   // Props
-  const { list, name, control, placeholder, label } = props
+  const { list, name, control, placeholder, label, onChange } = props
 
   // Form Hook
   const { field } = useController({ name, control })
@@ -28,7 +28,16 @@ const Combobox = props => {
 
   // Render
   return (
-    <HUICombobox value={field.value} name={field.name} onChange={field.onChange}>
+    <HUICombobox
+      value={field.value}
+      name={field.name}
+      onChange={v => {
+        field.onChange(v)
+        if (typeof onChange === 'function') {
+          onChange(v)
+        }
+      }}
+    >
       <div className="relative max-w-xl">
         {label && (
           <label

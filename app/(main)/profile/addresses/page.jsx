@@ -40,23 +40,6 @@ const BasicAddresses = () => {
     )
   }
 
-  // No Address
-  if (data?.data?.length <= 0) {
-    return (
-      <section className="flex flex-col items-center py-20 gap-y-4">
-        <Address className="h-52 w-52" />
-        <p>您尚未填写地址</p>
-        <button
-          className="flex items-center px-3 py-2 text-red-600 border-2 border-red-600 rounded-lg gap-x-3"
-          onClick={openAddressModal}
-        >
-          <Icons.Location className="text-red-600 icon" />
-          <span>地址登记</span>
-        </button>
-      </section>
-    )
-  }
-
   // Render
   return (
     <main>

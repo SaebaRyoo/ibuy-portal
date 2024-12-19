@@ -1,15 +1,13 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useRef } from 'react'
 
 import { useAddAddressMutation, useUpdateAddressMutation } from '@/store/services'
 
 import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 
-import { addressSchema } from 'utils'
-
-import regions from 'china-citys'
+import { addressSchema, regionUtils } from 'utils'
 
 import {
   TextField,
@@ -25,13 +23,16 @@ const AddressModal = props => {
   // Porps
   const { isShow, onClose, handleConfirm, address } = props
   const isEdit = !!address
+  const isInitialized = useRef(false)
+
+  const isInitialized2 = useRef(false)
 
   // Assets
-  let AllProvinces = regions.getProvinces()
+  let AllProvinces = regionUtils.getProvinces()
 
   // State
-  const [cities, setCities] = useState([])
-  const [areas, setAreas] = useState([])
+  const [cities, setCities] = useState(null)
+  const [areas, setAreas] = useState(null)
 
   // Form Hook
   const {
@@ -41,6 +42,7 @@ const AddressModal = props => {
     setValue,
     getValues,
     watch,
+    reset,
   } = useForm({
     resolver: yupResolver(addressSchema),
     defaultValues: address,
@@ -59,29 +61,60 @@ const AddressModal = props => {
       error: updateError,
     },
   ] = useUpdateAddressMutation()
-
   // Re-Renders
   //* Change cities beside on province
+
+  const selectedProvinceCode = getValues('province')?.province
+  const selectedCityCode = getValues('city')?.city
+
   useEffect(() => {
-    setValue('area', {})
-    getValues('city')?.code ? setAreas(regions.getAreasByCity(getValues('city')?.code)) : ''
+    // setValue('area', {})
+    if (selectedProvinceCode && selectedCityCode) {
+      setAreas(regionUtils.getAreasByProvinceAndCity(selectedProvinceCode, selectedCityCode))
+    }
     watch('city')
-  }, [getValues('city')?.code])
+  }, [selectedProvinceCode, selectedCityCode])
 
   useEffect(() => {
-    setValue('city', {})
-    setCities(regions.getCitysByProvince(getValues('province')?.code))
+    // setValue('city', {})
+    setCities(regionUtils.getCitysByProvince(selectedProvinceCode))
     watch('province')
-  }, [getValues('province')?.code])
+  }, [selectedProvinceCode])
 
+  // 编辑地址时的数据回显
   useEffect(() => {
-    if (address) {
-      console.log('address--->', address)
-      // setValue('city', address.city)
-      // setValue('area', address.area)
-      // setValue('province', regions.getProvinceByCode(address.provinceId))
+    if (address && !isInitialized.current) {
+      isInitialized.current = true
+
+      const initializeAddress = () => {
+        // 设置城市
+        const cities = regionUtils.getCitysByProvince(address.provinceId)
+        setCities(cities)
+
+        // 设置区域
+        const areas = regionUtils.getAreasByProvinceAndCity(address.provinceId, address.cityId)
+        setAreas(areas)
+      }
+
+      initializeAddress()
     }
   }, [address])
+
+  useEffect(() => {
+    if (address && cities && areas && !isInitialized2.current) {
+      isInitialized2.current = true
+      // 等城市和区域数据初始化后设置字段值
+      setValue('province', regionUtils.getProvinceByCode(address.provinceId))
+      setValue('city', regionUtils.getCityByCode(address.provinceId, address.cityId))
+      setValue(
+        'area',
+        regionUtils.getAreaByCode(address.provinceId, address.cityId, address.areaId)
+      )
+      setValue('street', address.address)
+      setValue('contact', address.contact)
+      setValue('phone', address.phone)
+    }
+  }, [address, cities, areas])
 
   // Handlers
   const submitHander = async editedAddress => {
@@ -93,9 +126,9 @@ const AddressModal = props => {
         editedAddress.city?.name +
         editedAddress.area?.name +
         editedAddress.street,
-      provinceId: editedAddress.province?.code,
-      cityId: editedAddress.city?.code,
-      areaId: editedAddress.area?.code,
+      provinceId: editedAddress.province?.province,
+      cityId: editedAddress.city?.city,
+      areaId: editedAddress.area?.area,
       username: '',
       isDefault: 0, // 是否为默认地址
     }
@@ -104,10 +137,12 @@ const AddressModal = props => {
         ..._editedAddress,
         id: address.id,
       })
+      reset()
       onClose()
       handleConfirm()
     } else {
       await addAddress(_editedAddress)
+      reset()
       onClose()
       handleConfirm()
     }
@@ -123,7 +158,10 @@ const AddressModal = props => {
           isSuccess={isSuccess}
           error={error?.data?.message}
           message={data?.message}
-          onSuccess={onClose}
+          onSuccess={() => {
+            reset()
+            onClose()
+          }}
         />
       )}
       {(isUpdateSuccess || isUpdateError) && (
@@ -132,16 +170,36 @@ const AddressModal = props => {
           isSuccess={isUpdateSuccess}
           error={updateError?.data?.message}
           message={updateData?.message}
-          onSuccess={onClose}
+          onSuccess={() => {
+            reset()
+            onClose()
+          }}
         />
       )}
 
-      <Modal isShow={isShow} onClose={onClose} effect="bottom-to-top">
+      <Modal
+        isShow={isShow}
+        onClose={() => {
+          reset()
+          onClose()
+        }}
+        effect="bottom-to-top"
+      >
         <Modal.Content
-          onClose={onClose}
+          onClose={() => {
+            reset()
+            onClose()
+          }}
           className="flex flex-col h-full px-5 py-3 bg-white md:rounded-lg gap-y-5 "
         >
-          <Modal.Header onClose={onClose}>地址管理</Modal.Header>
+          <Modal.Header
+            onClose={() => {
+              reset()
+              onClose()
+            }}
+          >
+            地址管理
+          </Modal.Header>
           <Modal.Body>
             <p>请输入您的收货地址</p>
             <form
@@ -157,6 +215,10 @@ const AddressModal = props => {
                       name="province"
                       list={AllProvinces}
                       placeholder="请选择您所在的省份"
+                      onChange={() => {
+                        setValue('city', {})
+                        setValue('area', {})
+                      }}
                     />
                     <DisplayError errors={formErrors.province?.name} />
                   </div>
@@ -166,8 +228,11 @@ const AddressModal = props => {
                       label="城市"
                       control={control}
                       name="city"
-                      list={cities}
+                      list={cities || []}
                       placeholder="请选择您所在的城市"
+                      onChange={() => {
+                        setValue('area', {})
+                      }}
                     />
                     <DisplayError errors={formErrors.city?.name} />
                   </div>
@@ -177,7 +242,7 @@ const AddressModal = props => {
                       label="区县"
                       control={control}
                       name="area"
-                      list={areas}
+                      list={areas || []}
                       placeholder="请选择您所在的区县"
                     />
                     <DisplayError errors={formErrors.area?.name} />
