@@ -11,7 +11,7 @@
     "prepare": "husky install"
   },
   "dependencies": {
-    "@headlessui/react": "^1.7.17",
+    "@headlessui/react": "2.1",
     "@hookform/resolvers": "^2.9.0",
     "@reduxjs/toolkit": "^1.8.2",
     "ali-oss": "^6.0.0",

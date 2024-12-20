@@ -29,11 +29,6 @@ function ProfileAside() {
       path: '/profile/addresses',
     },
     {
-      name: '最近访问',
-      Icon: Icons.Clock,
-      path: '/profile/user-history',
-    },
-    {
       name: '账户信息',
       Icon: Icons.User,
       path: '/profile/personal-info',

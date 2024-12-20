@@ -1,8 +1,8 @@
 'use client'
 
-import { ProductCard, Pagination, Sort, ProductsAside, Filter, ProductSkeleton } from 'components'
+import { ProductCard, Pagination, Sort, ProductsAside, ProductSkeleton } from 'components'
 
-import { useChangeRoute, useMediaQuery } from 'hooks'
+import { useChangeRoute } from 'hooks'
 
 import { useUrlQuery } from '@/hooks'
 import { useSearchProductsQuery } from '@/store/services'
@@ -12,15 +12,6 @@ const SearchHome = () => {
   const query = useUrlQuery()
 
   const category = query?.category?.toString() ?? ''
-  const page_size = query?.page_size?.toString() ?? ''
-  const page = query?.page?.toString() ?? ''
-  const sort = query?.sort?.toString() ?? ''
-  const search = query?.search?.toString() ?? ''
-  const inStock = query?.inStock?.toString() ?? ''
-  const discount = query?.discount?.toString() ?? ''
-  const price = query?.price?.toString() ?? ''
-
-  const isDesktop = useMediaQuery('(min-width:1280px)')
 
   // Handlers
   const changeRoute = useChangeRoute()

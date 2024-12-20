@@ -343,7 +343,7 @@ const SkuSelect: FC<Props> = props => {
                   onClick={() => !o.disable && onPressSpecOption(k, o)}
                   className={`cursor-pointer rounded-full px-4 py-1 text-sm border ${
                     o.select
-                      ? 'border-red-600 text-red-600 bg-red-100'
+                      ? 'border-cPink text-cPink bg-red-100'
                       : o.disable
                         ? 'text-gray-400 border-gray-300 bg-gray-100'
                         : 'border-gray-300 text-gray-700'

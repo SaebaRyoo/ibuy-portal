@@ -1,4 +1,5 @@
 'use client'
+
 import { ImageGallery, OutOfStock, VariantSelector } from 'components'
 import { useCartList, useUrlQuery } from '@/hooks'
 import {
@@ -31,24 +32,7 @@ export default function SingleProduct() {
           skus: data?.data
             ? data?.data.map(sku => ({
                 ...sku,
-                // 修改s商品属性的结构
-                //     spec: {"电视音响效果":"环绕","电视屏幕尺寸":"50英寸","尺码":"170"}
-                //      ↓↓↓↓↓↓↓↓↓↓↓↓
-                // 转换后：
-                //     spec: [
-                //       {
-                //         name: '电视音响效果',
-                //         value: '环绕',
-                //       },
-                //       {
-                //         name: '电视屏幕尺寸',
-                //         value: '50英寸',
-                //       },
-                //       {
-                //         name: '尺码',
-                //         value: '170',
-                //       },
-                //     ],
+                // 转换后的商品属性结构
                 spec: transformSpecObject(sku.spec),
               }))
             : [],
@@ -63,7 +47,6 @@ export default function SingleProduct() {
   const { refetch: refetchCartList } = useCartList()
 
   const onAddToCart = async data => {
-    // console.log('onAddToCart--->', data)
     await addToCart({
       id: data.id,
       num: data.num,
@@ -72,48 +55,37 @@ export default function SingleProduct() {
   }
 
   return (
-    <main className="container mx-auto py-4 space-y-4">
-      <div className="h-fit lg:h-fit lg:grid lg:grid-cols-9 lg:px-4 lg:gap-x-2 lg:gap-y-4 lg:mb-10 xl:gap-x-7">
-        <ImageGallery
-          images={product?.images?.split(',')}
-          discount={2}
-          inStock={product.num}
-          productName={product.name}
-        />
-        <div className="lg:col-span-4 ">
-          {/* title */}
-          <h2 className="p-3 text-base font-semibold leading-8 tracking-wide text-black/80 ">
-            {product.name}
-          </h2>
+    <main className="container mx-auto py-4 space-y-8">
+      <div className="lg:grid lg:grid-cols-9 lg:gap-x-6 lg:px-6 lg:py-6">
+        {/* 产品图片 */}
+        <div className="lg:col-span-5">
+          <ImageGallery
+            images={product?.images?.split(',')}
+            discount={2}
+            inStock={product.num}
+            productName={product.name}
+          />
+        </div>
 
-          <div className="section-divide-y" />
+        <div className="lg:col-span-4 flex flex-col space-y-4">
+          {/* 产品标题 */}
+          <h1 className="text-2xl font-semibold text-gray-800 leading-snug">{product.name}</h1>
 
-          {/* 商品属性 */}
+          <div className="border-t border-gray-200 pt-4" />
+
+          {/* 商品属性选择 */}
           <VariantSelector data={{ skus }} onAddToCart={onAddToCart} />
 
           {product.num === 0 && <OutOfStock />}
-
-          {/* <Info infos={product?.info} /> */}
         </div>
       </div>
-      <div className="section-divide-y" />
 
-      <div className="flex">
-        <div className="flex-1">
-          {/* <Specification specification={product.specification} /> */}
+      <div className="border-t border-gray-200 pt-6" />
 
-          <div className="section-divide-y" />
-
-          {/* <Reviews
-            numReviews={product.numReviews}
-            prdouctID={product._id}
-            productTitle={product.title}
-          /> */}
-        </div>
+      {/* 产品描述或评论部分 */}
+      <div className="flex flex-col space-y-6">
+        <div className="section-divide-y" />
       </div>
     </main>
   )
 }
-
-// export default SingleProduct
-// export const dynamic = 'force-dynamic'

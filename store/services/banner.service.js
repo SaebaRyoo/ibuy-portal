@@ -4,7 +4,7 @@ export const bannerApiSlice = apiSlice.injectEndpoints({
   endpoints: builder => ({
     getBanners: builder.query({
       query: ({ category }) => ({
-        url: `/api/banner?category=${category}`,
+        url: `/v1/banner?category=${category}`,
         method: 'GET',
       }),
       providesTags: result =>

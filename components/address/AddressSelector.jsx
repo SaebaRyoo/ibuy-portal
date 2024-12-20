@@ -1,15 +1,15 @@
 import React, { useState, useEffect } from 'react'
 import { AddressModal } from '@/components'
-import { RadioGroup } from '@headlessui/react'
+import { RadioGroup, Radio } from '@headlessui/react'
 import { useGetAddressListQuery } from '@/store/services'
-import { useAppDispatch, useDisclosure } from '@/hooks'
+import { useAppDispatch, useAppSelector, useDisclosure } from '@/hooks'
 import { setCurAddress } from '@/store'
 import Link from 'next/link'
 
 const AddressSelector = () => {
   const dispatch = useAppDispatch()
   const [isShowAddressModal, addressModalHandlers] = useDisclosure()
-  const [selectedAddressId, setSelectedAddressId] = useState(null)
+  const selectedAddress = useAppSelector(state => state.address.currentSelectedAddress)
   const [showMore, setShowMore] = useState(false)
 
   const { data, isSuccess, isFetching, error, isError, refetch } = useGetAddressListQuery(null)
@@ -26,7 +26,6 @@ const AddressSelector = () => {
   }
 
   const handleAddressSelect = selectedAddress => {
-    setSelectedAddressId(selectedAddress.id)
     dispatch(setCurAddress(selectedAddress))
   }
 
@@ -44,24 +43,22 @@ const AddressSelector = () => {
           </Link>
         </div>
       </div>
-      <RadioGroup value={selectedAddressId} onChange={handleAddressSelect}>
+      <RadioGroup value={selectedAddress} onChange={handleAddressSelect}>
         <div className={`grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4`}>
           {data?.data?.slice(0, showMore ? data?.data?.length : 3).map(item => (
-            <RadioGroup.Option key={item.id} value={item.id}>
-              {({ checked }) => (
-                <div
-                  className={`p-4 rounded-lg border cursor-pointer transition-colors hover:border-cPink ${
-                    checked ? 'border-cPink bg-red-50' : 'border-gray-300'
-                  }`}
-                >
-                  <div className="text-sm font-medium">{item.address}</div>
-                  {/* <div className="text-sm text-gray-600">{item.detail}</div> */}
-                  <div className="text-sm text-gray-500">
-                    {item.contact} {item.phone}
-                  </div>
+            <Radio key={item.id} value={item}>
+              <div
+                className={`p-4 rounded-lg border cursor-pointer transition-colors hover:border-cPink ${
+                  selectedAddress?.id === item.id ? 'border-cPink bg-red-50' : 'border-gray-300'
+                }`}
+              >
+                <div className="text-sm font-medium">{item.address}</div>
+                {/* <div className="text-sm text-gray-600">{item.detail}</div> */}
+                <div className="text-sm text-gray-500">
+                  {item.contact} {item.phone}
                 </div>
-              )}
-            </RadioGroup.Option>
+              </div>
+            </Radio>
           ))}
         </div>
       </RadioGroup>

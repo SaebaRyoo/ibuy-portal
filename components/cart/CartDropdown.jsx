@@ -5,9 +5,8 @@ import { formatNumber } from 'utils'
 
 import { useUserInfo, useDisclosure, useCartList } from 'hooks'
 
-import { Menu, Transition } from '@headlessui/react'
+import { Menu, MenuButton, MenuItems, Transition } from '@headlessui/react'
 import { ArrowLink, CartItem, RedirectToLogin, Button, CartBadge, EmptyCart } from 'components'
-import { useCreateOrderFromCartListMutation } from '@/store/services'
 
 export default function CartDropdown() {
   // Assets
@@ -34,9 +33,9 @@ export default function CartDropdown() {
       />
 
       <Menu as="div" className="dropdown">
-        <Menu.Button className="dropdown__button">
+        <MenuButton className="dropdown__button">
           <CartBadge />
-        </Menu.Button>
+        </MenuButton>
 
         <Transition
           as={Fragment}
@@ -47,7 +46,7 @@ export default function CartDropdown() {
           leaveFrom="transform opacity-100 scale-100"
           leaveTo="transform opacity-0 scale-95"
         >
-          <Menu.Items className="dropdown__items w-[440px]">
+          <MenuItems className="dropdown__items w-[440px]">
             {cartData?.totalItems > 0 ? (
               <>
                 {/* Header */}
@@ -78,7 +77,7 @@ export default function CartDropdown() {
                 <p className="pt-2 text-base font-bold text-center">你的购物车是空的！</p>
               </>
             )}
-          </Menu.Items>
+          </MenuItems>
         </Transition>
       </Menu>
     </>

@@ -21,16 +21,13 @@ import {
 
 import { AliPay, formatNumber, PayTypes } from 'utils'
 
-import { useAppDispatch, useAppSelector, useUserInfo, useCartList } from 'hooks'
+import { useAppDispatch, useAppSelector, useCartList } from 'hooks'
 
 const ShippingPage = () => {
   // Assets
   const router = useRouter()
   const dispatch = useAppDispatch()
   const { refetch: refetchCartList } = useCartList()
-
-  // Get User Data
-  const { userInfo } = useUserInfo()
 
   // States
   const [payType, setPaymentMethod] = useState(AliPay)

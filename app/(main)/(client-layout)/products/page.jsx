@@ -1,6 +1,6 @@
 'use client'
 
-import { ProductCard, Pagination, Sort, ProductsAside, Filter, ProductSkeleton } from 'components'
+import { ProductCard, Pagination, Sort, ProductsAside, ProductSkeleton } from 'components'
 
 import { useChangeRoute, useMediaQuery } from 'hooks'
 
@@ -49,7 +49,7 @@ const ProductsHome = () => {
     <>
       <main className="lg:px-3 container xl:mt-32">
         <div className="px-1 lg:flex lg:gap-x-0 xl:gap-x-3">
-          <ProductsAside mainMaxPrice={0} mainMinPrice={0} handleChangeRoute={handleChangeRoute} />
+          {/* <ProductsAside mainMaxPrice={0} mainMinPrice={0} handleChangeRoute={handleChangeRoute} /> */}
           <div id="_products" className="w-full p-4 mt-3 ">
             {/* Filters & Sort */}
             <div className="divide-y-2 ">

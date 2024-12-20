@@ -1,34 +1,31 @@
 import Link from 'next/link'
 
 import { Icons, ResponsiveImage, Skeleton } from 'components'
-
 import { truncate } from 'utils'
 import { useGetBestSellersQuery } from '@/store/services'
 
-const BestSellsSlider = props => {
+const BestSellsSlider = () => {
   const { products, isLoading } = useGetBestSellersQuery(
     {
       limit: 10,
     },
     {
-      selectFromResult: ({ data, isLoading }) => {
-        return {
-          products: data?.data,
-          isLoading,
-        }
-      },
+      selectFromResult: ({ data, isLoading }) => ({
+        products: data?.data,
+        isLoading,
+      }),
     }
   )
 
-  // Render
   return (
     <section className="px-3">
       <div className="flex items-center mb-3 space-x-2">
         <Icons.Check className="w-7 h-7 text-amber-400" />
-        <h4 className="text-xl">最畅销商品</h4>
+        <h2 className="text-xl font-semibold">最畅销商品</h2>
       </div>
 
-      <div className="grid grid-cols-[repeat(5,280px)] md:grid-cols-[repeat(5,300px)] grid-rows-3 xl:grid-cols-[repeat(5,330px)] grid-flow-col overflow-x-auto  gap-x-2 p-2">
+      {/* 商品容器：使用 grid 布局，确保每行显示5个商品 */}
+      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
         {isLoading
           ? Array(12)
               .fill('_')
@@ -49,19 +46,26 @@ const BestSellsSlider = props => {
                 </Skeleton.Items>
               ))
           : products?.map((item, index) => (
-              <div key={item.id} className="px-1 py-4 w-60 md:w-72 xl:w-80">
-                <Link href={`/products/item?spuId=${item.spuId}&skuId=${item.id}`}>
-                  <article className="flex space-x-4">
-                    <ResponsiveImage
-                      dimensions="w-24 h-24"
-                      src={item.images?.split(',')[0] ?? []}
-                      alt={item.name}
-                      className="shrink-0"
-                    />
-                    <div className="flex items-center border-b space-x-3">
-                      <span className="text-2xl text-sky-500 ">{index + 1}</span>
-                      <span>{truncate(item.name, 40)}</span>
+              <div
+                key={item.id}
+                className="flex flex-col items-center space-y-3 hover:bg-gray-50 rounded-lg p-3 transition duration-200 ease-in-out"
+              >
+                <Link href={`/products/item?spuId=${item.spuId}&skuId=${item.id}`} passHref>
+                  <article className="flex flex-col items-center space-y-3">
+                    {/* 商品图片和排名横向排列 */}
+                    <div className="flex items-start space-x-3">
+                      <span className="text-2xl text-sky-500">{index + 1}</span>
+                      <ResponsiveImage
+                        dimensions="w-24 h-24"
+                        src={item.images?.split(',')[0] ?? []}
+                        alt={item.name}
+                        className="shrink-0"
+                      />
                     </div>
+                    {/* 商品名称纵向排列 */}
+                    <span className="text-sm text-gray-700 text-center">
+                      {truncate(item.name, 40)}
+                    </span>
                   </article>
                 </Link>
               </div>

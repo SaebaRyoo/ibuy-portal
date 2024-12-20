@@ -1,7 +1,7 @@
 import Link from 'next/link'
 import { Fragment } from 'react'
 
-import { Menu, Transition } from '@headlessui/react'
+import { Menu, MenuButton, MenuItem, MenuItems, Transition } from '@headlessui/react'
 
 import { Icons, Logout, Person } from 'components'
 
@@ -12,10 +12,10 @@ export default function UserDropdown(props) {
   // Render
   return (
     <Menu as="div" className="dropdown">
-      <Menu.Button className="dropdown__button">
+      <MenuButton className="dropdown__button">
         <Icons.User className="icon" />
         <Icons.ArrowDown className="icon" />
-      </Menu.Button>
+      </MenuButton>
       <Transition
         as={Fragment}
         enter="transition ease-out duration-100"
@@ -25,8 +25,8 @@ export default function UserDropdown(props) {
         leaveFrom="transform opacity-100 scale-100"
         leaveTo="transform opacity-0 scale-95"
       >
-        <Menu.Items className="w-56 dropdown__items">
-          <Menu.Item>
+        <MenuItems className="w-56 dropdown__items">
+          <MenuItem>
             <div className="transition-colors hover:bg-gray-100">
               <Link
                 href="/profile"
@@ -37,10 +37,10 @@ export default function UserDropdown(props) {
                 <Icons.ArrowRight2 className="text-gray-700 icon" />
               </Link>
             </div>
-          </Menu.Item>
+          </MenuItem>
 
           <Logout />
-        </Menu.Items>
+        </MenuItems>
       </Transition>
     </Menu>
   )
