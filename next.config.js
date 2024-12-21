@@ -6,24 +6,6 @@ const nextConfig = {
     imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
     minimumCacheTTL: 60,
     remotePatterns: [
-      // {
-      //   protocol: 'http',
-      //   hostname: '**.aliyuncs.com',
-      //   port: '',
-      //   pathname: '/**',
-      // },
-      // {
-      //   protocol: 'https',
-      //   hostname: '**.aliyuncs.com',
-      //   port: '',
-      //   pathname: '/**',
-      // },
-      // {
-      //   protocol: "http",
-      //   hostname: "**.huanghanzhilian-test.oss-cn-beijing.aliyuncs.com",
-      //   port: "",
-      //   pathname: "/**",
-      // },
       {
         protocol: 'http',
         hostname: '**.360buyimg.com',
@@ -41,6 +23,7 @@ const nextConfig = {
     config.resolve.alias['@'] = path.resolve(__dirname, '.')
     return config
   },
+
   rewrites() {
     return [
       {

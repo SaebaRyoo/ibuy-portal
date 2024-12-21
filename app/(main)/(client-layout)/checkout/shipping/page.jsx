@@ -44,7 +44,6 @@ const ShippingPage = () => {
   // 获取支付宝支付页面链接
   const [getAlipayUrl] = useGetAlipayUrlMutation()
 
-  console.log('currentSelectedAddress: ', currentSelectedAddress)
   // Handlers
   const handleCreateOrder = async () => {
     // 1. 验证用户是否选择了地址
@@ -144,11 +143,13 @@ const ShippingPage = () => {
                 </span>
               </div>
               <div className="flex flex-wrap justify-start gap-x-8 gap-y-5">
-                {cartItems.map(item => (
-                  <article key={item.itemID}>
-                    <ResponsiveImage dimensions="w-28 h-28" src={item.image} alt={item.name} />
-                  </article>
-                ))}
+                {cartItems.map(item => {
+                  return (
+                    <article key={item.skuId}>
+                      <ResponsiveImage dimensions="w-28 h-28" src={item.image} alt={item.name} />
+                    </article>
+                  )
+                })}
               </div>
 
               <Link href="/checkout/cart" className="inline-block mt-6 text-sm text-sky-500">
@@ -164,7 +165,7 @@ const ShippingPage = () => {
             <CartInfo />
             <div className="px-3 py-2 space-y-3">
               {PayTypes.map(type => (
-                <div className="flex items-center gap-x-2 ">
+                <div key={type.value} className="flex items-center gap-x-2 ">
                   <input
                     type="radio"
                     name="zarinPal"

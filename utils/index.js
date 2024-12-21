@@ -1,6 +1,5 @@
 export * from './constants'
 export * from './validation'
-export * from './exchange'
 export { default as formatNumber } from './formatNumber'
 export { default as truncate } from './truncate'
 export { default as existItem } from './existItem'

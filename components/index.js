@@ -106,7 +106,6 @@ export { default as SpecialSell } from './product/SpecialSell'
 export { default as Depot } from './product/Depot'
 export { default as ImageGallery } from './product/ImageGallery'
 export { default as OutOfStock } from './product/OutOfStock'
-export { default as InitialStore } from './product/InitialStore'
 export { default as ProductsAside } from './product/ProductsAside'
 export { default as VariantSelector } from './product/VariantSelector'
 

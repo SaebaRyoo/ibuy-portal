@@ -57,12 +57,6 @@ export default function Navbar() {
                         onMouseOver={() => handleActive(levelOneCategory.id)}
                       >
                         <div className="px-3 py-3 flex gap-x-1.5 items-center">
-                          <ResponsiveImage
-                            dimensions="w-7 h-7"
-                            className="grayscale"
-                            src=""
-                            alt={levelOneCategory.name}
-                          />
                           <span>{levelOneCategory.name}</span>
                         </div>
                       </li>

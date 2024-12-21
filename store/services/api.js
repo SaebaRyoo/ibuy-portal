@@ -20,7 +20,8 @@ const baseQueryWithIntercept = async (args, api, extraOptions) => {
     const { status } = error
     if (error.status === 401) {
       // 清除token
-      // api.dispatch(userLogout())
+      const currentUrl = window.location.pathname
+      window.location.href = `/login?redirectTo=${currentUrl}`
     }
   }
   return result
