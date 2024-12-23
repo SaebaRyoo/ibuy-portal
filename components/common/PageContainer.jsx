@@ -11,7 +11,7 @@ const PageContainer = props => {
         <div className="lg:hidden">
           <BackIconBtn />
         </div>
-        <h3 className="pb-1 text-gray-500 text-sm lg:border-red-500 lg:border-b-2 lg:mx-3 md:text-base">
+        <h3 className="pb-1 text-gray-500 text-sm lg:border-cPink lg:border-b-2 lg:mx-3 md:text-base">
           {title}
         </h3>
       </div>

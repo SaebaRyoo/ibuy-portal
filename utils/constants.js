@@ -35,16 +35,16 @@ export const PayTypes = [
     name: '支付宝',
     value: AliPay,
   },
-  {
-    name: '微信',
-    value: WechatPay,
-  },
-  {
-    name: '银联',
-    value: UnionPay,
-  },
-  {
-    name: '货到付款',
-    value: CashOnDelivery,
-  },
+  // {
+  //   name: '微信',
+  //   value: WechatPay,
+  // },
+  // {
+  //   name: '银联',
+  //   value: UnionPay,
+  // },
+  // {
+  //   name: '货到付款',
+  //   value: CashOnDelivery,
+  // },
 ]

@@ -39,9 +39,12 @@ export default function Navbar() {
         </PopoverButton>
         <PopoverPanel
           transition
-          anchor="bottom"
+          anchor={{
+            to: 'bottom start',
+            gap: 24,
+            offset: -100,
+          }}
           modal={true}
-          className="divide-y divide-white/5 rounded-xl bg-white/5 text-sm transition duration-300 ease-in-out transform scale-95 opacity-0 data-[open]:scale-100 data-[open]:opacity-100"
         >
           <div className="w-full bg-white rounded-md shadow-lg border border-gray-100">
             <div className="flex">
@@ -64,7 +67,7 @@ export default function Navbar() {
               </ul>
 
               {/* Level 2 and 3 Categories */}
-              <ul className="flex flex-wrap w-full gap-10 px-2 py-4">
+              <ul className="flex flex-wrap flex-grow gap-10 px-2 py-4">
                 {activeId &&
                   categories &&
                   categories.map(levelTwoCategory => {
@@ -73,7 +76,7 @@ export default function Navbar() {
                     return (
                       <li key={levelTwoCategory.id} className="h-fit">
                         {/* Level 2 Category */}
-                        <div className="flex-center px-2 mb-1 text-sm font-semibold tracking-wider text-gray-700 border-l-2 border-red-500">
+                        <div className="flex-center px-2 mb-1 text-sm font-semibold tracking-wider text-gray-700 border-l-2 border-cPink">
                           {levelTwoCategory.name}
                           <Icons.ArrowRight2 className="icon" />
                         </div>

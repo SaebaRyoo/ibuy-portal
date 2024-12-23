@@ -35,7 +35,7 @@ export default function Signup() {
       <>
         <div className="lg:hidden">
           <Link href="/profile">
-            <Icons.User className="icon h-7 w-7" />
+            <Icons.User className="icon h-8 w-8" />
           </Link>
         </div>
         <div className="hidden lg:block">

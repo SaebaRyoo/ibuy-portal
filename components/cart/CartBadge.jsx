@@ -12,7 +12,7 @@ export default function CartBadge() {
   return (
     <div className="relative">
       {totalItems ? (
-        <span className="absolute outline outline-2 bottom-3.5 left-5 bg-red-500 rounded-md w-5 h-5 p-0.5 text-center text-xs text-white">
+        <span className="absolute outline outline-2 bottom-3.5 left-5 bg-cPink rounded-md w-5 h-5 p-0.5 text-center text-xs text-white">
           {formatNumber(totalItems)}
         </span>
       ) : null}
