@@ -4,7 +4,7 @@ const ComingSoon = () => {
       <div className="text-center">
         <h1 className="text-4xl font-extrabold text-gray-900 sm:text-5xl">Coming Soon</h1>
         <p className="mt-4 text-lg text-gray-600">
-          We're working hard to bring you something amazing. Stay tuned!
+          We&apos;re working hard to bring you something amazing. Stay tuned!
         </p>
         <div className="mt-6">
           <input
