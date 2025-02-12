@@ -1,8 +1,8 @@
 {
     "rewrites": [
         {
-        "source": "/v1/:path*",
-        "destination": "https://74400120.r9.cpolar.top/v1/:path*"
+            "source": "/v1/:path*",
+            "destination": "http://1.116.114.41/v1/:path*"
         }
     ]
 }
