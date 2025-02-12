@@ -78,11 +78,12 @@ const ShippingPage = () => {
 
     // 4. 根据alipayData.data.url 跳转到一个新的支付页面
     const alipayUrl = alipayData?.data?.data?.alipayUrl
-    // if (payType === AliPay) {
-    window.open(alipayUrl, '_blank')
-    // }
+    console.log('alipayUrl--->', alipayUrl)
 
     if (alipayUrl) {
+      if (payType === AliPay) {
+        window.open(alipayUrl, '_blank')
+      }
       // 5. 跳转到支付状态查询页面
       router.push(`/checkout/payment?orderId=${orderId}`)
     }
