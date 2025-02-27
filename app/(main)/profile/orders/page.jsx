@@ -32,6 +32,8 @@ const Orders = () => {
     orderStatus: activeTab === 'all' ? undefined : activeTab,
   })
 
+  console.log('data->', data)
+
   const orders = data?.data?.data || []
   const total = data?.data?.total || 0
 
@@ -73,7 +75,7 @@ const Orders = () => {
         </div>
       </ShowWrapper>
 
-      {total > 5 && (
+      {/* {total > 5 && (
         <div className="py-4 mx-auto lg:max-w-5xl">
           <Pagination
             // TODO: 生产环境有报错
@@ -83,7 +85,7 @@ const Orders = () => {
             client
           />
         </div>
-      )}
+      )} */}
       {/* </PageContainer> */}
     </main>
   )

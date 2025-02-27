@@ -13,10 +13,11 @@ export default function ResponsiveImage(props) {
       className={`relative ${dimensions ? dimensions : ''} ${className ? className : ''}`}
       title={alt}
     >
-      <Image
+      <img
         src={src}
         alt={alt}
-        className={imageStyles}
+        // className={imageStyles}
+        className="h-full object-contain"
         placeholder="blur"
         blurDataURL={blurDataURL}
         quality="100"

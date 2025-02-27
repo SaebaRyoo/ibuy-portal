@@ -134,7 +134,7 @@ const ShippingPage = () => {
             {/* products */}
             <section className="px-2 py-4 mx-3 border border-gray-200 rounded-lg lg:mx-0 lg:mt-3 ">
               <div className="flex mb-5">
-                <Image src="/icons/car.png" className="mr-4" width={40} height={40} alt="icon" />
+                <img src="/icons/car.png" className="mr-4" width={40} height={40} alt="icon" />
                 <div>
                   <span className="text-base text-black">正常发货</span>
                   <span className="block">有现货</span>

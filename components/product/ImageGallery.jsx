@@ -24,10 +24,10 @@ const ImageGallery = props => {
   return (
     <section className="mb-5 lg:col-span-3 ">
       <div className="hidden lg:block">
-        <SpecialSell discount={_discount} inStock={_inStock} />
+        {/* <SpecialSell discount={_discount} inStock={_inStock} /> */}
         <ResponsiveImage
           dimensions="lg:h-[320px] lg:w-[320px] xl:h-[420px] xl:w-[420px] 2xl:h-[500px] 2xl:w-[500px]"
-          className="mx-auto"
+          className="mx-auto h-full object-contain"
           src={_images[currentImage]}
           alt={_productName}
         />
