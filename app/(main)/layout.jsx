@@ -2,10 +2,12 @@
 
 import { useEffect, useState } from 'react'
 
-// ? Store
+// Store
 import StoreProvider from 'app/StoreProvider'
 
-// ? Conponents
+// Components
+import AppRoot from 'app/AppRoot'
+
 import { PageLoading, Alert } from '@/components'
 
 export default function Layout({ children }) {
@@ -21,9 +23,11 @@ export default function Layout({ children }) {
 
   return (
     <StoreProvider>
-      {children}
-      <Alert />
-      <PageLoading />
+      <AppRoot>
+        {children}
+        <Alert />
+        <PageLoading />
+      </AppRoot>
     </StoreProvider>
   )
 }

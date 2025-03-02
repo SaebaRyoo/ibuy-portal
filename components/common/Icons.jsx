@@ -14,7 +14,15 @@ import { FiLogIn, FiLogOut, FiEdit, FiPlus, FiMinus } from 'react-icons/fi'
 import { VscThreeBars, VscLocation } from 'react-icons/vsc'
 import { HiOutlineUser, HiOutlineUsers } from 'react-icons/hi'
 import { IoSearch, IoImagesOutline } from 'react-icons/io5'
-import { BiAbacus, BiCategory } from 'react-icons/bi'
+import {
+  BiAbacus,
+  BiCategory,
+  BiCheckCircle,
+  BiXCircle,
+  BiTime,
+  BiPackage,
+  BiLoaderCircle,
+} from 'react-icons/bi'
 import { TfiLayoutSlider } from 'react-icons/tfi'
 
 import {
@@ -74,6 +82,11 @@ const Icons = {
   User: HiOutlineUser,
   Users: HiOutlineUsers,
   Category: BiCategory,
+  CheckCircle: BiCheckCircle,
+  XCircle: BiXCircle,
+  Time: BiTime,
+  Package: BiPackage,
+  LoaderCircle: BiLoaderCircle,
   Question: BsQuestionSquare,
   Search: IoSearch,
   ArrowDown: RiArrowDownSFill,
