@@ -5,7 +5,6 @@
 ## 📑 目录
 
 - [项目概述](#项目概述)
-- [主要功能](#主要功能)
 - [技术栈](#技术栈)
 - [安装与使用](#安装与使用)
 - [项目结构](#项目结构)
@@ -18,7 +17,7 @@
 该项目是一个采用前后端分离架构的B2C购物商城：
 - **前端Portal仓库: [ibuy-portal](https://github.com/SaebaRyoo/ibuy-portal)**：使用 Next.js 开发，生成静态文件独立部署，同时也支持Vercel部署方案，具有优秀的性能和SEO友好的特性
 - **Portal后端仓库: [ibuy-portal-backend](https://github.com/SaebaRyoo/ibuy-portal-backend)**：使用 Nest.js 框架开发，提供RESTful API接口，负责处理业务逻辑、数据存储和第三方服务集成
-- **后台管理平台: [ibuy-admin](https://github.com/SaebaRyoo/ibuy-admin-backend)**：使用 ant-design pro进行二次开发。管理商品、订单等
+- **后台管理平台: [ibuy-admin](https://github.com/SaebaRyoo/ibuy-admin)**：使用 ant-design pro进行二次开发。管理商品、订单等
 - **后台管理平台: [ibuy-admin-backend](https://github.com/SaebaRyoo/ibuy-admin-backend)**：使用 Nest.js 框架开发，提供RESTful API接口,处理后台管理业务逻辑
 
 
@@ -34,10 +33,18 @@
 
 ## 📦 安装与使用
 
-### 前提条件
+### 环境要求
 
-- Node.js 16.x 或更高版本
-- npm 或 yarn
+- Node.js >= 16
+- Postgres >= 17
+- Redis >= 7
+- minio = latest
+- rabbitmq >= 4.0
+- elasticsearch >= 8.14.2
+- kibana >= 8.14.2 (可选)
+
+### 项目依赖
+要想本地运行，除了上面的各个服务，还需要启动 `Portal` 对应的后端代码 [ibuy-portal-backend](https://github.com/SaebaRyoo/ibuy-portal-backend)
 
 ### 安装步骤
 
