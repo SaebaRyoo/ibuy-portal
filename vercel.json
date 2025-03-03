@@ -2,7 +2,7 @@
     "rewrites": [
         {
             "source": "/v1/:path*",
-            "destination": "http://1.116.114.41:8000/v1/:path*"
+            "destination": "http://ibuy.xin:8000/v1/:path*"
         }
     ]
 }
