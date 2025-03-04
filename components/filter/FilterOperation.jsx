@@ -82,7 +82,7 @@ const FilterOperation = props => {
   // Render
   return (
     <>
-      <div className="flex justify-end ">
+      {/* <div className="flex justify-end ">
         <button
           type="button"
           className="text-sm text-sky-500"
@@ -91,23 +91,9 @@ const FilterOperation = props => {
         >
           删除过滤器
         </button>
-      </div>
+      </div> */}
 
       <div className="divide-y">
-        <CustomCheckbox
-          name="inStock"
-          checked={filters.inStock}
-          onChange={handlefilter}
-          label="仅限库存商品"
-        />
-
-        <CustomCheckbox
-          name="discount"
-          checked={filters.discount}
-          onChange={handlefilter}
-          label="仅限特价商品"
-        />
-
         <div className="py-4">
           <span className="font-medium text-gray-700">价格范围</span>
           <div className="flex items-center justify-between gap-x-1">

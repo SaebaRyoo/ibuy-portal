@@ -3,7 +3,7 @@
 import { useState } from 'react'
 import Link from 'next/link'
 
-import { Icons, EmptySearchList, ShowWrapper } from 'components'
+import { Icons, EmptySearchList, DropList } from 'components'
 import { truncate } from 'utils'
 
 import { useSearchProductsQuery } from '@/store/services'
@@ -13,6 +13,7 @@ import { useDebounce } from 'hooks'
 export default function Search() {
   // States
   const [search, setSearch] = useState('')
+  const [showDropList, setShowDropList] = useState(false)
 
   // Debounced search term
   const debouncedSearch = useDebounce(search, 1200)
@@ -38,11 +39,13 @@ export default function Search() {
   // Handle user input change
   const handleChange = e => {
     setSearch(e.target.value)
+    setShowDropList(!!e.target.value.length)
   }
 
   // Clear search input
   const handleRemoveSearch = () => {
     setSearch('')
+    setShowDropList(false)
   }
 
   return (
@@ -55,9 +58,10 @@ export default function Search() {
         <input
           type="text"
           placeholder="搜索"
-          className="flex-grow p-1 text-left bg-transparent outline-none input focus:border-none"
+          className="flex-grow p-1 text-left bg-transparent outline-none border-none input focus:outline-none focus:border-none focus:ring-0 focus-visible:outline-none focus-visible:ring-0 focus:shadow-none appearance-none"
           value={search}
           onChange={handleChange}
+          style={{ WebkitAppearance: 'none' }}
         />
         <button type="button" className="p-2" onClick={handleRemoveSearch}>
           {search.length > 0 && <Icons.Close className="icon text-gray-500" />}
@@ -66,7 +70,9 @@ export default function Search() {
 
       {/* 搜索结果下拉区域 */}
       <div className="absolute top-[54px] w-full max-h-[500px] overflow-y-auto bg-white rounded-b-lg shadow-lg z-10">
-        <ShowWrapper
+        <DropList
+          show={showDropList}
+          onClose={() => setShowDropList(false)}
           error={error}
           isError={isError}
           refetch={refetch}
@@ -76,15 +82,14 @@ export default function Search() {
           emptyComponent={<EmptySearchList />}
         >
           <div className="px-4 py-2">
-            {/* Show search results */}
-            {isFetching && search.length > 0 && (
-              <div className="text-gray-500 text-sm py-4 text-center">正在搜索...</div>
-            )}
             {searchData?.rows?.length > 0 &&
-              search.length > 0 &&
               searchData.rows.map(item => (
                 <article key={item.id} className="py-2">
-                  <Link href={`/search?keywords=${search}`} passHref>
+                  <Link
+                    onClick={() => setSearch(item.name)}
+                    href={`/search?keywords=${item.name}`}
+                    passHref
+                  >
                     <span className="block py-3 px-4 bg-white rounded-lg shadow-sm hover:shadow-md transition-all duration-150 ease-in-out text-gray-700 hover:bg-gray-50">
                       <span className="text-sm font-medium">{truncate(item.name, 70)}</span>
                     </span>
@@ -92,7 +97,7 @@ export default function Search() {
                 </article>
               ))}
           </div>
-        </ShowWrapper>
+        </DropList>
       </div>
     </div>
   )
