@@ -78,7 +78,7 @@ const ProductsHome = () => {
           </div>
         </div>
 
-        {searchData && searchData?.total > 10 && (
+        {/* {searchData && searchData?.total > 10 && (
           <div className="py-4 mx-auto lg:max-w-5xl">
             <Pagination
               pagination={searchData?.totalPages}
@@ -87,7 +87,7 @@ const ProductsHome = () => {
               client
             />
           </div>
-        )}
+        )} */}
       </main>
     </>
   )

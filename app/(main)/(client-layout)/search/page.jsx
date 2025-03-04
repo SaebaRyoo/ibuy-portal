@@ -11,30 +11,23 @@ const SearchHome = () => {
   // Assets
   const query = useUrlQuery()
 
-  const category = query?.category?.toString() ?? ''
-
   // Handlers
   const changeRoute = useChangeRoute()
 
   const handleChangeRoute = newQueries => {
     changeRoute({
       ...query,
-      page: 1,
+      pageNum: 1,
       ...newQueries,
     })
   }
 
   // Search Data
-  const { searchData, isFetching: isFetchingProduct } = useSearchProductsQuery(
-    {
-      categoryName: category,
+  const { searchData, isFetching: isFetchingProduct } = useSearchProductsQuery(query, {
+    selectFromResult: ({ isLoading, data }) => {
+      return { searchData: data?.data.data ?? [], isFetching: isLoading }
     },
-    {
-      selectFromResult: ({ isLoading, data }) => {
-        return { searchData: data?.data.data ?? [], isFetching: isLoading }
-      },
-    }
-  )
+  })
 
   return (
     <>
@@ -72,7 +65,8 @@ const SearchHome = () => {
         {searchData && searchData?.total > 10 && (
           <div className="py-4 mx-auto lg:max-w-5xl">
             <Pagination
-              pagination={searchData?.totalPages}
+              pageNumber={searchData.pageNumber}
+              totalPages={searchData.totalPages}
               changeRoute={handleChangeRoute}
               section="_products"
               client

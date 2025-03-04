@@ -20,7 +20,7 @@ export const productApiSlice = apiSlice.injectEndpoints({
         })
 
         return {
-          url: `/v1/spu`,
+          url: `/v1/spu?${queryParams.toString()}`,
           method: 'GET',
         }
       },
@@ -102,7 +102,7 @@ export const productApiSlice = apiSlice.injectEndpoints({
         })
 
         return {
-          url: `/v1/search/query`,
+          url: `/v1/search/query?${queryParams.toString()}`,
           method: 'GET',
         }
       },
