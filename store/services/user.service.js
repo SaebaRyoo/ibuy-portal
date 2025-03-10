@@ -20,6 +20,14 @@ export const userApiSlice = apiSlice.injectEndpoints({
       ],
     }),
 
+    logout: builder.mutation({
+      query: () => ({
+        url: '/v1/auth/logout',
+        method: 'POST',
+      }),
+      invalidatesTags: ['User'],
+    }),
+
     getUserInfo: builder.query({
       query: () => ({
         url: '/v1/auth/profile',
@@ -57,5 +65,10 @@ export const userApiSlice = apiSlice.injectEndpoints({
   }),
 })
 
-export const { useLoginMutation, useGetUserInfoQuery, useCreateUserMutation, useEditUserMutation } =
-  userApiSlice
+export const {
+  useLoginMutation,
+  useGetUserInfoQuery,
+  useCreateUserMutation,
+  useEditUserMutation,
+  useLogoutMutation,
+} = userApiSlice

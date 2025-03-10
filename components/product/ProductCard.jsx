@@ -20,7 +20,7 @@ const ProductCard = props => {
           <div className="sm:flex sm:p-1 ">
             <ResponsiveImage
               dimensions="h-[28vw] w-[26vw] sm:w-56 sm:h-60 sm:mb-8 xl:w-44 xl:h-48"
-              src={product.images.split(',')[0]}
+              src={product?.images?.split(',')[0]}
               alt={product.name}
             />
           </div>
