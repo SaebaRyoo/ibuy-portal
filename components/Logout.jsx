@@ -2,6 +2,7 @@ import { useRouter } from 'next/navigation'
 
 import { useDispatch } from 'react-redux'
 import { userLogout, showAlert } from 'store'
+import { useLogoutMutation } from '@/store/services'
 
 import { Icons } from 'components'
 
@@ -10,16 +11,21 @@ export default function Logout() {
   const dispatch = useDispatch()
   const router = useRouter()
 
+  const [logout] = useLogoutMutation()
+
   // Handlers
-  const handleLogout = () => {
-    router.push('/')
-    dispatch(userLogout())
-    dispatch(
-      showAlert({
-        status: 'success',
-        title: '退出登录成功',
-      })
-    )
+  const handleLogout = async () => {
+    const res = await logout()
+    if (res?.data?.code === 200) {
+      router.push('/')
+      dispatch(userLogout())
+      dispatch(
+        showAlert({
+          status: 'success',
+          title: '退出登录成功',
+        })
+      )
+    }
   }
 
   // Render
