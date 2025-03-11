@@ -43,3 +43,6 @@ jobs: # 构建的任务，一个工作流有多个构建任务，
             rm -rf /usr/local/docker-volumes/openresty/html/out/*
           # 静态资源目标目录
           TARGET: '/usr/local/docker-volumes/openresty/html/out'
+          SCRIPT_AFTER: |
+            # 重启openresty
+            docker restart openresty
