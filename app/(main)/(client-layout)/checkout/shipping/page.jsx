@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 import Image from 'next/image'
 import Link from 'next/link'
@@ -44,6 +44,12 @@ const ShippingPage = () => {
   // 获取支付宝支付页面链接
   const [getAlipayUrl] = useGetAlipayUrlMutation()
 
+  useEffect(() => {
+    if (isSuccess) {
+      refetchCartList()
+    }
+  }, [isSuccess])
+
   // Handlers
   const handleCreateOrder = async () => {
     // 1. 验证用户是否选择了地址
@@ -66,10 +72,10 @@ const ShippingPage = () => {
       },
     })
     // 重新刷新一下购物车列表
-    refetchCartList()
+    // refetchCartList()
     // 3. 根据订单id 调用支付接口
     const orderId = orderResult?.data?.data?.id
-    console.log('orderId: ', orderId)
+    // console.log('orderId: ', orderId)
 
     const alipayData = await getAlipayUrl({
       orderId: orderId,
@@ -78,7 +84,7 @@ const ShippingPage = () => {
 
     // 4. 根据alipayData.data.url 跳转到一个新的支付页面
     const alipayUrl = alipayData?.data?.data?.alipayUrl
-    console.log('alipayUrl--->', alipayUrl)
+    // console.log('alipayUrl--->', alipayUrl)
 
     if (alipayUrl) {
       if (payType === AliPay) {
