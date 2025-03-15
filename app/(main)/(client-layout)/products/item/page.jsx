@@ -11,7 +11,6 @@ import {
 import { transformSpecObject, BuyType } from '@/utils'
 
 export default function SingleProduct() {
-
   const router = useRouter()
   const query = useUrlQuery()
   const spuId = query?.spuId?.toString() ?? ''
