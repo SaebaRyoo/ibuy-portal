@@ -8,7 +8,7 @@ import { useRouter } from 'next/navigation'
 
 import { showAlert } from 'store'
 
-import { useCreateOrderFromCartListMutation, useGetAlipayUrlMutation } from '@/store/services'
+import { useCreateOrderDirectlyMutation, useCreateOrderFromCartListMutation, useGetAlipayUrlMutation } from '@/store/services'
 
 import {
   Button,
@@ -19,11 +19,21 @@ import {
   AddressSelector,
 } from 'components'
 
-import { AliPay, formatNumber, PayTypes } from 'utils'
+import { AliPay, formatNumber, PayTypes, BuyType } from 'utils'
 
-import { useAppDispatch, useAppSelector, useCartList } from 'hooks'
+import { useAppDispatch, useAppSelector, useCartList, useUrlQuery } from 'hooks'
 
 const ShippingPage = () => {
+  const query = useUrlQuery()
+  const buyType = query?.buyType?.toString() ?? ''
+  const skuId = query?.skuId?.toString() ?? null
+  const num = query?.num?.toString() ?? null
+
+  const skuInfo = {
+    skuId,
+    num,
+  }
+
   // Assets
   const router = useRouter()
   const dispatch = useAppDispatch()
@@ -37,8 +47,9 @@ const ShippingPage = () => {
   // get selected address from redux
   const currentSelectedAddress = useAppSelector(state => state.address.currentSelectedAddress)
 
+
   // Mutations
-  // const [postData, { data, isSuccess, isError, isLoading, error }] = useCreateOrderMutation()
+  const [createOrderDirectly, { data: directlyData, isSuccess: isOrderSuccess_D, isError: isOrderError_D, isLoading: isOrderLoading_D, error: orderError_D }] = useCreateOrderDirectlyMutation()
   const [createOrderFromCartList, { data, isSuccess, isError, isLoading, error }] =
     useCreateOrderFromCartListMutation()
   // 获取支付宝支付页面链接
@@ -52,6 +63,12 @@ const ShippingPage = () => {
 
   // Handlers
   const handleCreateOrder = async () => {
+    const orderInfo = {
+      receiverAddress: currentSelectedAddress?.address,
+      receiverMobile: currentSelectedAddress?.phone,
+      receiverContact: currentSelectedAddress?.contact,
+      payType,
+    }
     // 1. 验证用户是否选择了地址
     if (!currentSelectedAddress) {
       return dispatch(
@@ -62,15 +79,21 @@ const ShippingPage = () => {
       )
     }
 
-    // 2. 调用创建订单接口
-    const orderResult = await createOrderFromCartList({
-      body: {
-        receiverAddress: currentSelectedAddress.address,
-        receiverMobile: currentSelectedAddress.phone,
-        receiverContact: currentSelectedAddress.contact,
-        payType,
-      },
-    })
+    let orderResult
+    if (buyType === BuyType.direct) {
+      // 直接购买
+      orderResult = await createOrderDirectly({
+        body: {
+          skuInfo,
+          orderInfo,
+        }
+      })
+    } else {
+      // 从购物车购买
+      orderResult = await createOrderFromCartList({
+        body: orderInfo,
+      })
+    }
     // 重新刷新一下购物车列表
     // refetchCartList()
     // 3. 根据订单id 调用支付接口
@@ -110,20 +133,25 @@ const ShippingPage = () => {
           }}
         />
       )}
+      {(isOrderSuccess_D || isOrderError_D) && (
+        <HandleResponse
+          isError={isOrderError_D}
+          isSuccess={isOrderSuccess_D}
+          error={orderError_D?.data?.message}
+          message={directlyData?.message}
+          onSuccess={() => {
+            router.push('/profile')
+          }}
+        />
+      )}
 
       <main className="py-2 mx-auto space-y-3 container">
         {/* header */}
         <header className="lg:border lg:border-gray-200 lg:rounded-lg py-2">
           <div className="flex items-center justify-evenly">
-            <Link href="/checkout/cart" className="flex flex-col items-center gap-y-2">
-              <Icons.Cart className="text-red-300 icon" />
-              <span className="font-normal text-red-300">购物车</span>
-            </Link>
-
-            <div className="h-[1px] w-8  bg-red-300" />
             <div className="flex flex-col items-center gap-y-2">
-              <Icons.Wallet className="w-6 h-6 text-cPink icon" />
-              <span className="text-base font-normal text-cPink">付款方式</span>
+              {/* <Icons.Wallet className="w-6 h-6 text-cPink icon" /> */}
+              <span className="text-base font-normal text-cPink">请确认订单信息</span>
             </div>
           </div>
         </header>
@@ -188,10 +216,10 @@ const ShippingPage = () => {
               ))}
               <Button
                 onClick={handleCreateOrder}
-                isLoading={isLoading}
+                isLoading={isLoading || isOrderLoading_D}
                 className="w-full max-w-5xl mx-auto"
               >
-                完成购买
+                提交订单
               </Button>
             </div>
           </section>

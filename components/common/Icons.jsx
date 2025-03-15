@@ -52,6 +52,7 @@ import {
   RiLinkedinFill,
   RiInstagramFill,
   RiYoutubeFill,
+  RiOrderPlayFill,
 } from 'react-icons/ri'
 
 import { CgSandClock } from 'react-icons/cg'
@@ -64,6 +65,7 @@ const Icons = {
   Cross: BsFillXCircleFill,
   Times: RiTimeFill,
   Wallet: RiWallet3Line,
+  Order: RiOrderPlayFill,
   Rule: RiPencilRuler2Line,
   More: RiMore2Fill,
   ShieldCheck: BsShieldCheck,

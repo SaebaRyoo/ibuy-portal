@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation'
 import { Icons, CartItem, CartInfo, Header, RedirectToLogin, Button, EmptyCart } from 'components'
 import { Menu, Transition, MenuButton, MenuItem, MenuItems } from '@headlessui/react'
 
-import { formatNumber } from 'utils'
+import { formatNumber, BuyType } from 'utils'
 
 import { useUserInfo, useDisclosure, useCartList } from 'hooks'
 
@@ -23,7 +23,7 @@ const CartPage = () => {
   const handleRoute = () => {
     if (!userInfo) return redirectModalHandlers.open()
 
-    push('/checkout/shipping')
+    push(`/checkout/shipping?buyType=${BuyType.cart}`)
   }
 
   // 删除全部商品的下拉菜单

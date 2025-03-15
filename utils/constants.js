@@ -48,3 +48,10 @@ export const PayTypes = [
   //   value: CashOnDelivery,
   // },
 ]
+
+
+export const BuyType = {
+  cart: 'cart', // 购物车
+  direct: 'direct',   // 直接购买
+}
+
