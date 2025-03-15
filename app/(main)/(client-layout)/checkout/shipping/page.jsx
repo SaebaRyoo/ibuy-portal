@@ -8,7 +8,11 @@ import { useRouter } from 'next/navigation'
 
 import { showAlert } from 'store'
 
-import { useCreateOrderDirectlyMutation, useCreateOrderFromCartListMutation, useGetAlipayUrlMutation } from '@/store/services'
+import {
+  useCreateOrderDirectlyMutation,
+  useCreateOrderFromCartListMutation,
+  useGetAlipayUrlMutation,
+} from '@/store/services'
 
 import {
   Button,
@@ -47,9 +51,17 @@ const ShippingPage = () => {
   // get selected address from redux
   const currentSelectedAddress = useAppSelector(state => state.address.currentSelectedAddress)
 
-
   // Mutations
-  const [createOrderDirectly, { data: directlyData, isSuccess: isOrderSuccess_D, isError: isOrderError_D, isLoading: isOrderLoading_D, error: orderError_D }] = useCreateOrderDirectlyMutation()
+  const [
+    createOrderDirectly,
+    {
+      data: directlyData,
+      isSuccess: isOrderSuccess_D,
+      isError: isOrderError_D,
+      isLoading: isOrderLoading_D,
+      error: orderError_D,
+    },
+  ] = useCreateOrderDirectlyMutation()
   const [createOrderFromCartList, { data, isSuccess, isError, isLoading, error }] =
     useCreateOrderFromCartListMutation()
   // 获取支付宝支付页面链接
@@ -86,7 +98,7 @@ const ShippingPage = () => {
         body: {
           skuInfo,
           orderInfo,
-        }
+        },
       })
     } else {
       // 从购物车购买
