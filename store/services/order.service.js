@@ -28,9 +28,10 @@ export const orderApiSlice = apiSlice.injectEndpoints({
       invalidatesTags: ['Order'],
     }),
 
-    createOrder: builder.mutation({
+    // 直接购买
+    createOrderDirectly: builder.mutation({
       query: ({ body }) => ({
-        url: '/api/order',
+        url: '/v1/order/direct',
         method: 'POST',
         body,
       }),
@@ -43,5 +44,5 @@ export const {
   useGetOrdersQuery,
   useGetOrderItemsQuery,
   useCreateOrderFromCartListMutation,
-  useCreateOrderMutation,
+  useCreateOrderDirectlyMutation,
 } = orderApiSlice

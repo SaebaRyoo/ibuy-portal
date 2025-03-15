@@ -30,7 +30,7 @@ const AddressSelector = () => {
   }
 
   return (
-    <div className="p-6 bg-white rounded-lg shadow-md">
+    <div className="p-6 bg-white border border-gray-200 rounded-lg shadow-md">
       <div className="flex items-center justify-between mb-4">
         <h2 className="text-lg font-semibold">确认收货地址</h2>
         <div className="flex gap-2">

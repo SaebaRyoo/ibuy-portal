@@ -2,14 +2,17 @@
 
 import { ImageGallery, OutOfStock, VariantSelector } from 'components'
 import { useCartList, useUrlQuery } from '@/hooks'
+import { useRouter } from 'next/navigation'
 import {
   useAddToCartMutation,
   useGetSingleSkuQuery,
   useGetSkusBySpuIdQuery,
 } from '@/store/services'
-import { transformSpecObject } from '@/utils'
+import { transformSpecObject, BuyType } from '@/utils'
 
 export default function SingleProduct() {
+
+  const router = useRouter()
   const query = useUrlQuery()
   const spuId = query?.spuId?.toString() ?? ''
   const skuId = query?.skuId?.toString() ?? ''
@@ -46,12 +49,18 @@ export default function SingleProduct() {
     useAddToCartMutation()
   const { refetch: refetchCartList } = useCartList()
 
+  // 加入购物车
   const onAddToCart = async data => {
     await addToCart({
       id: data.id,
       num: data.num,
     })
     refetchCartList()
+  }
+
+  // 立即购买，跳转到shipping页面
+  const onBuyNow = async data => {
+    router.push(`/checkout/shipping?buyType=${BuyType.direct}&skuId=${data.id}&num=${data.num}`)
   }
 
   return (
@@ -74,7 +83,7 @@ export default function SingleProduct() {
           <div className="border-t border-gray-200 pt-4" />
 
           {/* 商品属性选择 */}
-          <VariantSelector data={{ skus }} onAddToCart={onAddToCart} />
+          <VariantSelector data={{ skus }} onAddToCart={onAddToCart} onPressConfirm={onBuyNow} />
 
           {product.num === 0 && <OutOfStock />}
         </div>

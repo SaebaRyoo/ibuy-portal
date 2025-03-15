@@ -1,3 +1,4 @@
+import { BuyType } from '@/utils/constants'
 import _ from 'lodash'
 import React, { FC, useState, useEffect } from 'react'
 
@@ -18,7 +19,7 @@ type PostBody = {
 interface Props {
   /** 商品数据 */
   data: SkuItem
-  /** 点击确定按钮 */
+  /** 直接购买 */
   onPressConfirm?: (p: PostBody) => void
   /** 加入购物车 */
   onAddToCart?: (p: PostBody) => void
@@ -26,11 +27,6 @@ interface Props {
   optionsChange?: (s: Spec) => void
   /** modal关闭时触发 */
   onClose?: (s: Spec) => void
-}
-
-export enum BuyType {
-  cart = 'cart',
-  buy = 'buy',
 }
 
 let TotalSkuStock = 0 // 总库存
@@ -298,7 +294,7 @@ const SkuSelect: FC<Props> = props => {
     }
     setCount(_count)
   }
-  const onPressConfirmButton = (buyType: BuyType) => {
+  const onPressConfirmButton = (buyType: string) => {
     if (!judgeCanAdd(data?.skus)) {
       return
     }
@@ -389,7 +385,7 @@ const SkuSelect: FC<Props> = props => {
             className={`w-full py-3 rounded-full text-white ${
               canFlag ? 'bg-orange-500 hover:bg-orange-600' : 'bg-gray-400 cursor-not-allowed'
             }`}
-            onClick={() => onPressConfirmButton(BuyType.buy)}
+            onClick={() => onPressConfirmButton(BuyType.direct)}
             disabled={!canFlag}
           >
             立即购买

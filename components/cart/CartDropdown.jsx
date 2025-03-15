@@ -1,7 +1,7 @@
 import { Fragment } from 'react'
 import { useRouter } from 'next/navigation'
 
-import { formatNumber } from 'utils'
+import { formatNumber, BuyType } from 'utils'
 
 import { useUserInfo, useDisclosure, useCartList } from 'hooks'
 
@@ -19,7 +19,7 @@ export default function CartDropdown() {
   // Handlers
   const handleRoute = () => {
     if (!isVerify) return redirectModalHandlers.open()
-    push('/checkout/shipping')
+    push(`/checkout/shipping?buyType=${BuyType.cart}`)
   }
 
   // Render
