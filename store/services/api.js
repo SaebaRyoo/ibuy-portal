@@ -48,29 +48,45 @@ const baseQueryWithIntercept = async (args, api, extraOptions) => {
   // console.log('args', args)
   // console.log('result', result)
   // console.log('extraOptions', extraOptions)
-  if (result.error && result.error.status === 401) {
-    // 如果是 401 错误
-    if (!isRefreshing) {
-      isRefreshing = true
-      const refreshSuccess = await handleRefreshToken(api)
+  if (result.error) {
+    const { status } = result.error
 
-      if (refreshSuccess) {
-        // 重试当前请求
-        result = await baseQuery(args, api, extraOptions)
+    if (status === 401) {
+      // 如果是 401 错误
+      if (!isRefreshing) {
+        isRefreshing = true
+        const refreshSuccess = await handleRefreshToken(api)
+
+        if (refreshSuccess) {
+          // 重试当前请求
+          result = await baseQuery(args, api, extraOptions)
+        } else {
+          // 刷新失败，跳转到登录页
+          const currentUrl = window.location.pathname
+          window.location.href = `/login?redirectTo=${currentUrl}`
+          return result
+        }
       } else {
-        // 刷新失败，跳转到登录页
-        const currentUrl = window.location.pathname
-        window.location.href = `/login?redirectTo=${currentUrl}`
-        return result
-      }
-    } else {
-      // 将并发请求添加到队列
-      return new Promise(resolve => {
-        requests.push(async () => {
-          const retryResult = await baseQuery(args, api, extraOptions)
-          resolve(retryResult)
+        // 将并发请求添加到队列
+        return new Promise(resolve => {
+          requests.push(async () => {
+            const retryResult = await baseQuery(args, api, extraOptions)
+            resolve(retryResult)
+          })
         })
-      })
+      }
+    } else if (status === 403) {
+      // 无权限，跳转到 403 页面
+      window.location.href = '/403'
+    } else if (status === 500) {
+      // 服务器错误，跳转到 500 页面
+      window.location.href = '/500'
+    } else if (status === 'FETCH_ERROR') {
+      // 网络错误
+      result.error = { ...result.error, data: { message: '网络连接失败，请检查网络设置' } }
+    } else if (status === 'TIMEOUT_ERROR') {
+      // 请求超时
+      result.error = { ...result.error, data: { message: '请求超时，请稍后重试' } }
     }
   }
 
