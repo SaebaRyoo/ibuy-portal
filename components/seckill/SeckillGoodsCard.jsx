@@ -9,20 +9,30 @@ const SeckillGoodsCard = ({ goods, disabled = false }) => {
 
   const soldOut = stockCount === 0
   const almostGone = stockCount > 0 && stockCount <= 5
-  const soldPercent = totalStock > 0 ? Math.round(((totalStock - stockCount) / totalStock) * 100) : 0
+  const soldPercent =
+    totalStock > 0 ? Math.round(((totalStock - stockCount) / totalStock) * 100) : 0
 
   const cardContent = (
     <div
       className={`bg-white rounded-xl overflow-hidden shadow-sm min-w-[200px] max-w-[240px] flex-shrink-0 flex-1 transition-all duration-200 ${
-        soldOut || disabled ? 'opacity-60 cursor-default' : 'cursor-pointer hover:-translate-y-1 hover:shadow-md'
+        soldOut || disabled
+          ? 'opacity-60 cursor-default'
+          : 'cursor-pointer hover:-translate-y-1 hover:shadow-md'
       }`}
     >
       {/* 商品图片 */}
       <div className="relative h-[180px] bg-gray-100">
         {skuImage ? (
-          <ResponsiveImage dimensions="w-full h-full" src={skuImage} alt={skuName} className="object-cover" />
+          <ResponsiveImage
+            dimensions="w-full h-full"
+            src={skuImage}
+            alt={skuName}
+            className="object-cover"
+          />
         ) : (
-          <div className="w-full h-full flex items-center justify-center text-gray-400 text-sm">商品图片</div>
+          <div className="w-full h-full flex items-center justify-center text-gray-400 text-sm">
+            商品图片
+          </div>
         )}
         {!soldOut && (
           <span className="absolute top-2 left-2 bg-[#ff4757] text-white text-[10px] font-bold px-2 py-0.5 rounded">
@@ -31,7 +41,9 @@ const SeckillGoodsCard = ({ goods, disabled = false }) => {
         )}
         {soldOut && (
           <div className="absolute inset-0 bg-black/40 flex items-center justify-center">
-            <span className="text-white text-base font-bold border-2 border-white px-4 py-1 rounded">已售罄</span>
+            <span className="text-white text-base font-bold border-2 border-white px-4 py-1 rounded">
+              已售罄
+            </span>
           </div>
         )}
       </div>
@@ -47,7 +59,10 @@ const SeckillGoodsCard = ({ goods, disabled = false }) => {
         </div>
 
         {/* 进度条 */}
-        <div className="relative h-[18px] rounded-full overflow-hidden" style={{ background: soldOut ? '#eee' : '#ffe0e0' }}>
+        <div
+          className="relative h-[18px] rounded-full overflow-hidden"
+          style={{ background: soldOut ? '#eee' : '#ffe0e0' }}
+        >
           <div
             className={`absolute left-0 top-0 h-full rounded-full ${almostGone ? 'animate-pulse' : ''}`}
             style={{
