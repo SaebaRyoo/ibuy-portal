@@ -120,3 +120,9 @@ export { default as BannerTwo } from './banners/BannerTwo'
 //* ADDRESS COMPONENTS
 export { default as AddressSelector } from './address/AddressSelector'
 export { default as AddressTable } from './address/AddressTable'
+
+//* SECKILL COMPONENTS
+export { default as SeckillBanner } from './seckill/SeckillBanner'
+export { default as SeckillCountdown } from './seckill/SeckillCountdown'
+export { default as SeckillGoodsCard } from './seckill/SeckillGoodsCard'
+export { default as SeckillGoodsList } from './seckill/SeckillGoodsList'
