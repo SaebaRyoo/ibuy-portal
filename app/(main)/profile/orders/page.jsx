@@ -9,46 +9,61 @@ import {
   PageContainer,
   OrderSkeleton,
   Tabs,
+  SeckillOrderCard,
 } from 'components'
 
-import { useGetOrdersQuery } from '@/store/services'
+import { useGetOrdersQuery, useGetSeckillOrdersMutation } from '@/store/services'
 
 import { useTitle, useUrlQuery } from '@/hooks'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 
 const Orders = () => {
   useTitle('订单管理')
-  // Assets
   const query = useUrlQuery()
   const changeRoute = useChangeRoute()
 
-  // state
-  const [activeTab, setActiveTab] = useState(query.activeKey)
+  const [activeTab, setActiveTab] = useState(query.activeKey || 'all')
 
-  // Get Orders Data
-  const { data, isSuccess, isFetching, error, isError, refetch } = useGetOrdersQuery({
-    pageSize: 5,
-    current: query.page ? +query.page : 1,
-    orderStatus: activeTab === 'all' ? undefined : activeTab,
-  })
+  const isSeckillTab = activeTab === 'seckill'
 
-  console.log('data->', data)
+  // 普通订单
+  const { data, isSuccess, isFetching, error, isError, refetch } = useGetOrdersQuery(
+    {
+      pageSize: 5,
+      current: query.page ? +query.page : 1,
+      orderStatus: activeTab === 'all' ? undefined : activeTab,
+    },
+    { skip: isSeckillTab }
+  )
 
   const orders = data?.items || []
   const total = data?.total || 0
 
-  // function
+  // 秒杀订单
+  const [fetchSeckillOrders, {
+    data: seckillData,
+    isSuccess: seckillSuccess,
+    isLoading: seckillLoading,
+    error: seckillError,
+    isError: seckillIsError,
+  }] = useGetSeckillOrdersMutation()
+
+  useEffect(() => {
+    if (isSeckillTab) {
+      fetchSeckillOrders({ current: query.page ? +query.page : 1, pageSize: 5 })
+    }
+  }, [isSeckillTab, query.page])
+
+  const seckillOrders = seckillData?.items || []
+  const seckillTotal = seckillData?.total || 0
+
   const handleTabChange = index => {
-    console.log(`Active tab index: ${index}`)
     changeRoute({ activeKey: index })
-    setActiveTab(index) // 更新父组件中的 activeTab
+    setActiveTab(index)
   }
 
-  // Render
   return (
     <main id="profileOrders">
-      {/* <PageContainer title="订单历史"> */}
-
       <Tabs currentActiveKey={activeTab} onTabChange={handleTabChange}>
         <Tabs.TabPane activeKey="all" label="所有订单"></Tabs.TabPane>
         <Tabs.TabPane activeKey="0" label="待付款"></Tabs.TabPane>
@@ -56,37 +71,44 @@ const Orders = () => {
         <Tabs.TabPane activeKey="2" label="待收货"></Tabs.TabPane>
         <Tabs.TabPane activeKey="3" label="待评价"></Tabs.TabPane>
         <Tabs.TabPane activeKey="4" label="退款/售后"></Tabs.TabPane>
+        <Tabs.TabPane activeKey="seckill" label="🔥秒杀订单"></Tabs.TabPane>
       </Tabs>
 
-      <ShowWrapper
-        error={error}
-        isError={isError}
-        refetch={refetch}
-        isFetching={isFetching}
-        isSuccess={isSuccess}
-        dataLength={total}
-        emptyComponent={<EmptyOrdersList />}
-        loadingComponent={<OrderSkeleton />}
-      >
-        <div className="px-4 py-3 space-y-3">
-          {orders.map(item => (
-            <OrderCard key={item.id} order={item} />
-          ))}
-        </div>
-      </ShowWrapper>
-
-      {/* {total > 5 && (
-        <div className="py-4 mx-auto lg:max-w-5xl">
-          <Pagination
-            // TODO: 生产环境有报错
-            pagination={data?.pagination}
-            changeRoute={changeRoute}
-            section="profileOrders"
-            client
-          />
-        </div>
-      )} */}
-      {/* </PageContainer> */}
+      {isSeckillTab ? (
+        <ShowWrapper
+          error={seckillError}
+          isError={seckillIsError}
+          refetch={() => fetchSeckillOrders({ current: 1, pageSize: 5 })}
+          isFetching={seckillLoading}
+          isSuccess={seckillSuccess}
+          dataLength={seckillTotal}
+          emptyComponent={<EmptyOrdersList />}
+          loadingComponent={<OrderSkeleton />}
+        >
+          <div className="px-4 py-3 space-y-3">
+            {seckillOrders.map(item => (
+              <SeckillOrderCard key={item.id} order={item} />
+            ))}
+          </div>
+        </ShowWrapper>
+      ) : (
+        <ShowWrapper
+          error={error}
+          isError={isError}
+          refetch={refetch}
+          isFetching={isFetching}
+          isSuccess={isSuccess}
+          dataLength={total}
+          emptyComponent={<EmptyOrdersList />}
+          loadingComponent={<OrderSkeleton />}
+        >
+          <div className="px-4 py-3 space-y-3">
+            {orders.map(item => (
+              <OrderCard key={item.id} order={item} />
+            ))}
+          </div>
+        </ShowWrapper>
+      )}
     </main>
   )
 }
