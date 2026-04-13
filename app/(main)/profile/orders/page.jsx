@@ -34,8 +34,8 @@ const Orders = () => {
 
   console.log('data->', data)
 
-  const orders = data?.data?.data || []
-  const total = data?.data?.total || 0
+  const orders = data?.items || []
+  const total = data?.total || 0
 
   // function
   const handleTabChange = index => {
@@ -79,7 +79,7 @@ const Orders = () => {
         <div className="py-4 mx-auto lg:max-w-5xl">
           <Pagination
             // TODO: 生产环境有报错
-            pagination={data?.data?.pagination}
+            pagination={data?.pagination}
             changeRoute={changeRoute}
             section="profileOrders"
             client

@@ -12,7 +12,7 @@ const cartSlice = createSlice({
   initialState,
   reducers: {
     setCartData: (state, action) => {
-      state.cartItems = action.payload.data
+      state.cartItems = action.payload.items
       state.totalDiscount = action.payload.totalDiscount
       state.totalItems = action.payload.totalItems
       state.totalPrice = action.payload.totalPrice

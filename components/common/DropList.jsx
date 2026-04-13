@@ -41,7 +41,7 @@ export default function DropList({
       {isError ? (
         <div className="py-20 mx-auto space-y-3 text-center w-fit">
           <h5 className="text-xl">出现异常</h5>
-          <p className="text-lg text-cPink">{error?.data?.err}</p>
+          <p className="text-lg text-cPink">{error?.message}</p>
           <button
             className="px-4 py-2 text-white bg-blue-500 rounded hover:bg-blue-600"
             onClick={refetch}

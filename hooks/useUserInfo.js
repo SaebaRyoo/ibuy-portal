@@ -13,5 +13,5 @@ export default function useUserInfo() {
 
   if (isError) dispatch(userLogin(''))
 
-  return { userInfo: data?.data, isVerify, isLoading, error, isError }
+  return { userInfo: data, isVerify, isLoading, error, isError }
 }

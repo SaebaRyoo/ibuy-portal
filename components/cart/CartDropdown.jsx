@@ -56,7 +56,7 @@ export default function CartDropdown() {
                 </div>
                 {/* Itmes */}
                 <div className="mx-1 overflow-y-auto divide-y divide-gray-50 h-80">
-                  {cartData?.data?.map(item => <CartItem item={item} key={item.skuId} />)}
+                  {cartData?.items?.map(item => <CartItem item={item} key={item.skuId} />)}
                 </div>
                 {/* Footer */}
                 <div className="flex items-center justify-between p-3 border-t">

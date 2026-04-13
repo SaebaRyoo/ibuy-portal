@@ -27,14 +27,14 @@ const OrderCard = props => {
     id: order.id,
   })
 
-  const orderItems = data?.data || []
+  const orderItems = data || []
 
   // Render
   return (
     <>
       {/* Handle Edit Order Response */}
       {(isSuccess || isError) && (
-        <HandleResponse isError={isError} isSuccess={isSuccess} error={error} message={data?.msg} />
+        <HandleResponse isError={isError} isSuccess={isSuccess} error={error?.message} message={data?.message} />
       )}
       <div className="py-4 space-y-3 border-b border-gray-200 lg:border lg:rounded-lg ">
         <div className="flex items-center justify-between lg:px-3">

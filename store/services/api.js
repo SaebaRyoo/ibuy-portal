@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/dist/query/react'
-import { userLogin } from '../slices/user.slice'
+import { userLogin, userLogout } from '../slices/user.slice'
 
 let isRefreshing = false
 let requests = []
@@ -25,10 +25,11 @@ const handleRefreshToken = async api => {
       api,
       {}
     )
-    // console.log('refreshResult', refreshResult)
-    if (refreshResult.data.data?.access_token) {
+    // Refresh endpoint returns envelope: { data: { access_token } }
+    const newToken = refreshResult.data?.data?.access_token
+    if (newToken) {
       // 更新 Redux store 中的 token
-      api.dispatch(userLogin(refreshResult.data.data.access_token))
+      api.dispatch(userLogin(newToken))
       // 执行队列中失败的请求
       requests.forEach(cb => cb())
       requests = []
@@ -45,9 +46,7 @@ const handleRefreshToken = async api => {
 // 拦截器
 const baseQueryWithIntercept = async (args, api, extraOptions) => {
   let result = await baseQuery(args, api, extraOptions)
-  // console.log('args', args)
-  // console.log('result', result)
-  // console.log('extraOptions', extraOptions)
+
   if (result.error) {
     const { status } = result.error
 
@@ -62,6 +61,7 @@ const baseQueryWithIntercept = async (args, api, extraOptions) => {
           result = await baseQuery(args, api, extraOptions)
         } else {
           // 刷新失败，跳转到登录页
+          api.dispatch(userLogout())
           const currentUrl = window.location.pathname
           window.location.href = `/login?redirectTo=${currentUrl}`
           return result
@@ -81,16 +81,51 @@ const baseQueryWithIntercept = async (args, api, extraOptions) => {
     } else if (status === 500) {
       // 服务器错误，跳转到 500 页面
       window.location.href = '/500'
-    } else if (status === 'FETCH_ERROR') {
-      // 网络错误
-      result.error = { ...result.error, data: { message: '网络连接失败，请检查网络设置' } }
-    } else if (status === 'TIMEOUT_ERROR') {
-      // 请求超时
-      result.error = { ...result.error, data: { message: '请求超时，请稍后重试' } }
+    }
+
+    // If still an error after retry, normalize error shape
+    if (result.error) {
+      const { status: errStatus } = result.error
+      if (errStatus === 'FETCH_ERROR') {
+        return {
+          error: {
+            status: errStatus,
+            message: '网络连接失败，请检查网络设置',
+          },
+        }
+      }
+      if (errStatus === 'TIMEOUT_ERROR') {
+        return {
+          error: {
+            status: errStatus,
+            message: '请求超时，请稍后重试',
+          },
+        }
+      }
+      return {
+        error: {
+          status: result.error.status,
+          message: result.error.data?.message || 'Unknown error',
+          code: result.error.data?.code,
+        },
+      }
     }
   }
 
-  return result
+  const body = result.data
+
+  // Backend business error (HTTP 200 + success: false)
+  if (body?.success === false) {
+    return {
+      error: {
+        status: body.code,
+        message: body.message,
+      },
+    }
+  }
+
+  // Strip envelope — return only data
+  return { data: body?.data }
 }
 
 const apiSlice = createApi({

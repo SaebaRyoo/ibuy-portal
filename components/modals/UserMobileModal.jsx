@@ -39,7 +39,7 @@ const UserMobileModal = props => {
         <HandleResponse
           isError={isError}
           isSuccess={isSuccess}
-          error={error?.data?.message}
+          error={error?.message}
           message={data?.message}
           onSuccess={onClose}
         />

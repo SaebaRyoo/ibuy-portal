@@ -27,7 +27,7 @@ export const productApiSlice = apiSlice.injectEndpoints({
       providesTags: result => {
         return result
           ? [
-              ...result.data.map(({ id }) => ({
+              ...result.map(({ id }) => ({
                 type: 'Product',
                 id: id,
               })),
@@ -50,7 +50,7 @@ export const productApiSlice = apiSlice.injectEndpoints({
       providesTags: result => {
         return result
           ? [
-              ...result.data.map(({ id }) => ({
+              ...result.map(({ id }) => ({
                 type: 'Product',
                 id: id,
               })),
@@ -82,7 +82,7 @@ export const productApiSlice = apiSlice.injectEndpoints({
       providesTags: result => {
         return result
           ? [
-              ...result.data.map(({ id }) => ({
+              ...result.map(({ id }) => ({
                 type: 'Product',
                 id: id,
               })),

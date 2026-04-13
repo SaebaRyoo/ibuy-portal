@@ -55,7 +55,7 @@ const CartPage = () => {
   )
 
   // 购物车为空时的展示
-  if (!cartData?.data || cartData?.data.length === 0) {
+  if (!cartData?.items || cartData?.items.length === 0) {
     return (
       <section className="py-10 mx-auto mb-20 space-y-3 container lg:px-5 lg:mt-6">
         <div className="text-center space-y-4">
@@ -87,7 +87,7 @@ const CartPage = () => {
 
           {/* 购物车列表 */}
           <section className="divide-y">
-            {cartData?.data?.map(item => <CartItem item={item} key={item.itemID} />)}
+            {cartData?.items?.map(item => <CartItem item={item} key={item.itemID} />)}
           </section>
         </div>
 

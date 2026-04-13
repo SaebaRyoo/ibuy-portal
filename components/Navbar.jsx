@@ -11,7 +11,7 @@ export default function Navbar() {
   // Fetch Categories Data
   const { categories, isLoading } = useGetCategoriesQuery(undefined, {
     selectFromResult: ({ data, isLoading }) => ({
-      categories: data?.data,
+      categories: data,
       isLoading,
     }),
   })

@@ -43,7 +43,7 @@ const BasicAddresses = () => {
   // Render
   return (
     <main>
-      <AddressTable dataSource={data?.data} refetch={refetch} />
+      <AddressTable dataSource={data} refetch={refetch} />
     </main>
   )
 }

@@ -40,7 +40,7 @@ const ProductsHome = () => {
     },
     {
       selectFromResult: ({ isLoading, data }) => {
-        return { searchData: data?.data.data ?? [], isFetching: isLoading }
+        return { searchData: data ?? [], isFetching: isLoading }
       },
     }
   )

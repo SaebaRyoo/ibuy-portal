@@ -20,7 +20,7 @@ export default function SingleProduct() {
     { id: skuId },
     {
       selectFromResult: ({ data, isLoading }) => ({
-        product: data?.data ?? {},
+        product: data ?? {},
         isLoading,
       }),
     }
@@ -31,8 +31,8 @@ export default function SingleProduct() {
     {
       selectFromResult: ({ data, isLoading }) => {
         return {
-          skus: data?.data
-            ? data?.data.map(sku => ({
+          skus: data
+            ? data.map(sku => ({
                 ...sku,
                 // 转换后的商品属性结构
                 spec: transformSpecObject(sku.spec),

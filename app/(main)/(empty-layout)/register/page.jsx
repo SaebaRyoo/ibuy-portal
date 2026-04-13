@@ -61,7 +61,7 @@ export default function RegisterPage() {
   }
 
   const onSuccess = () => {
-    dispatch(userLogin(data.data.access_token))
+    dispatch(userLogin(data.access_token))
     reset()
     replace(redirectTo || '/')
   }
@@ -70,7 +70,7 @@ export default function RegisterPage() {
     <>
       <RedirectToLogin
         title="注册异常"
-        text={error?.data?.message}
+        text={error?.message}
         onClose={redirectModalHandlers.close}
         isShow={isShowRedirectModal}
       />
@@ -79,7 +79,7 @@ export default function RegisterPage() {
         <HandleResponse
           isError={isError}
           isSuccess={isSuccess}
-          error={error?.data?.message}
+          error={error?.message}
           message={data?.message}
           onSuccess={onSuccess}
           onError={onError}

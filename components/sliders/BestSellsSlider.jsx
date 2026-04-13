@@ -11,7 +11,7 @@ const BestSellsSlider = () => {
     },
     {
       selectFromResult: ({ data, isLoading }) => ({
-        products: data?.data,
+        products: data,
         isLoading,
       }),
     }

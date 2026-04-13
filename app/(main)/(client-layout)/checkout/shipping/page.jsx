@@ -109,7 +109,7 @@ const ShippingPage = () => {
     // 重新刷新一下购物车列表
     // refetchCartList()
     // 3. 根据订单id 调用支付接口
-    const orderId = orderResult?.data?.data?.id
+    const orderId = orderResult?.data?.id
     // console.log('orderId: ', orderId)
 
     const alipayData = await getAlipayUrl({
@@ -118,7 +118,7 @@ const ShippingPage = () => {
     })
 
     // 4. 根据alipayData.data.url 跳转到一个新的支付页面
-    const alipayUrl = alipayData?.data?.data?.alipayUrl
+    const alipayUrl = alipayData?.data?.alipayUrl
     // console.log('alipayUrl--->', alipayUrl)
 
     if (alipayUrl) {
@@ -138,7 +138,7 @@ const ShippingPage = () => {
         <HandleResponse
           isError={isError}
           isSuccess={isSuccess}
-          error={error?.data?.message}
+          error={error?.message}
           message={data?.message}
           onSuccess={() => {
             router.push('/profile')
@@ -149,7 +149,7 @@ const ShippingPage = () => {
         <HandleResponse
           isError={isOrderError_D}
           isSuccess={isOrderSuccess_D}
-          error={orderError_D?.data?.message}
+          error={orderError_D?.message}
           message={directlyData?.message}
           onSuccess={() => {
             router.push('/profile')

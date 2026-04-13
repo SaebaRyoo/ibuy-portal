@@ -27,7 +27,7 @@ const PayConfirmPage = () => {
     const fetchStatus = async () => {
       try {
         const response = await getAlipayStatus({ orderId })
-        const status = response?.data?.data?.tradeStatus
+        const status = response?.data?.tradeStatus
 
         setTradeStatus(status)
 
@@ -161,12 +161,12 @@ const PayConfirmPage = () => {
                 <h2 className="text-xl font-semibold text-green-700">支付成功</h2>
                 <div className="space-y-1 text-sm text-gray-600">
                   <p>
-                    交易号：<span className="font-mono">{data?.data?.tradeNo}</span>
+                    交易号：<span className="font-mono">{data?.tradeNo}</span>
                   </p>
                   <p>
-                    支付金额：<span className="font-semibold">¥{data?.data?.totalAmount}</span>
+                    支付金额：<span className="font-semibold">¥{data?.totalAmount}</span>
                   </p>
-                  <p>买家账号：{data?.data?.buyerLogonId}</p>
+                  <p>买家账号：{data?.buyerLogonId}</p>
                 </div>
               </div>
             )}

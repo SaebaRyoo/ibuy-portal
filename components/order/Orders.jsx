@@ -20,8 +20,8 @@ export default function Orders() {
   // Handle Get Order Response
   useEffect(() => {
     if (data) {
-      const pending = data?.data?.orders.filter(item => item.delivered === false)
-      const success = data?.data?.orders.filter(item => item.delivered === true)
+      const pending = data?.items.filter(item => item.delivered === false)
+      const success = data?.items.filter(item => item.delivered === true)
 
       setPendingOrder(pending.length)
       setSuccessOrder(success.length)

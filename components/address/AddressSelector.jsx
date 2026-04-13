@@ -17,7 +17,7 @@ const AddressSelector = () => {
   //  初始化选中排在第一的默认地址
   useEffect(() => {
     if (isSuccess) {
-      handleAddressSelect(data.data[0])
+      handleAddressSelect(data[0])
     }
   }, [isSuccess, data])
 
@@ -45,7 +45,7 @@ const AddressSelector = () => {
       </div>
       <RadioGroup value={selectedAddress} onChange={handleAddressSelect}>
         <div className={`grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4`}>
-          {data?.data?.slice(0, showMore ? data?.data?.length : 3).map(item => (
+          {data?.slice(0, showMore ? data?.length : 3).map(item => (
             <Radio key={item.id} value={item}>
               <div
                 className={`p-4 rounded-lg border cursor-pointer transition-colors hover:border-cPink ${

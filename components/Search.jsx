@@ -26,7 +26,7 @@ export default function Search() {
     {
       skip: !Boolean(debouncedSearch) || search !== debouncedSearch, // Prevent refetching if input is not debounced
       selectFromResult: ({ isFetching, data, isSuccess, error, isError, refetch }) => ({
-        searchData: data?.data?.data ?? {},
+        searchData: data ?? {},
         isFetching,
         isSuccess,
         error,

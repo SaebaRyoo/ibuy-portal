@@ -10,7 +10,7 @@ export const bannerApiSlice = apiSlice.injectEndpoints({
       providesTags: result =>
         result
           ? [
-              ...result?.data.map(({ _id }) => ({
+              ...result?.map(({ _id }) => ({
                 type: 'Banner',
                 id: _id,
               })),

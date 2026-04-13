@@ -13,10 +13,10 @@ export default function useCartList() {
   })
 
   useEffect(() => {
-    if (isSuccess && data?.data) {
-      dispatch(setCartData(data.data))
+    if (isSuccess && data) {
+      dispatch(setCartData(data))
     }
   }, [isSuccess, data, dispatch]) // 仅在 data 或 isSuccess 更新时触发
 
-  return { cartData: data?.data, isVerify, isLoading, error, isError, refetch }
+  return { cartData: data, isVerify, isLoading, error, isError, refetch }
 }

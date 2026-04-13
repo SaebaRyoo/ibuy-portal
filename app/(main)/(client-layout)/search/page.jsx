@@ -25,7 +25,7 @@ const SearchHome = () => {
   // Search Data
   const { searchData, isFetching: isFetchingProduct } = useSearchProductsQuery(query, {
     selectFromResult: ({ isLoading, data }) => {
-      return { searchData: data?.data.data ?? [], isFetching: isLoading }
+      return { searchData: data ?? [], isFetching: isLoading }
     },
   })
 

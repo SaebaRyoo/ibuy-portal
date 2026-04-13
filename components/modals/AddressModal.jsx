@@ -156,7 +156,7 @@ const AddressModal = props => {
         <HandleResponse
           isError={isError}
           isSuccess={isSuccess}
-          error={error?.data?.message}
+          error={error?.message}
           message={data?.message}
           onSuccess={() => {
             reset()
@@ -168,7 +168,7 @@ const AddressModal = props => {
         <HandleResponse
           isError={isUpdateError}
           isSuccess={isUpdateSuccess}
-          error={updateError?.data?.message}
+          error={updateError?.message}
           message={updateData?.message}
           onSuccess={() => {
             reset()

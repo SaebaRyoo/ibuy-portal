@@ -25,10 +25,10 @@ export const enSiteTitle = 'IBuy'
 export const siteDescription = `从${siteTitle}以最优惠的价格购买您需要的一切！ 最新款手机、笔记本电脑、衣服、化妆品、书籍、家电、汽车等，轻松换货 | ✓免费送货 ✓当场付款 ✓退货保证 - 点击购买！`
 
 // 0: 支付宝支付、1: 微信支付  2: 银联支付 3: 货到付款
-export const AliPay = 0
-export const WechatPay = 1
-export const UnionPay = 2
-export const CashOnDelivery = 3
+export const AliPay = '0'
+export const WechatPay = '1'
+export const UnionPay = '2'
+export const CashOnDelivery = '3'
 
 export const PayTypes = [
   {
@@ -49,9 +49,7 @@ export const PayTypes = [
   // },
 ]
 
-
 export const BuyType = {
   cart: 'cart', // 购物车
-  direct: 'direct',   // 直接购买
+  direct: 'direct', // 直接购买
 }
-

@@ -34,10 +34,10 @@ export default function LoginPage() {
         <HandleResponse
           isError={isError}
           isSuccess={isSuccess}
-          error={error?.data?.message}
+          error={error?.message}
           message={data?.message}
           onSuccess={() => {
-            dispatch(userLogin(data.data.access_token))
+            dispatch(userLogin(data.access_token))
             replace(redirectTo || '/')
           }}
         />
