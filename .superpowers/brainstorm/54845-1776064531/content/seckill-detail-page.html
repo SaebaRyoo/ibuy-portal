@@ -1,0 +1,110 @@
+<h2>秒杀商品详情页设计（Web 桌面端）</h2>
+<p class="subtitle">路由 /seckill/item?id=xxx — 参考现有商品详情页布局，增加秒杀专属元素</p>
+
+<div class="mockup">
+  <div class="mockup-header">秒杀商品详情页</div>
+  <div class="mockup-body" style="padding:24px 32px;font-size:13px">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:32px">
+
+      <!-- 左侧：商品图片 -->
+      <div>
+        <div style="background:#f0f0f0;height:360px;border-radius:8px;display:flex;align-items:center;justify-content:center;color:#999;position:relative">
+          商品大图
+          <div style="position:absolute;top:12px;left:12px;background:#ff4757;color:white;font-size:12px;padding:4px 12px;border-radius:4px;font-weight:bold">⚡ 秒杀</div>
+        </div>
+        <!-- 缩略图行 -->
+        <div style="display:flex;gap:8px;margin-top:12px">
+          <div style="background:#e8e8e8;width:64px;height:64px;border-radius:4px;border:2px solid #ff4757"></div>
+          <div style="background:#e8e8e8;width:64px;height:64px;border-radius:4px"></div>
+          <div style="background:#e8e8e8;width:64px;height:64px;border-radius:4px"></div>
+          <div style="background:#e8e8e8;width:64px;height:64px;border-radius:4px"></div>
+        </div>
+      </div>
+
+      <!-- 右侧：商品信息 + 秒杀操作 -->
+      <div style="display:flex;flex-direction:column;gap:16px">
+        <!-- 商品标题 -->
+        <h3 style="margin:0;font-size:20px;line-height:1.4;color:#333">Apple AirPods Pro 第二代 主动降噪无线蓝牙耳机</h3>
+
+        <!-- 秒杀价格区 -->
+        <div style="background:linear-gradient(135deg,#fff5f5,#ffe8e8);border-radius:8px;padding:16px;border:1px solid #ffd0d0">
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px">
+            <span style="background:#ff4757;color:white;font-size:11px;padding:2px 8px;border-radius:3px;font-weight:bold">秒杀价</span>
+            <div style="display:flex;align-items:center;gap:4px;font-size:12px;color:#ff4757">
+              <span>距结束</span>
+              <span style="background:#ff4757;color:white;padding:1px 5px;border-radius:3px;font-family:monospace;font-weight:bold">02</span>:
+              <span style="background:#ff4757;color:white;padding:1px 5px;border-radius:3px;font-family:monospace;font-weight:bold">15</span>:
+              <span style="background:#ff4757;color:white;padding:1px 5px;border-radius:3px;font-family:monospace;font-weight:bold">38</span>
+            </div>
+          </div>
+          <div style="display:flex;align-items:baseline;gap:8px">
+            <span style="color:#ff4757;font-size:32px;font-weight:bold">¥99</span>
+            <span style="color:#999;font-size:14px;text-decoration:line-through">原价 ¥299</span>
+          </div>
+          <!-- 进度条 -->
+          <div style="margin-top:12px">
+            <div style="display:flex;justify-content:space-between;font-size:11px;color:#999;margin-bottom:4px">
+              <span>已抢 75%</span>
+              <span>仅剩 25 件</span>
+            </div>
+            <div style="position:relative;height:12px;background:#ffd0d0;border-radius:6px;overflow:hidden">
+              <div style="position:absolute;left:0;top:0;height:100%;width:75%;background:linear-gradient(90deg,#ff4757,#ff6348);border-radius:6px"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 收货地址选择 -->
+        <div style="border:1px solid #e8e8e8;border-radius:8px;padding:14px 16px;display:flex;align-items:center;justify-content:space-between">
+          <div>
+            <div style="font-size:12px;color:#999;margin-bottom:4px">收货地址</div>
+            <div style="font-size:14px;color:#333">张三 · 138****8888 · 北京市朝阳区xxx路xxx号</div>
+          </div>
+          <div style="color:#666;font-size:12px;cursor:pointer;white-space:nowrap">切换 ›</div>
+        </div>
+
+        <!-- 限购提示 -->
+        <div style="font-size:12px;color:#999;display:flex;align-items:center;gap:6px">
+          <span style="color:#ff9f43">⚠</span> 每人限购 1 件 · 下单后 5 分钟内未支付将自动取消
+        </div>
+
+        <!-- 秒杀按钮 -->
+        <button style="background:linear-gradient(135deg,#ff4757,#ff6348);color:white;border:none;padding:14px;border-radius:8px;font-size:18px;font-weight:bold;cursor:pointer;letter-spacing:2px;margin-top:auto">
+          立即秒杀
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div style="margin-top:24px">
+  <h3>秒杀按钮状态</h3>
+  <div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:12px;margin-top:12px">
+    <div style="text-align:center">
+      <button style="width:100%;background:linear-gradient(135deg,#ff4757,#ff6348);color:white;border:none;padding:10px;border-radius:6px;font-size:14px;font-weight:bold;cursor:pointer">立即秒杀</button>
+      <div style="font-size:11px;color:#999;margin-top:6px">正常可抢</div>
+    </div>
+    <div style="text-align:center">
+      <button style="width:100%;background:#ccc;color:white;border:none;padding:10px;border-radius:6px;font-size:14px;font-weight:bold;cursor:not-allowed">已售罄</button>
+      <div style="font-size:11px;color:#999;margin-top:6px">库存为 0</div>
+    </div>
+    <div style="text-align:center">
+      <button style="width:100%;background:#ccc;color:white;border:none;padding:10px;border-radius:6px;font-size:14px;font-weight:bold;cursor:not-allowed">活动已结束</button>
+      <div style="font-size:11px;color:#999;margin-top:6px">倒计时归零</div>
+    </div>
+    <div style="text-align:center">
+      <button style="width:100%;background:#ffa502;color:white;border:none;padding:10px;border-radius:6px;font-size:14px;font-weight:bold;cursor:not-allowed">排队中...</button>
+      <div style="font-size:11px;color:#999;margin-top:6px">下单请求已发出</div>
+    </div>
+  </div>
+</div>
+
+<div style="margin-top:24px">
+  <h3>下单流程</h3>
+  <div style="background:#1a1a2e;border-radius:8px;padding:16px;color:#ccc;font-size:12px;line-height:1.8">
+    <div>1. 用户点击<span style="color:#ff4757;font-weight:bold">「立即秒杀」</span>→ 按钮变为<span style="color:#ffa502;font-weight:bold">「排队中...」</span></div>
+    <div>2. 前端调用 <code style="background:rgba(255,255,255,0.1);padding:1px 6px;border-radius:3px">POST /seckill/order</code> 发送 { seckillGoodsId, activityId, receiverAddress }</div>
+    <div>3. 后端 Redis Lua 扣库存 → MQ 异步创建订单 → 返回 { orderId, status: 'queued' }</div>
+    <div>4. 前端收到 orderId → <span style="color:#4ade80;font-weight:bold">跳转秒杀订单详情页（复用现有订单页）</span></div>
+    <div style="margin-top:8px;color:#ff6b6b">失败情况：已售罄 / 限购1件 / 活动已结束 → Toast 提示错误信息</div>
+  </div>
+</div>

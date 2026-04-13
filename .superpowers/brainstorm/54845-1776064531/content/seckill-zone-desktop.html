@@ -1,0 +1,147 @@
+<h2>秒杀专区页设计（Web 桌面端）</h2>
+<p class="subtitle">路由 /seckill — 横向布局，适配宽屏</p>
+
+<div class="mockup">
+  <div class="mockup-header">秒杀专区页 — 桌面端布局</div>
+  <div class="mockup-body" style="padding:0;font-size:13px">
+    <!-- 顶部活动横幅 -->
+    <div style="background:linear-gradient(135deg,#ff4757,#ff6348);color:white;padding:20px 32px;display:flex;align-items:center;justify-content:space-between">
+      <div style="display:flex;align-items:center;gap:24px">
+        <div>
+          <div style="font-size:22px;font-weight:bold">⚡ 限时秒杀</div>
+          <div style="font-size:13px;opacity:0.85;margin-top:2px">夏日清凉特卖 · 低至3折</div>
+        </div>
+        <div style="display:flex;align-items:center;gap:4px">
+          <div style="background:rgba(0,0,0,0.35);padding:4px 8px;border-radius:4px;font-size:22px;font-weight:bold;font-family:monospace">02</div>
+          <span style="font-size:18px;font-weight:bold">:</span>
+          <div style="background:rgba(0,0,0,0.35);padding:4px 8px;border-radius:4px;font-size:22px;font-weight:bold;font-family:monospace">15</div>
+          <span style="font-size:18px;font-weight:bold">:</span>
+          <div style="background:rgba(0,0,0,0.35);padding:4px 8px;border-radius:4px;font-size:22px;font-weight:bold;font-family:monospace">38</div>
+          <span style="font-size:11px;opacity:0.7;margin-left:6px">距结束</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- 商品横向排列 -->
+    <div style="padding:24px 32px;background:#f5f5f5">
+      <div style="display:flex;gap:16px;overflow-x:auto">
+
+        <!-- 商品卡片 1 -->
+        <div style="background:white;border-radius:10px;overflow:hidden;box-shadow:0 1px 4px rgba(0,0,0,0.08);cursor:pointer;min-width:200px;flex-shrink:0;flex:1;max-width:240px">
+          <div style="background:#e8e8e8;height:180px;display:flex;align-items:center;justify-content:center;color:#999;font-size:12px;position:relative">
+            商品图片
+            <div style="position:absolute;top:8px;left:8px;background:#ff4757;color:white;font-size:10px;padding:2px 8px;border-radius:3px;font-weight:bold">秒杀</div>
+          </div>
+          <div style="padding:12px">
+            <div style="font-size:13px;color:#333;margin-bottom:8px;overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;line-height:1.4;height:36px">Apple AirPods Pro 第二代 无线降噪耳机</div>
+            <div style="display:flex;align-items:baseline;gap:6px;margin-bottom:10px">
+              <span style="color:#ff4757;font-size:20px;font-weight:bold">¥99</span>
+              <span style="color:#999;font-size:12px;text-decoration:line-through">¥299</span>
+            </div>
+            <div style="position:relative;height:18px;background:#ffe0e0;border-radius:9px;overflow:hidden">
+              <div style="position:absolute;left:0;top:0;height:100%;width:75%;background:linear-gradient(90deg,#ff4757,#ff6348);border-radius:9px"></div>
+              <div style="position:absolute;width:100%;text-align:center;font-size:10px;color:white;font-weight:bold;line-height:18px">已抢 75%</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 商品卡片 2 -->
+        <div style="background:white;border-radius:10px;overflow:hidden;box-shadow:0 1px 4px rgba(0,0,0,0.08);cursor:pointer;min-width:200px;flex-shrink:0;flex:1;max-width:240px">
+          <div style="background:#e8e8e8;height:180px;display:flex;align-items:center;justify-content:center;color:#999;font-size:12px;position:relative">
+            商品图片
+            <div style="position:absolute;top:8px;left:8px;background:#ff4757;color:white;font-size:10px;padding:2px 8px;border-radius:3px;font-weight:bold">秒杀</div>
+          </div>
+          <div style="padding:12px">
+            <div style="font-size:13px;color:#333;margin-bottom:8px;overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;line-height:1.4;height:36px">小米移动电源 20000mAh 快充版</div>
+            <div style="display:flex;align-items:baseline;gap:6px;margin-bottom:10px">
+              <span style="color:#ff4757;font-size:20px;font-weight:bold">¥49</span>
+              <span style="color:#999;font-size:12px;text-decoration:line-through">¥199</span>
+            </div>
+            <div style="position:relative;height:18px;background:#ffe0e0;border-radius:9px;overflow:hidden">
+              <div style="position:absolute;left:0;top:0;height:100%;width:30%;background:linear-gradient(90deg,#ff4757,#ff6348);border-radius:9px"></div>
+              <div style="position:absolute;width:100%;text-align:center;font-size:10px;color:white;font-weight:bold;line-height:18px">已抢 30%</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 商品卡片 3 - 已售罄 -->
+        <div style="background:white;border-radius:10px;overflow:hidden;box-shadow:0 1px 4px rgba(0,0,0,0.08);min-width:200px;flex-shrink:0;flex:1;max-width:240px;opacity:0.6">
+          <div style="background:#e8e8e8;height:180px;display:flex;align-items:center;justify-content:center;color:#999;font-size:12px;position:relative">
+            商品图片
+            <div style="position:absolute;inset:0;background:rgba(0,0,0,0.4);display:flex;align-items:center;justify-content:center">
+              <span style="color:white;font-size:16px;font-weight:bold;border:2px solid white;padding:4px 16px;border-radius:4px">已售罄</span>
+            </div>
+          </div>
+          <div style="padding:12px">
+            <div style="font-size:13px;color:#333;margin-bottom:8px;height:36px">华为 FreeBuds 5i</div>
+            <div style="display:flex;align-items:baseline;gap:6px;margin-bottom:10px">
+              <span style="color:#999;font-size:20px;font-weight:bold">¥149</span>
+              <span style="color:#999;font-size:12px;text-decoration:line-through">¥499</span>
+            </div>
+            <div style="position:relative;height:18px;background:#eee;border-radius:9px;overflow:hidden">
+              <div style="position:absolute;left:0;top:0;height:100%;width:100%;background:#999;border-radius:9px"></div>
+              <div style="position:absolute;width:100%;text-align:center;font-size:10px;color:white;font-weight:bold;line-height:18px">已售罄</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 商品卡片 4 -->
+        <div style="background:white;border-radius:10px;overflow:hidden;box-shadow:0 1px 4px rgba(0,0,0,0.08);cursor:pointer;min-width:200px;flex-shrink:0;flex:1;max-width:240px">
+          <div style="background:#e8e8e8;height:180px;display:flex;align-items:center;justify-content:center;color:#999;font-size:12px;position:relative">
+            商品图片
+            <div style="position:absolute;top:8px;left:8px;background:#ff4757;color:white;font-size:10px;padding:2px 8px;border-radius:3px;font-weight:bold">秒杀</div>
+          </div>
+          <div style="padding:12px">
+            <div style="font-size:13px;color:#333;margin-bottom:8px;height:36px">索尼 WH-1000XM5 头戴降噪耳机</div>
+            <div style="display:flex;align-items:baseline;gap:6px;margin-bottom:10px">
+              <span style="color:#ff4757;font-size:20px;font-weight:bold">¥1299</span>
+              <span style="color:#999;font-size:12px;text-decoration:line-through">¥2999</span>
+            </div>
+            <div style="position:relative;height:18px;background:#ffe0e0;border-radius:9px;overflow:hidden">
+              <div style="position:absolute;left:0;top:0;height:100%;width:10%;background:linear-gradient(90deg,#ff4757,#ff6348);border-radius:9px"></div>
+              <div style="position:absolute;width:100%;text-align:center;font-size:10px;color:white;font-weight:bold;line-height:18px">已抢 10%</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 商品卡片 5 -->
+        <div style="background:white;border-radius:10px;overflow:hidden;box-shadow:0 1px 4px rgba(0,0,0,0.08);cursor:pointer;min-width:200px;flex-shrink:0;flex:1;max-width:240px">
+          <div style="background:#e8e8e8;height:180px;display:flex;align-items:center;justify-content:center;color:#999;font-size:12px;position:relative">
+            商品图片
+            <div style="position:absolute;top:8px;left:8px;background:#ff4757;color:white;font-size:10px;padding:2px 8px;border-radius:3px;font-weight:bold">秒杀</div>
+          </div>
+          <div style="padding:12px">
+            <div style="font-size:13px;color:#333;margin-bottom:8px;height:36px">Bose QuietComfort 45 降噪耳机</div>
+            <div style="display:flex;align-items:baseline;gap:6px;margin-bottom:10px">
+              <span style="color:#ff4757;font-size:20px;font-weight:bold">¥899</span>
+              <span style="color:#999;font-size:12px;text-decoration:line-through">¥2499</span>
+            </div>
+            <div style="position:relative;height:18px;background:#ffe0e0;border-radius:9px;overflow:hidden">
+              <div style="position:absolute;left:0;top:0;height:100%;width:55%;background:linear-gradient(90deg,#ff4757,#ff6348);border-radius:9px"></div>
+              <div style="position:absolute;width:100%;text-align:center;font-size:10px;color:white;font-weight:bold;line-height:18px">已抢 55%</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<div style="margin-top:24px">
+  <h3>交互说明</h3>
+  <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-top:12px">
+    <div style="background:#1a1a2e;border-radius:8px;padding:12px;color:#ccc;font-size:12px">
+      <div style="color:#4ade80;font-weight:bold;margin-bottom:4px">横向滚动</div>
+      <p>商品超出容器宽度时可横向滚动，桌面端 hover 可拖拽或滚轮滑动</p>
+    </div>
+    <div style="background:#1a1a2e;border-radius:8px;padding:12px;color:#ccc;font-size:12px">
+      <div style="color:#fbbf24;font-weight:bold;margin-bottom:4px">卡片交互</div>
+      <p>hover 轻微上浮阴影加深，点击跳转秒杀商品详情页</p>
+    </div>
+    <div style="background:#1a1a2e;border-radius:8px;padding:12px;color:#ccc;font-size:12px">
+      <div style="color:#ef4444;font-weight:bold;margin-bottom:4px">售罄处理</div>
+      <p>卡片半透明+遮罩，不可点击，自动排到列表末尾</p>
+    </div>
+  </div>
+</div>

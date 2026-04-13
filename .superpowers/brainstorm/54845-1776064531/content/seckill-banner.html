@@ -1,0 +1,78 @@
+<h2>首页秒杀入口模块设计</h2>
+<p class="subtitle">SeckillBanner 组件 — 展示在首页显眼位置</p>
+
+<div class="options">
+  <div class="option" data-choice="a" onclick="toggleSelect(this)">
+    <div class="letter">A</div>
+    <div class="content">
+      <h3>横幅卡片型</h3>
+      <p>一个醒目的横幅卡片，左侧活动信息+倒计时，右侧预览2-3个秒杀商品缩略图，整体可点击跳转专区</p>
+      <div class="mockup" style="margin-top:12px">
+        <div class="mockup-body" style="padding:16px;font-size:13px">
+          <!-- 模拟首页 -->
+          <div style="background:linear-gradient(135deg,#ff4757,#ff6348);border-radius:12px;padding:20px;color:white;display:flex;align-items:center;gap:20px;cursor:pointer">
+            <div style="flex:1">
+              <div style="font-size:20px;font-weight:bold;margin-bottom:4px">⚡ 限时秒杀</div>
+              <div style="font-size:13px;opacity:0.9;margin-bottom:12px">夏日清凉特卖 · 低至3折</div>
+              <div style="display:flex;gap:4px;align-items:center">
+                <div style="background:rgba(0,0,0,0.3);padding:4px 8px;border-radius:4px;font-size:20px;font-weight:bold;font-family:monospace">02</div>
+                <span style="font-weight:bold">:</span>
+                <div style="background:rgba(0,0,0,0.3);padding:4px 8px;border-radius:4px;font-size:20px;font-weight:bold;font-family:monospace">15</div>
+                <span style="font-weight:bold">:</span>
+                <div style="background:rgba(0,0,0,0.3);padding:4px 8px;border-radius:4px;font-size:20px;font-weight:bold;font-family:monospace">38</div>
+              </div>
+              <div style="font-size:11px;opacity:0.7;margin-top:4px">距结束</div>
+            </div>
+            <div style="display:flex;gap:8px">
+              <div style="background:rgba(255,255,255,0.2);border-radius:8px;padding:8px;text-align:center;width:70px">
+                <div style="background:rgba(255,255,255,0.3);height:50px;border-radius:4px;margin-bottom:4px"></div>
+                <div style="font-size:12px;font-weight:bold">¥99</div>
+                <div style="font-size:10px;text-decoration:line-through;opacity:0.7">¥299</div>
+              </div>
+              <div style="background:rgba(255,255,255,0.2);border-radius:8px;padding:8px;text-align:center;width:70px">
+                <div style="background:rgba(255,255,255,0.3);height:50px;border-radius:4px;margin-bottom:4px"></div>
+                <div style="font-size:12px;font-weight:bold">¥49</div>
+                <div style="font-size:10px;text-decoration:line-through;opacity:0.7">¥199</div>
+              </div>
+              <div style="background:rgba(255,255,255,0.2);border-radius:8px;padding:8px;text-align:center;width:70px">
+                <div style="background:rgba(255,255,255,0.3);height:50px;border-radius:4px;margin-bottom:4px"></div>
+                <div style="font-size:12px;font-weight:bold">¥149</div>
+                <div style="font-size:10px;text-decoration:line-through;opacity:0.7">¥499</div>
+              </div>
+            </div>
+            <div style="font-size:24px;opacity:0.6">›</div>
+          </div>
+          <div style="margin-top:16px;color:#999;font-size:12px;text-align:center">↓ 下方是现有的 BestSellsSlider ↓</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="option" data-choice="b" onclick="toggleSelect(this)">
+    <div class="letter">B</div>
+    <div class="content">
+      <h3>紧凑条型</h3>
+      <p>一行式横条，左侧"限时秒杀"+倒计时，右侧"查看更多"箭头，点击跳转专区。节省首页空间。</p>
+      <div class="mockup" style="margin-top:12px">
+        <div class="mockup-body" style="padding:16px;font-size:13px">
+          <div style="background:linear-gradient(90deg,#ff4757,#ff6348);border-radius:8px;padding:12px 16px;color:white;display:flex;align-items:center;justify-content:space-between;cursor:pointer">
+            <div style="display:flex;align-items:center;gap:12px">
+              <div style="font-size:16px;font-weight:bold">⚡ 限时秒杀</div>
+              <div style="display:flex;gap:3px;align-items:center;font-size:14px">
+                <div style="background:rgba(0,0,0,0.3);padding:2px 6px;border-radius:3px;font-weight:bold;font-family:monospace">02</div>
+                <span>:</span>
+                <div style="background:rgba(0,0,0,0.3);padding:2px 6px;border-radius:3px;font-weight:bold;font-family:monospace">15</div>
+                <span>:</span>
+                <div style="background:rgba(0,0,0,0.3);padding:2px 6px;border-radius:3px;font-weight:bold;font-family:monospace">38</div>
+              </div>
+            </div>
+            <div style="display:flex;align-items:center;gap:4px;font-size:13px;opacity:0.9">
+              查看更多 <span style="font-size:16px">›</span>
+            </div>
+          </div>
+          <div style="margin-top:16px;color:#999;font-size:12px;text-align:center">↓ 下方是现有的 BestSellsSlider ↓</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
