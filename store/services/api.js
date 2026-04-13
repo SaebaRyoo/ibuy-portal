@@ -131,7 +131,7 @@ const baseQueryWithIntercept = async (args, api, extraOptions) => {
 const apiSlice = createApi({
   reducerPath: 'api',
   baseQuery: baseQueryWithIntercept,
-  tagTypes: ['User', 'Review', 'Details', 'Order', 'Product', 'Category', 'Slider', 'Banner'],
+  tagTypes: ['User', 'Review', 'Details', 'Order', 'Product', 'Category', 'Slider', 'Banner', 'Seckill'],
   endpoints: builder => ({}),
 })
 

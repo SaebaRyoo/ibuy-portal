@@ -2,7 +2,11 @@
   "permissions": {
     "allow": [
       "Bash(git add:*)",
-      "Bash(git commit -m ':*)"
+      "Bash(git commit -m ':*)",
+      "Bash(pnpm db:generate)",
+      "Bash(npx tsc:*)",
+      "Bash(ls /Users/zhuqingyuan/Documents/work/ibuy/ibuy-portal/hooks/useCountdown*)",
+      "Bash(git commit:*)"
     ]
   }
 }
