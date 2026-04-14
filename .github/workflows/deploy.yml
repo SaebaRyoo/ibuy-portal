@@ -36,7 +36,7 @@ jobs: # 构建的任务，一个工作流有多个构建任务，
           # Remote user
           REMOTE_USER: ${{ secrets.REMOTE_USER }}
           # Source directory, path relative to `$GITHUB_WORKSPACE` root, eg: `dist/`
-          SOURCE: '/out/'
+          SOURCE: 'out/'
           # 在执行 rsync 前, 先创建静态资源目录
           SCRIPT_BEFORE: |
             mkdir -p /usr/local/docker-volumes/openresty/html/out
