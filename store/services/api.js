@@ -76,11 +76,21 @@ const baseQueryWithIntercept = async (args, api, extraOptions) => {
         })
       }
     } else if (status === 403) {
-      // 无权限，跳转到 403 页面
-      window.location.href = '/403'
+      // 无权限，返回带状态码的错误信息
+      return {
+        error: {
+          status: 403,
+          message: '抱歉，您没有权限访问此资源',
+        },
+      }
     } else if (status === 500) {
-      // 服务器错误，跳转到 500 页面
-      window.location.href = '/500'
+      // 服务器错误，返回带状态码的错误信息
+      return {
+        error: {
+          status: 500,
+          message: '服务器开小差了，请稍后再试',
+        },
+      }
     }
 
     // If still an error after retry, normalize error shape
@@ -131,7 +141,17 @@ const baseQueryWithIntercept = async (args, api, extraOptions) => {
 const apiSlice = createApi({
   reducerPath: 'api',
   baseQuery: baseQueryWithIntercept,
-  tagTypes: ['User', 'Review', 'Details', 'Order', 'Product', 'Category', 'Slider', 'Banner', 'Seckill'],
+  tagTypes: [
+    'User',
+    'Review',
+    'Details',
+    'Order',
+    'Product',
+    'Category',
+    'Slider',
+    'Banner',
+    'Seckill',
+  ],
   endpoints: builder => ({}),
 })
 
