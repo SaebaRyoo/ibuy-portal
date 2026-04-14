@@ -48,7 +48,8 @@ const SeckillPage = () => {
         <div className="text-white">
           <div className="text-2xl font-bold">⚡ 限时秒杀</div>
           <div className="text-sm opacity-85 mt-1">
-            {activity.name}{activity.intro ? ` · ${activity.intro}` : ''}
+            {activity.name}
+            {activity.intro ? ` · ${activity.intro}` : ''}
           </div>
         </div>
         {isExpired ? (

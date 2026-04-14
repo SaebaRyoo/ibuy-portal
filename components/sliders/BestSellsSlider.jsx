@@ -18,8 +18,8 @@ const BestSellsSlider = () => {
   )
 
   return (
-    <section className="px-3">
-      <div className="flex items-center mb-3 space-x-2">
+    <section className="px-3 py-4 shadow-md rounded-lg bg-white">
+      <div className="flex items-center space-x-2">
         <Icons.Check className="w-7 h-7 text-amber-400" />
         <h2 className="text-xl font-semibold">最畅销商品</h2>
       </div>

@@ -6,7 +6,11 @@ import toast from 'react-hot-toast'
 import { ImageGallery, AddressSelector } from 'components'
 import useCountdown from '@/hooks/useCountdown'
 import { useUrlQuery } from '@/hooks'
-import { useGetActiveActivityQuery, useGetSeckillGoodsQuery, usePlaceSeckillOrderMutation } from '@/store/services'
+import {
+  useGetActiveActivityQuery,
+  useGetSeckillGoodsQuery,
+  usePlaceSeckillOrderMutation,
+} from '@/store/services'
 import { useAppSelector } from '@/hooks'
 import { formatNumber } from 'utils'
 
@@ -30,9 +34,10 @@ const SeckillItemPage = () => {
   const [orderPlaced, setOrderPlaced] = useState(false)
 
   const soldOut = goods?.stockCount === 0
-  const soldPercent = goods && goods.totalStock > 0
-    ? Math.round(((goods.totalStock - goods.stockCount) / goods.totalStock) * 100)
-    : 0
+  const soldPercent =
+    goods && goods.totalStock > 0
+      ? Math.round(((goods.totalStock - goods.stockCount) / goods.totalStock) * 100)
+      : 0
 
   const handleSeckill = async () => {
     if (!selectedAddress) {
@@ -57,9 +62,12 @@ const SeckillItemPage = () => {
   }
 
   const getButtonState = () => {
-    if (orderPlaced || isOrdering) return { text: '排队中...', disabled: true, className: 'bg-amber-500 cursor-not-allowed' }
-    if (isExpired) return { text: '活动已结束', disabled: true, className: 'bg-gray-400 cursor-not-allowed' }
-    if (soldOut) return { text: '已售罄', disabled: true, className: 'bg-gray-400 cursor-not-allowed' }
+    if (orderPlaced || isOrdering)
+      return { text: '排队中...', disabled: true, className: 'bg-amber-500 cursor-not-allowed' }
+    if (isExpired)
+      return { text: '活动已结束', disabled: true, className: 'bg-gray-400 cursor-not-allowed' }
+    if (soldOut)
+      return { text: '已售罄', disabled: true, className: 'bg-gray-400 cursor-not-allowed' }
     return { text: '立即秒杀', disabled: false, className: 'cursor-pointer' }
   }
 
@@ -93,19 +101,33 @@ const SeckillItemPage = () => {
           {/* 秒杀价格区 */}
           <div className="bg-[#fff5f5] border border-[#ffd0d0] rounded-lg p-4">
             <div className="flex items-center gap-2 mb-1">
-              <span className="bg-[#ff4757] text-white text-xs font-bold px-2 py-0.5 rounded">秒杀价</span>
+              <span className="bg-[#ff4757] text-white text-xs font-bold px-2 py-0.5 rounded">
+                秒杀价
+              </span>
               {!isExpired && (
                 <div className="flex items-center gap-1 text-xs text-[#ff4757]">
                   <span>距结束</span>
-                  <span className="bg-[#ff4757] text-white px-1.5 py-0.5 rounded font-mono font-bold">{hours}</span>:
-                  <span className="bg-[#ff4757] text-white px-1.5 py-0.5 rounded font-mono font-bold">{minutes}</span>:
-                  <span className="bg-[#ff4757] text-white px-1.5 py-0.5 rounded font-mono font-bold">{seconds}</span>
+                  <span className="bg-[#ff4757] text-white px-1.5 py-0.5 rounded font-mono font-bold">
+                    {hours}
+                  </span>
+                  :
+                  <span className="bg-[#ff4757] text-white px-1.5 py-0.5 rounded font-mono font-bold">
+                    {minutes}
+                  </span>
+                  :
+                  <span className="bg-[#ff4757] text-white px-1.5 py-0.5 rounded font-mono font-bold">
+                    {seconds}
+                  </span>
                 </div>
               )}
             </div>
             <div className="flex items-baseline gap-2">
-              <span className="text-3xl font-bold text-[#ff4757]">¥{formatNumber(goods.seckillPrice)}</span>
-              <span className="text-sm text-gray-400 line-through">原价 ¥{formatNumber(goods.skuPrice)}</span>
+              <span className="text-3xl font-bold text-[#ff4757]">
+                ¥{formatNumber(goods.seckillPrice)}
+              </span>
+              <span className="text-sm text-gray-400 line-through">
+                原价 ¥{formatNumber(goods.skuPrice)}
+              </span>
             </div>
             <div className="mt-3">
               <div className="flex justify-between text-xs text-gray-400 mb-1">
@@ -135,7 +157,11 @@ const SeckillItemPage = () => {
             onClick={handleSeckill}
             disabled={btn.disabled}
             className={`w-full py-3.5 rounded-lg text-lg font-bold text-white tracking-wider ${btn.className}`}
-            style={!btn.disabled ? { background: 'linear-gradient(135deg, #ff4757, #ff6348)' } : undefined}
+            style={
+              !btn.disabled
+                ? { background: 'linear-gradient(135deg, #ff4757, #ff6348)' }
+                : undefined
+            }
           >
             {btn.text}
           </button>

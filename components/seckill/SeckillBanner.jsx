@@ -20,7 +20,7 @@ const SeckillBanner = () => {
   return (
     <Link href={`/seckill?activityId=${activity.id}`}>
       <div
-        className="rounded-xl p-5 flex items-center gap-6 cursor-pointer transition-shadow hover:shadow-lg"
+        className="rounded-xl p-5 flex items-center gap-6 cursor-pointer transition-shadow shadow-md hover:shadow-lg"
         style={{ background: 'linear-gradient(135deg, #ff4757, #ff6348)' }}
       >
         {/* 左侧：活动信息 + 倒计时 */}

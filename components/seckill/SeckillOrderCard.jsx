@@ -64,9 +64,7 @@ const SeckillOrderCard = ({ order }) => {
           <span className="ml-2 text-sm text-black">{order.id}</span>
         </div>
         <div className="flex items-center gap-x-2">
-          <span className="text-xl font-bold text-red-600">
-            ¥{formatNumber(order.money)}
-          </span>
+          <span className="text-xl font-bold text-red-600">¥{formatNumber(order.money)}</span>
           {order.orderStatus === '0' && (
             <button
               onClick={handlePay}
@@ -80,9 +78,7 @@ const SeckillOrderCard = ({ order }) => {
       </div>
 
       {order.receiverAddress && (
-        <div className="text-sm text-gray-500 lg:px-3">
-          收货地址: {order.receiverAddress}
-        </div>
+        <div className="text-sm text-gray-500 lg:px-3">收货地址: {order.receiverAddress}</div>
       )}
     </div>
   )

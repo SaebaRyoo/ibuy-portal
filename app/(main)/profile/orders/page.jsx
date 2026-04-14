@@ -40,13 +40,16 @@ const Orders = () => {
   const total = data?.total || 0
 
   // 秒杀订单
-  const [fetchSeckillOrders, {
-    data: seckillData,
-    isSuccess: seckillSuccess,
-    isLoading: seckillLoading,
-    error: seckillError,
-    isError: seckillIsError,
-  }] = useGetSeckillOrdersMutation()
+  const [
+    fetchSeckillOrders,
+    {
+      data: seckillData,
+      isSuccess: seckillSuccess,
+      isLoading: seckillLoading,
+      error: seckillError,
+      isError: seckillIsError,
+    },
+  ] = useGetSeckillOrdersMutation()
 
   useEffect(() => {
     if (isSeckillTab) {
